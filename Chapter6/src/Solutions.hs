@@ -8,6 +8,7 @@ module Solutions
     , concat
     , replicate
     , (!!)
+    , elem
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
@@ -17,6 +18,7 @@ import Prelude hiding
     , concat
     , replicate
     , (!!)
+    , elem
     )
 
 -- #1
@@ -70,6 +72,14 @@ replicate n a = [a] ++ replicate (n - 1) a
 (!!) :: [a] -> Int -> a
 (x:xs) !! 0 = x
 (x:xs) !! n = xs !! (n - 1)
+
+-- #6 Part e
+elem :: Eq a => a -> [a] -> Bool
+elem _ [] = False
+-- Note: ys can be [] which is why (y:ys) matches singletons
+elem x (y:ys)
+    | x == y = True
+    | x /= y = elem x ys
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Hello world"
