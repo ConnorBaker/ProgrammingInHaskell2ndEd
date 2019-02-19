@@ -29,7 +29,6 @@ sumdown n = n + sumdown (n - 1)
 
 -- #3
 -- Assumes that the answer is computable; no 0^0
--- We use "^^" to avoid a name conflict with Prelude
 (^) :: Int -> Int -> Int
 0 ^ _ = 0
 _ ^ 0 = 1
@@ -42,7 +41,7 @@ euclid n m
     | n >  m = euclid m (n - m)
     | n <  m = euclid n (m - n)
 
--- #6a
+-- #6 Part a
 and :: [Bool] -> Bool
 and []  = False
 and [x] = x
@@ -50,7 +49,7 @@ and (x:xs)
     | x == False = False
     | x == True  = and xs
 
--- #6b
+-- #6 Part b
 concat :: [[a]] -> [a]
 concat  []  = []
 concat (xs:xss) = xs ++ concat xss
