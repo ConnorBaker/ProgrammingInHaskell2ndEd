@@ -6,6 +6,7 @@ module Solutions
     , euclid
     , and
     , concat
+    , replicate
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
@@ -13,6 +14,7 @@ import Prelude hiding
     ( (^)
     , and
     , concat
+    , replicate
     )
 
 -- #1
@@ -53,6 +55,12 @@ and (x:xs)
 concat :: [[a]] -> [a]
 concat  []  = []
 concat (xs:xss) = xs ++ concat xss
+
+-- #6 Part c
+replicate :: Int -> a -> [a]
+replicate 0 _ = []
+replicate 1 a = [a]
+replicate n a = [a] ++ replicate (n - 1) a
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Hello world"
