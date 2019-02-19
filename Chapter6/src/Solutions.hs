@@ -7,6 +7,7 @@ module Solutions
     , and
     , concat
     , replicate
+    , (!!)
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
@@ -15,6 +16,7 @@ import Prelude hiding
     , and
     , concat
     , replicate
+    , (!!)
     )
 
 -- #1
@@ -61,6 +63,13 @@ replicate :: Int -> a -> [a]
 replicate 0 _ = []
 replicate 1 a = [a]
 replicate n a = [a] ++ replicate (n - 1) a
+
+-- #6 Part d
+-- For simplicity, assume that the index is valid and that
+-- the array is non-empty
+(!!) :: [a] -> Int -> a
+(x:xs) !! 0 = x
+(x:xs) !! n = xs !! (n - 1)
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Hello world"
