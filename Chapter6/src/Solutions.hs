@@ -49,21 +49,18 @@ euclid n m
 
 -- #6 Part a
 and :: [Bool] -> Bool
-and []  = False
-and [x] = x
-and (x:xs)
-    | x == False = False
-    | x == True  = and xs
+and []        = True
+and (False:_) = False
+and (_:xs)    = and xs
 
 -- #6 Part b
 concat :: [[a]] -> [a]
-concat  []  = []
+concat []       = []
 concat (xs:xss) = xs ++ concat xss
 
 -- #6 Part c
 replicate :: Int -> a -> [a]
 replicate 0 _ = []
-replicate 1 a = [a]
 replicate n a = [a] ++ replicate (n - 1) a
 
 -- #6 Part d
@@ -82,4 +79,4 @@ elem x (y:ys)
     | x /= y = elem x ys
 
 helloWorld :: IO ()
-helloWorld = putStrLn "Hello world"
+helloWorld = putStrLn "Chapter 6 Exercises"
