@@ -69,8 +69,8 @@ replicate n a = [a] ++ replicate (n - 1) a
 -- For simplicity, assume that the index is valid and that
 -- the array is non-empty
 (!!) :: [a] -> Int -> a
-(x:xs) !! 0 = x
-(x:xs) !! n = xs !! (n - 1)
+(x:_)  !! 0 = x
+(_:xs) !! n = xs !! (n - 1)
 
 -- #6 Part e
 elem :: Eq a => a -> [a] -> Bool
