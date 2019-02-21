@@ -78,5 +78,13 @@ elem x (y:ys)
     | x == y = True
     | x /= y = elem x ys
 
+-- #7
+merge :: Ord a => [a] -> [a] -> [a]
+merge [] y'     = y'
+merge x' []     = x'
+merge x'@(x:xs) y'@(y:ys)
+    | (x <= y)  = x : merge xs y'
+    | otherwise = y : merge x' ys
+
 helloWorld :: IO ()
 helloWorld = putStrLn "Chapter 6 Exercises"
