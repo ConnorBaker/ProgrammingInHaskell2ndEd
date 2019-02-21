@@ -11,6 +11,7 @@ module Solutions
     , replicate
     , (!!)
     , elem
+    , merge
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
