@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Weverything -Wno-missing-import-lists #-}
+
 module Solutions
     ( helloWorld
     , facRecursive
