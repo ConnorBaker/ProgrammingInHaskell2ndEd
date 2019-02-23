@@ -12,6 +12,8 @@ module Solutions
     , (!!)
     , elem
     , merge
+    , halve
+    , msort
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
@@ -88,6 +90,18 @@ merge x' []     = x'
 merge x'@(x:xs) y'@(y:ys)
     | (x <= y)  = x : merge xs y'
     | otherwise = y : merge x' ys
+
+-- # 8
+halve :: [a] -> ([a],[a])
+halve xs = splitAt (div (length xs) 2) xs
+
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]
+msort [x,y] = merge [x] [y]
+msort xs = merge (msort a) (msort b)
+    where a = fst $ halve xs
+          b = snd $ halve xs
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Chapter 6 Exercises"
