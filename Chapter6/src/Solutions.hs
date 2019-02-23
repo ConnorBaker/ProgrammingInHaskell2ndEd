@@ -14,6 +14,9 @@ module Solutions
     , merge
     , halve
     , msort
+    , sumOfList
+    , takeFromList
+    , lastElem
     ) where
 
 -- Allows us to avoid a namespace conflict with our own implementation
@@ -91,7 +94,7 @@ merge x'@(x:xs) y'@(y:ys)
     | (x <= y)  = x : merge xs y'
     | otherwise = y : merge x' ys
 
--- # 8
+-- #8
 halve :: [a] -> ([a],[a])
 halve xs = splitAt (div (length xs) 2) xs
 
@@ -101,6 +104,23 @@ msort [x] = [x]
 msort xs = merge (msort a) (msort b)
     where a = fst $ halve xs
           b = snd $ halve xs
+
+-- #9 Part a
+sumOfList :: Num a => [a] -> a
+sumOfList []     = 0
+sumOfList (x:xs) = x + (sumOfList xs)
+
+-- #9 Part b
+takeFromList :: Int -> [a] -> [a]
+takeFromList _ []     = []
+takeFromList 0 _      = []
+takeFromList n (x:xs) = x : takeFromList (n - 1) xs
+
+-- #9 Part c
+lastElem :: [a] -> a
+lastElem [x]    = x
+lastElem (_:xs) = lastElem xs
+lastElem []     = error "List is empty!"
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Chapter 6 Exercises"
