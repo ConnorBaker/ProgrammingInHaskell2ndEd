@@ -98,7 +98,6 @@ halve xs = splitAt (div (length xs) 2) xs
 msort :: Ord a => [a] -> [a]
 msort [] = []
 msort [x] = [x]
-msort [x,y] = merge [x] [y]
 msort xs = merge (msort a) (msort b)
     where a = fst $ halve xs
           b = snd $ halve xs
