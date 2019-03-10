@@ -8,6 +8,8 @@ author: Connor Baker
 
 1. Show how the list comprehension `[f x | x <- xs, p x]` can be re-expressed using the higher order functions `map` and `filter`.
 
+    <script src="https://gist.github.com/ConnorBaker/f52b94a627dbff4b4144881095c2f68a.js"></script>
+
 2. Without looking at the definitions from the standard prelude, define the following higher-order library functions on lists:
    (a)  Decide if all the elements of a list satisfy a predicate:
 
@@ -34,6 +36,9 @@ author: Connor Baker
         ~~~
 
     *Note: In `Prelude` the first two of these functions are generic functions rather than being specific to the type of lists*
+
+    <script src="https://gist.github.com/ConnorBaker/9884fb621c0b1e6566cf93b357f77743.js"></script>
+
 3. Redefine the functions `map f` and `filter p` using `foldr`.
 
 4. Using `foldl` define a function `dec2Int :: [Int] -> Int` that converts a decimal number into an integer. For example:
