@@ -24,13 +24,13 @@ author: Connor Baker
    (c)  Select elements from a list while they satisfy a predicate
 
         ~~~hs
-        takeWhile :: (a -> Bool) -> [a] -> a
+        takeWhile :: (a -> Bool) -> [a] -> [a]
         ~~~
 
    (d)  Remove elements from a list while they satisfy a predicate
 
         ~~~hs
-        dropWhile :: (a -> Bool) -> [a] -> a
+        dropWhile :: (a -> Bool) -> [a] -> [a]
         ~~~
 
     *Note: In `Prelude` the first two of these functions are generic functions rather than being specific to the type of lists*
