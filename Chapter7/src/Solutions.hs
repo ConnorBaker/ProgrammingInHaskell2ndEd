@@ -6,6 +6,8 @@ module Solutions
     , any
     , takeWhile
     , dropWhile
+    , map'
+    , filter'
     , helloWorld
     ) where
 
@@ -44,7 +46,18 @@ dropWhile p x'@(x:xs)
     | p x       = dropWhile p xs
     | otherwise = x'
 
+-- #3
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\x xs -> f x : xs) []
 
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' p =
+    foldr (\x xs -> 
+            if (p x) then 
+                x:xs 
+            else 
+                xs)
+          []
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
