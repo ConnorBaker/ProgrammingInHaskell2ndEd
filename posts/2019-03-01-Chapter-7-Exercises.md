@@ -41,6 +41,8 @@ author: Connor Baker
 
 3. Redefine the functions `map f` and `filter p` using `foldr`.
 
+    <script src="https://gist.github.com/ConnorBaker/3a6be340566ec0e9e02a420fe5e2e4fd.js"></script>
+
 4. Using `foldl` define a function `dec2Int :: [Int] -> Int` that converts a decimal number into an integer. For example:
 
 5. Without looking at the definitions from the standard prelude, define the higher-order library function `curry` that converts a function on pairs into a curried function, and, conversely, the function `uncurry` that converts a curried function with two arguments into a function on pairs. (Hint: first write down the types of the two functions.)
@@ -64,7 +66,7 @@ author: Connor Baker
 
 8. Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modelled using the tail function on lists of bits.
 
-9. Define a function `altMap :: (a -> b) -> (a -> b) -> [a] -> [b]` that alternately applies its two argument functions to successive elements in a list, in turn about order. For example:
+9.  Define a function `altMap :: (a -> b) -> (a -> b) -> [a] -> [b]` that alternately applies its two argument functions to successive elements in a list, in turn about order. For example:
 
     ~~~hs
     > altMap (+10) (+100) [0,1,2,3,4]
