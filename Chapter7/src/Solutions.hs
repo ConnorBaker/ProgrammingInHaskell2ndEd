@@ -8,6 +8,7 @@ module Solutions
     , dropWhile
     , map'
     , filter'
+    , dec2Int
     , helloWorld
     ) where
 
@@ -58,6 +59,10 @@ filter' p =
             else 
                 xs)
           []
+
+-- #4
+dec2Int :: [Int] -> Int
+dec2Int = foldl (\xs x -> 10*xs + x) 0
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
