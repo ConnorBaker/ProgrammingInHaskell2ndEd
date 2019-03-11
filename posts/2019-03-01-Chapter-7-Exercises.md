@@ -45,6 +45,11 @@ author: Connor Baker
 
 4. Using `foldl` define a function `dec2Int :: [Int] -> Int` that converts a decimal number into an integer. For example:
 
+    ~~~hs
+    > dec2Int [2,3,4,5]
+    2345
+    ~~~
+
 5. Without looking at the definitions from the standard prelude, define the higher-order library function `curry` that converts a function on pairs into a curried function, and, conversely, the function `uncurry` that converts a curried function with two arguments into a function on pairs. (Hint: first write down the types of the two functions.)
 
 6. A higher-order function `unfold` that encapsulates a simple pattern of recursion for producing a list can be defined as follows:
