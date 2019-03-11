@@ -50,6 +50,8 @@ author: Connor Baker
     2345
     ~~~
 
+    <script src="https://gist.github.com/ConnorBaker/dc7e07cd9108ee6c1ae5bcc9a1bd642c.js"></script>
+
 5. Without looking at the definitions from the standard prelude, define the higher-order library function `curry` that converts a function on pairs into a curried function, and, conversely, the function `uncurry` that converts a curried function with two arguments into a function on pairs. (Hint: first write down the types of the two functions.)
 
 6. A higher-order function `unfold` that encapsulates a simple pattern of recursion for producing a list can be defined as follows:
