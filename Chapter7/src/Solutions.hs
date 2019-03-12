@@ -9,6 +9,8 @@ module Solutions
     , map'
     , filter'
     , dec2Int
+    , curry
+    , uncurry
     , helloWorld
     ) where
 
@@ -18,7 +20,8 @@ import Prelude hiding
     , any
     , takeWhile
     , dropWhile
-    -- , all
+    , curry
+    , uncurry
     )
 
 -- #1
@@ -63,6 +66,13 @@ filter' p =
 -- #4
 dec2Int :: [Int] -> Int
 dec2Int = foldl (\xs x -> 10*xs + x) 0
+
+-- #5
+curry :: ((a,b) -> c) -> a -> b -> c
+curry f a b = f (a, b)
+
+uncurry :: (a -> b -> c) -> (a,b) -> c
+uncurry f (a,b) = f a b
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
