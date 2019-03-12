@@ -71,6 +71,8 @@ author: Connor Baker
 
     Redefine the functions `chop8`, `map f` and `iterate f` using `unfold`.
 
+    <script src="https://gist.github.com/ConnorBaker/c2ed590b9badb3aae6204313eb624a19.js"></script>
+
 7. Modify the binary string transmitter example to detect simple transmission errors using the concept of parity bits. That is, each eight-bit binary number produced during encoding is extended with a parity bit, set to one if the number contains an odd number of ones, and to zero otherwise. In turn, each resulting nine-bit binary number consumed during decoding is checked to ensure that its parity bit is correct, with the parity bit being discarded if this is the case, and a parity error being reported otherwise. (Hint: the library function `error :: String -> a` displays the given string as an error message and terminates the program; the polymorphic result type ensures that error can be used in any context.)
 
 8. Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modelled using the tail function on lists of bits.
