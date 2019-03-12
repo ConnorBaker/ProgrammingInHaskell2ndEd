@@ -11,6 +11,10 @@ module Solutions
     , dec2Int
     , curry
     , uncurry
+    , unfold
+    , chop8
+    , map''
+    , iterate'
     , helloWorld
     ) where
 
@@ -40,8 +44,8 @@ any p = or . map p
 takeWhile :: (a -> Bool) -> [a] -> [a]
 takeWhile _ [] = []
 takeWhile p (x:xs)
-    | p x         = x : takeWhile p xs
-    | otherwise   = []
+    | p x       = x : takeWhile p xs
+    | otherwise = []
 
 -- #2 Part d
 dropWhile :: (a -> Bool) -> [a] -> [a]
@@ -69,10 +73,29 @@ dec2Int = foldl (\xs x -> 10*xs + x) 0
 
 -- #5
 curry :: ((a,b) -> c) -> a -> b -> c
-curry f a b = f (a, b)
+curry f a b = f (a,b)
+-- Alternatively:
+-- curry f = \a b -> f (a,b)
 
 uncurry :: (a -> b -> c) -> (a,b) -> c
 uncurry f (a,b) = f a b
+-- Alternatively:
+-- uncurry f = \(a,b) -> f a b
+
+-- #6
+unfold :: (a -> Bool) -> (a -> b) -> (a -> a) -> a -> [b]
+unfold p h t x
+    | p x       = []
+    | otherwise = h x : unfold p h t (t x)
+
+chop8 :: [Int] -> [[Int]]
+chop8 = unfold (null) (take 8) (drop 8)
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f = unfold (null) (f . head) (tail)
+
+iterate' :: (a -> a) -> a -> [a]
+iterate' f = unfold (const False) (id) (f)
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
