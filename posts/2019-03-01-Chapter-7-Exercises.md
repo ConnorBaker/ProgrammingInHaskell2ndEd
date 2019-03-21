@@ -75,7 +75,11 @@ author: Connor Baker
 
 7. Modify the binary string transmitter example to detect simple transmission errors using the concept of parity bits. That is, each eight-bit binary number produced during encoding is extended with a parity bit, set to one if the number contains an odd number of ones, and to zero otherwise. In turn, each resulting nine-bit binary number consumed during decoding is checked to ensure that its parity bit is correct, with the parity bit being discarded if this is the case, and a parity error being reported otherwise. (Hint: the library function `error :: String -> a` displays the given string as an error message and terminates the program; the polymorphic result type ensures that error can be used in any context.)
 
+    <script src="https://gist.github.com/ConnorBaker/9dbb569c6578bebd71804157993b9401.js"></script>
+
 8. Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modelled using the tail function on lists of bits.
+
+    <script src="https://gist.github.com/ConnorBaker/88b355d9463cc29b589deb225fee7718.js"></script>
 
 9.  Define a function `altMap :: (a -> b) -> (a -> b) -> [a] -> [b]` that alternately applies its two argument functions to successive elements in a list, in turn about order. For example:
 
@@ -84,4 +88,8 @@ author: Connor Baker
     [10,101,12,103,14]
     ~~~
 
+    <script src="https://gist.github.com/ConnorBaker/cec3d1f5fd93d6eeca25dce62fff6b7e.js"></script>
+
 10. Using `altMap`, define a function `luhn :: [Int] -> Bool` that implements the Luhn algorithm from the exercises in Chapter 4 for bank card numbers of any length. Test your new function using your own bank card.
+
+    <script src="https://gist.github.com/ConnorBaker/290ff5a876983435afc2e83be6ab139c.js"></script>
