@@ -24,6 +24,9 @@ module Solutions
     , decodeWithParityBit
     , channelNoisy
     , transmitNoisy
+    , altMap
+    , luhnDouble
+    , luhn
     , helloWorld
     ) where
 
@@ -151,6 +154,20 @@ transmitNoisy = decodeWithParityBit
               . channelNoisy
               . encodeWithParityBit
 
+-- #9
+altMap :: (a -> b) -> (a -> b) -> [a] -> [b]
+altMap _ _ [] = []
+altMap f g (x:xs) = f x : altMap g f xs
+
+-- #10
+luhnDouble :: Int -> Int
+luhnDouble n
+    | n <= 5    = 2 * n
+    | otherwise = 2 * n - 9
+
+luhn :: [Int] -> Bool
+luhn [] = False
+luhn ns = mod (sum $ altMap luhnDouble id ns) 10 == 0
 
 helloWorld :: IO ()
-helloWorld = putStrLn "someFunc"
+helloWorld = putStrLn "Chapter 7 Exercises"
