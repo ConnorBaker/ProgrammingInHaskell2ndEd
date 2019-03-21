@@ -15,6 +15,15 @@ module Solutions
     , chop8
     , map''
     , iterate'
+    , bin2Int
+    , int2Bin
+    , make8
+    , encode
+    , encodeWithParityBit
+    , decode
+    , decodeWithParityBit
+    , channelNoisy
+    , transmitNoisy
     , helloWorld
     ) where
 
@@ -27,6 +36,8 @@ import Prelude hiding
     , curry
     , uncurry
     )
+
+import Data.Char
 
 -- #1
 applyFilterAndFnToList :: (a -> Bool) -> (a -> b) -> [a] -> [b]
@@ -96,6 +107,50 @@ map'' f = unfold null (f . head) tail
 
 iterate' :: (a -> a) -> a -> [a]
 iterate' = unfold (const False) id
+
+-- #7
+type Bit = Int
+
+bin2Int :: [Bit] -> Int
+bin2Int = foldr (\x y -> x + 2*y) 0
+
+int2Bin :: Int -> [Bit]
+int2Bin 0 = []
+int2Bin n = mod n 2 : int2Bin (div n 2)
+
+make8 :: [Bit] -> [Bit]
+make8 bits = take 8 (bits ++ repeat 0)
+
+encode :: String -> [Bit]
+encode = concatMap (make8 . int2Bin . ord)
+
+encodeWithParityBit :: String -> [Bit]
+encodeWithParityBit s = encoded ++ [parityBit]
+    where
+        encoded   = encode s
+        parityBit = sum encoded `mod` 2
+
+-- Using previously defined chop8 from #6
+
+decode :: [Bit] -> String
+decode = map (chr . bin2Int) . chop8
+
+decodeWithParityBit :: [Bit] -> String
+decodeWithParityBit list =
+    if last list == sum (init list) `mod` 2
+        then decode $ init list
+        else error "Parity bit doesn't match input actual string"
+
+-- #8
+-- Discard the leading bit
+channelNoisy :: [Bit] -> [Bit]
+channelNoisy = tail
+
+transmitNoisy :: String -> String
+transmitNoisy = decodeWithParityBit
+              . channelNoisy
+              . encodeWithParityBit
+
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
