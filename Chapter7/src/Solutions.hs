@@ -145,7 +145,6 @@ decodeWithParityBit list =
         else error "Parity bit doesn't match input actual string"
 
 -- #8
--- Discard the leading bit
 channelNoisy :: [Bit] -> [Bit]
 channelNoisy = tail
 
