@@ -1,7 +1,7 @@
-{-# OPTIONS_GHC -Weverything -Wno-missing-import-lists #-}
+{-# OPTIONS_GHC -Weverything -Wno-missing-import-lists -Wno-safe #-}
 
 module Solutions
-    ( applyFilterAndFnToList 
+    ( applyFilterAndFnToList
     , all
     , any
     , takeWhile
@@ -60,10 +60,10 @@ map' f = foldr (\x xs -> f x : xs) []
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' p =
-    foldr (\x xs -> 
-            if (p x) then 
-                x:xs 
-            else 
+    foldr (\x xs ->
+            if p x then
+                x:xs
+            else
                 xs)
           []
 
@@ -89,13 +89,13 @@ unfold p h t x
     | otherwise = h x : unfold p h t (t x)
 
 chop8 :: [Int] -> [[Int]]
-chop8 = unfold (null) (take 8) (drop 8)
+chop8 = unfold null (take 8) (drop 8)
 
 map'' :: (a -> b) -> [a] -> [b]
-map'' f = unfold (null) (f . head) (tail)
+map'' f = unfold null (f . head) tail
 
 iterate' :: (a -> a) -> a -> [a]
-iterate' f = unfold (const False) (id) (f)
+iterate' = unfold (const False) id
 
 helloWorld :: IO ()
 helloWorld = putStrLn "someFunc"
