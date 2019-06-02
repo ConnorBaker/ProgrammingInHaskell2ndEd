@@ -194,7 +194,7 @@ header-includes:
             else error "Parity bit doesn't match input actual string"
     ~~~
 
-8. Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modelled using the tail function on lists of bits.
+8. Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modeled using the tail function on lists of bits.
 
     ~~~hs
     channelNoisy :: [Bit] -> [Bit]
