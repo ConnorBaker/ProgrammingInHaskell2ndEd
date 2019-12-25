@@ -43,13 +43,13 @@ header-includes:
     + Decide if all the elements of a list satisfy a predicate:
 
         ```haskell
-        all :: (a -> Bool) -> [Bool] -> Bool
+        all :: (a -> Bool) -> [a] -> Bool
         ```
 
     + Decide if any element of a list satisfies a predicate:
 
         ```haskell
-        any :: (a -> Bool) -> [Bool] -> Bool
+        any :: (a -> Bool) -> [a] -> Bool
         ```
 
     + Select elements from a list while they satisfy a predicate
