@@ -11,7 +11,10 @@ module Solutions
   , balanced
   , halve
   , balance
+  , Expr
   , folde
+  , eval
+  , size
   )
 where
 
@@ -77,13 +80,37 @@ balance as  = FourNode (balance l) (balance r) where (l, r) = halve as
 
 -- Problem Five
 data Expr = Val Int | Add Expr Expr
+  deriving stock Show
 
 folde
   :: (Int -> a)    -- Transforms the contents of the Val constructor
   -> (a -> a -> a) -- Applied to result of the Add constructor
   -> (Expr -> a)
-folde f _ (Val n) = f n 
+folde f _ (Val n  ) = f n
 folde f g (Add a b) = g (folde f g a) (folde f g b)
+
+-- Problem Six
+-- Evaluates an expression to an integer value
+eval :: Expr -> Int
+eval = folde id (+)
+
+-- Calculates the number of values in an expression
+size :: Expr -> Int
+size = folde (const 1) (+)
+
+-- Problem Seven
+-- Commented out to avoid conflicting definitions
+-- Recall that we get /= for free as the negation of ==
+-- instance Eq a => Eq (Maybe a)
+--   where
+--   Nothing == Nothing = True
+--   Just a  == Just b  = a == b
+
+-- instance Eq a => [a]
+--   where
+--   []       == []       = True
+--   (x : xs) == (y : ys) = x == y && xs == ys
+--   _        == _        = False
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Chapter 8 Exercises"
