@@ -11,10 +11,19 @@ module Solutions
   , balanced
   , halve
   , balance
-  , Expr
+  , Expr(..)
   , folde
-  , eval
+  , eval'
   , size
+  , Prop(..)
+  , Assoc
+  , Subst
+  , find
+  , eval
+  , vars
+  , bools
+  , substs
+  , rmdups
   )
 where
 
@@ -91,8 +100,8 @@ folde f g (Add a b) = g (folde f g a) (folde f g b)
 
 -- Problem Six
 -- Evaluates an expression to an integer value
-eval :: Expr -> Int
-eval = folde id (+)
+eval' :: Expr -> Int
+eval' = folde id (+)
 
 -- Calculates the number of values in an expression
 size :: Expr -> Int
@@ -111,6 +120,54 @@ size = folde (const 1) (+)
 --   []       == []       = True
 --   (x : xs) == (y : ys) = x == y && xs == ys
 --   _        == _        = False
+
+-- Problem Eight
+-- Extend the tautology checker to support the use of logical disjunction
+-- (\|) and equivalence (<=>) in propositions.
+data Prop = Const Bool
+          | Var Char
+          | Not Prop
+          | And Prop Prop
+          | Or Prop Prop
+          | Imply Prop Prop
+          | Equiv Prop Prop
+  deriving stock Show
+
+type Assoc k v = [(k, v)]
+
+type Subst = Assoc Char Bool
+
+find :: Eq k => k -> Assoc k v -> v
+find k t = head [ v | (k', v) <- t, k == k' ]
+
+eval :: Subst -> Prop -> Bool
+eval _ (Const b  ) = b
+eval s (Var   x  ) = find x s
+eval s (Not   p  ) = not (eval s p)
+eval s (And   p q) = eval s p && eval s q
+eval s (Or    p q) = eval s p || eval s q
+eval s (Imply p q) = eval s p <= eval s q
+eval s (Equiv p q) = eval s p == eval s q
+
+vars :: Prop -> [Char]
+vars (Const _  ) = []
+vars (Var   x  ) = [x]
+vars (Not   p  ) = vars p
+vars (And   p q) = vars p ++ vars q
+vars (Or    p q) = vars p ++ vars q
+vars (Imply p q) = vars p ++ vars q
+vars (Equiv p q) = vars p ++ vars q
+
+bools :: Int -> [[Bool]]
+bools 0 = [[]]
+bools n = map (False :) bss ++ map (True :) bss where bss = bools (n - 1)
+
+substs :: Prop -> [Subst]
+substs p = map (zip vs) (bools (length vs)) where vs = rmdups (vars p)
+
+rmdups :: Eq a => [a] -> [a]
+rmdups []       = []
+rmdups (a : as) = if a `elem` as then rmdups as else a : rmdups as
 
 helloWorld :: IO ()
 helloWorld = putStrLn "Chapter 8 Exercises"
