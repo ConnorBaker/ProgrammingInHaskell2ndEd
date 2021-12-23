@@ -1,30 +1,10 @@
 ---
 title: Chapter 8 Exercises
 author: [Connor Baker]
-date: Compiled on \today\ at \currenttime
+date: 2020-12-23
 subject: Programming in Haskell, 2nd ed.
 keywords: [Chapter 8, Notes]
 subtitle: Declaring Types and Classes
-lang: en
-titlepage: true
-titlepage-color: FFFFFF
-titlepage-text-color: 0d47a1
-titlepage-rule-color: 0d47a1
-titlepage-rule-height: 2
-papersize: letter
-fontsize: 10pt
-listings-disable-line-numbers: true
-table-use-row-colors: true
-footnotes-pretty: true
-footer-right: \thepage\ of \pageref{LastPage}
-header-right: \today
-header-includes:
-  - \setcounter{page}{0} # So that the titlepage is the zeroth page
-  - \lstset{breaklines=true}
-  - \lstset{postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{blue}\hookrightarrow\space}}}
-  - \usepackage{datetime}
-  - \settimeformat{ampmtime}
-  - \usepackage{lastpage}
 ---
 
 ## 8.9 Exercises
