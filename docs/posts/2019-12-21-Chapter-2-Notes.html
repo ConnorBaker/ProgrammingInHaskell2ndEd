@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-2-Notes.html">Chapter 2</a>
+    </div>
+    <div class="post-subtitle">
+        Programming in Haskell, 2nd ed.
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="standard-prelude">2.3 Standard Prelude</h2>
+<p>Haskell has a large standard library. A portion of the standard library, called the Prelude, is included by default in all Haskell packages. Prelude includes many useful and commonly used functions, so it serves as a core part of the standard library. It includes functions such as <code>+</code> and <code>*</code> as well as several functions used on lists (like <code>head</code>, <code>tail</code>, <code>take</code>, and <code>drop</code>).</p>
+<!--more-->
+<h2 id="function-application">2.4 Function Application</h2>
+<blockquote>
+<p>The notation for function application is a bit different than is common in mathematics. These differences are highlighted by the table below:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Mathematics</th>
+<th style="text-align: center;">Haskell</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>f</em>(<em>x</em>)</span></td>
+<td style="text-align: center;"><code>f x</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>f</em>(<em>x</em>,<em>y</em>)</span></td>
+<td style="text-align: center;"><code>f x y</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>f</em>(<em>g</em>(<em>x</em>))</span></td>
+<td style="text-align: center;"><code>f (g x)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>f</em>(<em>x</em>,<em>g</em>(<em>y</em>))</span></td>
+<td style="text-align: center;"><code>f x (g y)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>f</em>(<em>x</em>)<em>g</em>(<em>y</em>)</span></td>
+<td style="text-align: center;"><code>f x * g y</code></td>
+</tr>
+</tbody>
+</table>
+<p>Excerpt from: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="haskell-scripts">2.5 Haskell Scripts</h2>
+<h3 id="naming-requirements">Naming requirements</h3>
+<blockquote>
+<p>When defining a new function, the names of the function and its arguments must begin with a lower-case letter, but can then be followed by zero or more letters (both lower- and upper-case), digits, underscores, and forward single quotes.</p>
+<p>Excerpt from: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h3 id="the-layout-rule">The layout rule</h3>
+<blockquote>
+<p>Within a script, each definition at the same level must begin in precisely the same column. This layout rulemakes it possible to determine the grouping of definitions from their indentation.</p>
+<p>Excerpt from: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+</div>
+    </div>
+</body>
+
+</html>

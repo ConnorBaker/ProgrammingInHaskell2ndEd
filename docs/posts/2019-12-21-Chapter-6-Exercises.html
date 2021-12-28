@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 6 Exercises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-6-Exercises.html">Chapter 6 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Recursive Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">6.8 Exercises</h2>
+<ol type="1">
+<li><p>How does the recursive version of the factorial function behave if applied to a negative argument, like <span class="math inline"> − 1</span>? Modify the definition to prohibit negative arguments by adding a guard to the recursive case.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">facRecursive ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>facRecursive n</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">0</span>     <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">==</span> <span class="dv">0</span>    <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> n <span class="op">*</span> facRecursive (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<!--more--></li>
+<li><p>Define a recursive function <code>sumdown :: Int -&gt; Int</code> that returns the sum of the non-negative integers from a given value down to zero. For example, <code>sumdown 3</code> should return the result <span class="math inline">3 + 2 + 1 + 0 = 6</span>.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">sumdown ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sumdown <span class="dv">0</span> <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sumdown n <span class="ot">=</span> n <span class="op">+</span> sumdown (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div></li>
+<li><p>Define the exponentiation operator <code>^</code> for non-negative integers using the same pattern of recursion as the multiplication operator <code>*</code> and show how the expression <code>2 ^ 3</code> is evaluated using your definition.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(^) ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span> <span class="op">^</span> _ <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>_ <span class="op">^</span> <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">^</span> m <span class="ot">=</span> n <span class="op">*</span> (n <span class="op">^</span> (m <span class="op">-</span> <span class="dv">1</span>))</span></code></pre></div></li>
+<li><p>Define a recursive function <code>euclid :: Int -&gt; Int -&gt; Int</code> that implements Euclid’s algorithm for calculating the greatest common divisor of two non-negative integers: if the two numbers are equal, this number is the result; otherwise, the smaller number is subtracted from the larger, and the same process is then repeated. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> euclid <span class="dv">6</span> <span class="dv">27</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">euclid ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>euclid n m </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">==</span> m <span class="ot">=</span> n</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&gt;</span>  m <span class="ot">=</span> euclid m (n <span class="op">-</span> m)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&lt;</span>  m <span class="ot">=</span> euclid n (m <span class="op">-</span> n)</span></code></pre></div></li>
+<li><p>Using the recursive definitions given in this chapter, show how <code>length [1,2,3]</code>, <code>drop 3 [1,2,3,4,5]</code>, and <code>init [1,2,3]</code> are evaluated.</p>
+<p>For length:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">length</span> }</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> <span class="fu">length</span> [<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">length</span> }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fu">length</span> [<span class="dv">3</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">length</span> }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fu">length</span> []))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">length</span> }</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">0</span>)))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="op">+</span> }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span></code></pre></div>
+<p>For drop:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> <span class="dv">3</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">drop</span> }</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> <span class="dv">2</span> [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">drop</span> }</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> <span class="dv">1</span> [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">drop</span> }</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> <span class="dv">0</span> [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>[<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span></code></pre></div>
+<p>For init (the definition is provided below for reference):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">init</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">init</span> [_]    <span class="ot">=</span> []</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">init</span> (x<span class="op">:</span>xs) <span class="ot">=</span> x <span class="op">:</span> <span class="fu">init</span> xs</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">init</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">init</span> }</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> <span class="fu">init</span> [<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">init</span> }</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> <span class="dv">2</span> <span class="op">:</span> <span class="fu">init</span> [<span class="dv">3</span>]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">init</span> }</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> <span class="dv">2</span> <span class="op">:</span> []</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ list notation }</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div></li>
+<li><p>Without looking at the definitions from the standard prelude, define the following library functions on lists using recursion:</p>
+<ul>
+<li>Decide if all logical values in a list are true:
+<ul>
+<li><code>and :: [Bool] -&gt; Bool</code></li>
+</ul></li>
+<li>Concatenate a list of lists:
+<ul>
+<li><code>concat :: [[a]] -&gt; [a]</code></li>
+</ul></li>
+<li>Produce a list with <span class="math inline"><em>n</em></span> identical elements:
+<ul>
+<li><code>replicate :: Int -&gt; a -&gt; [a]</code></li>
+</ul></li>
+<li>Select the <span class="math inline"><em>n</em><sup>th</sup></span> element of a list:
+<ul>
+<li><code>(!!) :: [a] -&gt; Int -&gt; a</code></li>
+</ul></li>
+<li>Decide if a value is an element of a list:
+<ul>
+<li><code>elem :: Eq a =&gt; a -&gt; [a] -&gt; Bool</code></li>
+</ul></li>
+</ul>
+<p>Note: most of these functions are defined in the prelude using other library functions rather than using explicit recursion, and are generic functions rather than being specific to the type of lists.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part a</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">and</span><span class="ot"> ::</span> [<span class="dt">Bool</span>] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">and</span> []        <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">and</span> (<span class="dt">False</span><span class="op">:</span>_) <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">and</span> (_<span class="op">:</span>xs)    <span class="ot">=</span> <span class="fu">and</span> xs</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part b</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">concat</span><span class="ot"> ::</span> [[a]] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">concat</span> []       <span class="ot">=</span> []</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">concat</span> (xs<span class="op">:</span>xss) <span class="ot">=</span> xs <span class="op">++</span> <span class="fu">concat</span> xss</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part c</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a]</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span> <span class="dv">0</span> _ <span class="ot">=</span> []</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span> n a <span class="ot">=</span> [a] <span class="op">++</span> <span class="fu">replicate</span> (n <span class="op">-</span> <span class="dv">1</span>) a</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part d</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- For simplicity, assume that the index is valid</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- and that the array is non-empty</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ot">(!!) ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>(x<span class="op">:</span>_)  <span class="op">!!</span> <span class="dv">0</span> <span class="ot">=</span> x</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>(_<span class="op">:</span>xs) <span class="op">!!</span> n <span class="ot">=</span> xs <span class="op">!!</span> (n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part e</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">elem</span><span class="ot"> ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="fu">elem</span> _ [] <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note: ys can be [] which is why (y:ys) matches singletons</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="fu">elem</span> x (y<span class="op">:</span>ys)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> x <span class="op">==</span> y <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> x <span class="op">/=</span> y <span class="ot">=</span> <span class="fu">elem</span> x ys</span></code></pre></div></li>
+<li><p>Define a recursive function <code>merge :: Ord a =&gt; [a] -&gt; [a] -&gt; [a]</code> that merges two sorted lists to give a single sorted list.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> merge [<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>] [<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span></code></pre></div>
+<p>Note: your definition should not use other functions on sorted lists such as insert or isort, but should be defined using explicit recursion.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">merge ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>merge [] y'     <span class="ot">=</span> y'</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>merge x' []     <span class="ot">=</span> x'</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>merge x'<span class="op">@</span>(x<span class="op">:</span>xs) y'<span class="op">@</span>(y<span class="op">:</span>ys)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> (x <span class="op">&lt;=</span> y)  <span class="ot">=</span> x <span class="op">:</span> merge xs y'</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y <span class="op">:</span> merge x' ys</span></code></pre></div></li>
+<li><p>Using merge, define a function <code>msort :: Ord a =&gt; [a] -&gt; [a]</code> that implements merge sort, in which the empty list and singleton lists are already sorted, and any other list is sorted by merging together the two lists that result from sorting the two halves of the list separately. Hint: first define a function <code>halve :: [a] -&gt; ([a],[a])</code> that splits a list into two halves whose lengths differ by at most one.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">halve ::</span> [a] <span class="ot">-&gt;</span> ([a],[a])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>halve xs <span class="ot">=</span> <span class="fu">splitAt</span> (<span class="fu">div</span> (<span class="fu">length</span> xs) <span class="dv">2</span>) xs</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ot">msort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>msort [] <span class="ot">=</span> []</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>msort [x] <span class="ot">=</span> [x]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>msort xs <span class="ot">=</span> merge (msort a) (msort b)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> a <span class="ot">=</span> <span class="fu">fst</span> <span class="op">$</span> halve xs</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>          b <span class="ot">=</span> <span class="fu">snd</span> <span class="op">$</span> halve xs</span></code></pre></div></li>
+<li><p>Using the five-step process, construct the library function that:</p>
+<ul>
+<li>Calculates the sum of a list of numbers;</li>
+<li>takes a given number of elements from the start of a list;</li>
+<li>Selects the last element of a non-empty list.</li>
+</ul>
+<p>Solution:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part a</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ot">sumOfList ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sumOfList []     <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>sumOfList (x<span class="op">:</span>xs) <span class="ot">=</span> x <span class="op">+</span> (sumOfList xs)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part b</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ot">takeFromList ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>takeFromList _ []     <span class="ot">=</span> []</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>takeFromList <span class="dv">0</span> _      <span class="ot">=</span> []</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>takeFromList n (x<span class="op">:</span>xs) <span class="ot">=</span> x <span class="op">:</span> takeFromList (n <span class="op">-</span> <span class="dv">1</span>) xs</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part c</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ot">lastElem ::</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>lastElem [x]    <span class="ot">=</span> x</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>lastElem (_<span class="op">:</span>xs) <span class="ot">=</span> lastElem xs</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>lastElem []     <span class="ot">=</span> <span class="fu">error</span> <span class="st">&quot;List is empty!&quot;</span></span></code></pre></div></li>
+</ol>
+</div>
+    </div>
+</body>
+
+</html>

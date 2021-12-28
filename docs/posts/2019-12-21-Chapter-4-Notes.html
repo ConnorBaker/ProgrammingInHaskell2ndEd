@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-4-Notes.html">Chapter 4</a>
+    </div>
+    <div class="post-subtitle">
+        Defining Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="new-from-old">4.1 New From Old</h2>
+<p>Function composition is an extremely powerful tool and should not be overlooked. If it works for Unix, it’ll probably work for you.</p>
+<!--more-->
+<h2 id="conditional-expressions">4.2 Conditional Expressions</h2>
+<p>Conditional expressions in Haskell look a bit different than those in bog-standard imperative languages. Consider an implementation of the <code>signum</code> function for integers:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span> n <span class="ot">=</span> <span class="kw">if</span> n <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="kw">else</span> <span class="kw">if</span> n <span class="op">==</span> <span class="dv">0</span> <span class="kw">then</span> <span class="dv">0</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           <span class="kw">else</span> <span class="dv">1</span></span></code></pre></div>
+<p>We can see from this example that conditional expressions may be nested.</p>
+<blockquote>
+<p>Note that unlike in some programming languages, conditional expressions in Haskell must always have an else branch, which avoids the well-known dangling else problem.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="guarded-equations">4.3 Guarded Equations</h2>
+<p>Guarded equations are a sequence of logical expressions evaluated in order (think of it like <code>switch</code> statement meets <code>if</code>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span> n <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">0</span>     <span class="ot">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="op">|</span> n <span class="op">==</span> <span class="dv">0</span>    <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div>
+<p>The guard symbol <code>|</code> is read as such that.</p>
+<blockquote>
+<p>… the guard otherwise is defined in the standard prelude simply by <code>otherwise = True</code>. Ending a sequence of guards with otherwise is not necessary, but provides a convenient way of handling all other cases..</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="pattern-matching">4.4 Pattern Matching</h2>
+<p>Functions can also be defined via pattern matching, which is a list of expressions. As the program executes, the first pattern to match is chosen. As an example, consider logical conjunction:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(&amp;&amp;) ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="op">&amp;&amp;</span> <span class="dt">True</span>  <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="op">&amp;&amp;</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="op">&amp;&amp;</span> <span class="dt">True</span>  <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="op">&amp;&amp;</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<p>We can simplify this by using the wildcard pattern <code>_</code> which matches any value (it serves as a sort of else):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(&amp;&amp;) ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span> <span class="op">&amp;&amp;</span> <span class="dt">True</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>_    <span class="op">&amp;&amp;</span> _    <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<blockquote>
+<p>This version also has the benefit that, under lazy evaluation as discussed in chapter 15, if the first argument is False, then the result False is returned without the need to evaluate the second argument.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell (2nd ed.).</p>
+</blockquote>
+<h3 id="tuple-patterns">Tuple patterns</h3>
+<blockquote>
+<p>A tuple of patterns is itself a pattern, which matches any tuple of the same arity whose components all match the corresponding patterns in order.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Pattern matching works exactly how you’d expect (component-wise, if you had forgotten what you were expecting):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fst</span><span class="ot"> ::</span> (a,b) <span class="ot">-&gt;</span> a</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fst</span> (x,_) <span class="ot">=</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">snd</span><span class="ot"> ::</span> (a,b) <span class="ot">-&gt;</span> b</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">snd</span> (_,y) <span class="ot">=</span> y</span></code></pre></div>
+<h3 id="list-patterns">List patterns</h3>
+<p>Lists are not primitives in Haskell.</p>
+<blockquote>
+<p>Lists are constructed one element at a time starting from the empty list <code>[]</code> using an operator <code>:</code> called cons that constructs a new list by prepending a new element to the start of an existing list…. the library functions <code>head</code> and <code>tail</code> that respectively select and remove the first element of a non-empty list are defined as follows:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (x<span class="op">:</span>_) <span class="ot">=</span> x</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> (_<span class="op">:</span>xs) <span class="ot">=</span> xs</span></code></pre></div>
+<p>Note that cons patterns must be parenthesised, [sic] because function application has higher priority than all other operators in the language.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="lambda-expressions">4.5 Lambda expressions</h2>
+<blockquote>
+<p>As an alternative to defining functions using equations, functions can also be constructed using lambda expressions, which comprise a pattern for each of the arguments, a body that specifies how the result can be calculated in terms of the arguments, but do not give a name for the function itself. In other words, lambda expressions are nameless functions.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Haskell uses the symbol <code>\</code> to represent the Greek letter lambda, written as <span class="math inline"><em>λ</em></span>. Consider the lambda expression</p>
+<p><code>\x -&gt; x + x</code></p>
+<p>which adds a number to itself. One might use the lambda expression in GHCi to double a number:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> (\x <span class="ot">-&gt;</span> x <span class="op">+</span> x) <span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span></code></pre></div>
+<p>These lambda expressions can define curried functions. Consider that we can rewrite</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>add x y <span class="ot">=</span> x <span class="op">+</span> y</span></code></pre></div>
+<p>as</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>add <span class="ot">=</span> \x <span class="ot">-&gt;</span> (\y <span class="ot">-&gt;</span> x <span class="op">+</span> y)</span></code></pre></div>
+<blockquote>
+<p>… which makes precise that <code>add</code> is a function that takes an integer <code>x</code> and returns a function, which in turn takes another integer <code>y</code> and returns the result <code>x + y</code>. Moreover, rewriting the original definition in this manner also has the benefit that the type for the function and the manner in which it is defined now have the same syntactic form, namely <code>? -&gt; (? -&gt; ?)</code>.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Lambda expressions are a natural way to define functions that return functions as part of how they work rather simply as a result of currying.</p>
+<blockquote>
+<p>… the library function const that returns a constant function that always produces a given value can be defined as follows:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">const</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> a</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">const</span> x _ <span class="ot">=</span> x</span></code></pre></div>
+<p>However, it is more appealing to define <code>const</code> in a way that makes explicit that it returns a function as its result, by including parentheses in the type and using a lambda expression in the definition itself:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">const</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> a)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">const</span> x <span class="ot">=</span> \_ <span class="ot">-&gt;</span> x</span></code></pre></div>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Lastly, lambda expressions help get rid of the need to define small, single-use helper functions.</p>
+<blockquote>
+<p>… a function <code>odds</code> that returns the first <code>n</code> odd integers can be defined as follows:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ot">odds ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>odds n <span class="ot">=</span> <span class="fu">map</span> f [<span class="dv">0</span><span class="op">..</span>n<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">where</span> f x <span class="ot">=</span> x<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>(The library function map applies a function to all elements of a list.) However, because the locally defined function <code>f</code> is only referenced once, the definition for <code>odds</code> can be simplified by using a lambda expression:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">odds ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>odds n <span class="ot">=</span> <span class="fu">map</span> (\x <span class="ot">-&gt;</span> x<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span>) [<span class="dv">0</span><span class="op">..</span>n<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="operator-sections">4.6 Operator Sections</h2>
+<p>Functions written between two arguments are called operators (formally known as an infix operator). Any function with two arguments can be converted into an operator by putting the function in-between back-ticks. The opposite is also possible: putting parenthesis around an operator turns it into a prefix operator.</p>
+<blockquote>
+<p>In general, if <code>#</code> is an operator, then expressions of the form <code>(#)</code>, <code>(x #)</code>, and <code>(# y)</code> for arguments <code>x</code> and <code>y</code> are called sections, whose meaning as functions can be formalised [sic] using lambda expressions as follows:</p>
+<p><code>(#) = \x -&gt; (\y -&gt; x # y)</code></p>
+<p><code>(x #) = \y -&gt; x # y</code></p>
+<p><code>(# y) = \x -&gt; x # y</code></p>
+<p>Sections have three primary applications. First of all, they can be used to construct a number of simple but useful functions in a particularly compact way, as shown in the following examples:</p>
+<ul>
+<li><code>(+)</code> is the addition function
+<ul>
+<li>Example: <code>\x -&gt; (\y -&gt; x+y)</code></li>
+</ul></li>
+<li><code>(1+)</code> is the successor function
+<ul>
+<li>Example: <code>\y -&gt; 1+y</code></li>
+</ul></li>
+<li><code>(1/)</code> is the reciprocation function
+<ul>
+<li>Example: <code>\y -&gt; 1/y</code></li>
+</ul></li>
+<li><code>(*2)</code> is the doubling function
+<ul>
+<li>Example: <code>\x -&gt; x*2</code></li>
+</ul></li>
+<li><code>(/2)</code> is the halving function
+<ul>
+<li>Example: <code>\x -&gt; x/2</code></li>
+</ul></li>
+</ul>
+<p>Secondly, sections are necessary when stating the type of operators, because an operator itself is not a valid expression in Haskell… Finally, sections are also necessary when using operators as arguments to other functions.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="chapter-remarks">4.7 Chapter Remarks</h2>
+<blockquote>
+<p>The Greek letter λ used when defining nameless functions comes from the lambda calculus, the mathematical theory of functions upon which Haskell is founded.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+</div>
+    </div>
+</body>
+
+</html>

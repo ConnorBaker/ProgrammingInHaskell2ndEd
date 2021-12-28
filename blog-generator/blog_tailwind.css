@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  ul {
+    @apply list-disc ml-12;
+  }
+
+  ol {
+    @apply list-decimal ml-12;
+  }
+
+  pre > code.sourceCode {
+    @apply whitespace-pre relative;
+  }
+
+  pre > code.sourceCode > span {
+    @apply inline-block leading-tight;
+  }
+
+  pre > code.sourceCode > span:empty {
+    @apply h-5;
+  }
+
+  code.sourceCode > span {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  div.sourceCode {
+    @apply my-4 mx-0;
+  }
+
+  pre.sourceCode {
+    @apply m-2;
+  }
+
+  @media screen {
+    div.sourceCode {
+      @apply overflow-auto;
+    }
+  }
+
+  @media print {
+    pre > code.sourceCode {
+      @apply whitespace-pre-wrap;
+    }
+
+    pre > code.sourceCode > span {
+      @apply -indent-20 pl-20;
+    }
+  }
+
+  pre.numberSource code {
+    counter-reset: source-line 0;
+  }
+
+  pre.numberSource code > span {
+    @apply relative -left-16;
+    counter-increment: source-line;
+  }
+
+  pre.numberSource code > span > a:first-child::before {
+    content: counter(source-line);
+    @apply text-stone-400 relative -left-4 text-right align-baseline border-none inline-block select-none py-0 px-1 w-4;
+  }
+
+  pre.numberSource {
+    @apply ml-12 pl-1 border-l border-solid border-[#aaaaaa];
+  }
+
+  div.sourceCode {
+    @apply bg-lime-100 border border-lime-300 rounded-xl p-2;
+  }
+
+  @media screen {
+    pre > code.sourceCode > span > a:first-child::before {
+      @apply underline underline-offset-auto;
+    }
+  }
+
+  p > code {
+    @apply bg-lime-100 border border-lime-300 rounded-lg p-1;
+  }
+
+  code span.al {
+    @apply text-red-600;
+  } /* Alert */
+
+  code span.an {
+    @apply text-yellow-700 font-bold italic;
+  } /* Annotation */
+
+  code span.at {
+    @apply text-yellow-600;
+  } /* Attribute */
+
+  code span.bn {
+    @apply text-indigo-700;
+  } /* BaseN */
+
+  code span.cf {
+    @apply text-blue-900 font-bold;
+  } /* ControlFlow */
+
+  code span.ch {
+    @apply text-lime-600;
+  } /* Char */
+
+  code span.cn {
+    @apply text-lime-200;
+  } /* Constant */
+
+  code span.co {
+    @apply text-yellow-700 italic;
+  } /* Comment */
+
+  code span.cv {
+    @apply text-yellow-700 font-bold italic;
+  } /* CommentVar */
+
+  code span.do {
+    @apply text-yellow-700 font-bold italic;
+  } /* Documentation */
+
+  code span.dt {
+    @apply text-blue-900;
+  } /* DataType */
+
+  code span.dv {
+    @apply text-indigo-700;
+  } /* DecVal */
+
+  code span.er {
+    @apply text-red-700 font-bold;
+  } /* Error */
+
+  code span.ex {
+  } /* Extension */
+
+  code span.fl {
+    @apply text-indigo-700;
+  } /* Float */
+
+  code span.fu {
+    @apply text-white;
+  } /* Function */
+
+  code span.im {
+  } /* Import */
+
+  code span.in {
+    @apply text-yellow-700 font-bold italic;
+  } /* Information */
+
+  code span.kw {
+    @apply text-blue-900 font-bold;
+  } /* Keyword */
+
+  code span.op {
+    @apply text-orange-600 font-bold;
+  } /* Operator */
+
+  code span.ot {
+    @apply text-yellow-700;
+  } /* Other */
+
+  code span.pp {
+    @apply text-yellow-700 italic;
+  } /* Preprocessor */
+
+  code span.sc {
+    @apply text-black;
+  } /* SpecialChar */
+
+  code span.ss {
+    @apply text-lime-600;
+  } /* SpecialString */
+
+  code span.st {
+    @apply text-lime-600;
+  } /* String */
+
+  code span.va {
+    @apply text-black;
+  } /* Variable */
+
+  code span.vs {
+    @apply text-lime-600;
+  } /* VerbatimString */
+
+  code span.wa {
+    @apply text-yellow-700 font-bold italic;
+  } /* Warning */
+}
+
+@layer components {
+  .animated {
+    @apply ease-in-out transition-all duration-300;
+  }
+
+  .clickable-light-bg {
+    @apply hover:bg-lime-300 font-medium animated;
+  }
+
+  .background-default {
+    @apply bg-bumblebee bg-top bg-cover bg-no-repeat bg-fixed;
+  }
+
+  .spacing-defaults {
+    @apply m-8 space-y-8;
+  }
+
+  .text-defaults {
+    @apply antialiased text-justify text-black selection:bg-lime-300;
+  }
+
+  .post-box {
+    @apply p-8 max-w-5xl mx-auto bg-lime-50 rounded-xl shadow-xl shadow-black/50 space-y-2;
+  }
+
+  .post-title {
+    @apply text-5xl font-display font-bold;
+  }
+
+  .post-subtitle {
+    @apply ml-1 text-xl italic;
+  }
+
+  .post-first-paragraph {
+    @apply first-line:uppercase first-line:tracking-wide first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left;
+  }
+
+  .post-pill-button {
+    @apply bg-transparent hover:bg-lime-300 border-2 border-lime-300 hover:border-transparent text-sm font-bold uppercase rounded-full px-4 py-2 animated;
+  }
+
+  .post-pill-button-short {
+    @apply post-pill-button px-2 py-1;
+  }
+}

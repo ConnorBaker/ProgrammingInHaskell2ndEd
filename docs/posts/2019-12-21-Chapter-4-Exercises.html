@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 4 Exercises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-4-Exercises.html">Chapter 4 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Defining Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">4.8 Exercises</h2>
+<ol type="1">
+<li><p>Using library functions, define a function <code>halve :: [a] -&gt; ([a],[a])</code> that splits an even-lengthed list into two halves. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> halve [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">halve ::</span> [a] <span class="ot">-&gt;</span> ([a],[a])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>halve xs <span class="ot">=</span> <span class="fu">splitAt</span> (((<span class="fu">length</span> xs) <span class="op">+</span> <span class="dv">1</span>) <span class="ot">`div`</span> <span class="dv">2</span>) xs</span></code></pre></div>
+<!--more--></li>
+<li><p>Define a function <code>third :: [a] -&gt; a</code> that returns the third element in a list that contains at least this many elements using:</p>
+<ol type="a">
+<li>head and tail;</li>
+<li>list indexing !!;</li>
+<li>pattern matching.</li>
+</ol>
+<p>Solution:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">thirdHeadAndTail ::</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>thirdHeadAndTail <span class="ot">=</span> <span class="fu">head</span> <span class="op">.</span> <span class="fu">tail</span> <span class="op">.</span> <span class="fu">tail</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ot">thirdIndex ::</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>thirdIndex xs <span class="ot">=</span> xs <span class="op">!!</span> <span class="dv">2</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ot">thirdPatternMatching ::</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>thirdPatternMatching (_<span class="op">:</span>_<span class="op">:</span>x<span class="op">:</span>_) <span class="ot">=</span> x</span></code></pre></div></li>
+<li><p>Consider a function <code>safetail :: [a] -&gt; [a]</code> that behaves in the same way as tail except that it maps the empty list to itself rather than producing an error. Using <code>tail</code> and the function <code>null :: [a] -&gt; Bool</code> that decides if a list is empty or not, define <code>safetail</code> using:</p>
+<ol type="a">
+<li>a conditional expression;</li>
+<li>guarded equations;</li>
+<li>pattern matching.</li>
+</ol>
+<p>Solution:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">safetailConditional ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>safetailConditional xs <span class="ot">=</span> <span class="kw">if</span> <span class="fu">null</span> xs</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">then</span> []</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">else</span> <span class="fu">tail</span> xs</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">safetailGuarded ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>safetailGuarded xs <span class="op">|</span> <span class="fu">null</span> xs   <span class="ot">=</span> []</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="fu">tail</span> xs</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ot">safetailPatternMatch ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>safetailPatternMatch [] <span class="ot">=</span> []</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>safetailPatternMatch (_<span class="op">:</span>xs) <span class="ot">=</span> xs</span></code></pre></div></li>
+<li><p>In a similar way to <code>&amp;&amp;</code> in section 4.4, show how the disjunction operator <code>||</code> can be defined in four different ways using pattern matching.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">or1 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="ot">`or1`</span> <span class="dt">True</span>  <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="ot">`or1`</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="ot">`or1`</span> <span class="dt">True</span>  <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="ot">`or1`</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ot">or2 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="ot">`or2`</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>_     <span class="ot">`or2`</span> _     <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ot">or3 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="ot">`or3`</span> b <span class="ot">=</span> b</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="ot">`or3`</span> _ <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ot">or4 ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>a <span class="ot">`or4`</span> b <span class="op">|</span> a <span class="op">==</span> b    <span class="ot">=</span> b</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dt">True</span></span></code></pre></div></li>
+<li><p>Without using any other library functions or operators, show how the meaning of the following pattern matching definition for logical conjunction <code>&amp;&amp;</code> can be formalized using conditional expressions:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span> <span class="op">&amp;&amp;</span> <span class="dt">True</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>_    <span class="op">&amp;&amp;</span> _    <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<p>Hint: use two nested conditional expressions</p>
+<p>Solution</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">formalConjunction ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>formalConjunction a b <span class="ot">=</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> a <span class="kw">then</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> b <span class="kw">then</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="dt">True</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="dt">False</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="dt">False</span></span></code></pre></div></li>
+<li><p>Do the same for the following alternative definition, and note the difference in the number of conditional expressions that are required:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span>  <span class="op">&amp;&amp;</span> b <span class="ot">=</span> b</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="op">&amp;&amp;</span> _ <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">formalConjunction ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>formalConjunction a b <span class="ot">=</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> a <span class="kw">then</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        b</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">False</span></span></code></pre></div></li>
+<li><p>Show how the meaning of the following curried function definition can be formalized in terms of lambda expressions:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">mult ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mult x y z <span class="ot">=</span> x<span class="op">*</span>y<span class="op">*</span>z</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">mult ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mult <span class="ot">=</span> \x <span class="ot">-&gt;</span> (\y <span class="ot">-&gt;</span> (\z <span class="ot">-&gt;</span> x <span class="op">*</span> y <span class="op">*</span> z))</span></code></pre></div></li>
+<li><p>The Luhn algorithm is used to check bank card numbers for simple errors such as mistyping a digit, and proceeds as follows:</p>
+<ul>
+<li>consider each digit as a separate number;</li>
+<li>moving left, double every other number from the second last;</li>
+<li>subtract 9 from each number that is now greater than 9;</li>
+<li>add all the resulting numbers together;</li>
+<li>if the total is divisible by 10, the card number is valid.</li>
+</ul>
+<p>Define a function <code>luhnDouble :: Int -&gt; Int</code> that doubles a digit and subtracts 9 if the result is greater than 9. For example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> luhnDouble <span class="dv">3</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> luhnDouble <span class="dv">6</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span></code></pre></div>
+<p>Using <code>luhnDouble</code> and the integer remainder function mod, define a function <code>luhn :: Int -&gt; Int -&gt; Int -&gt; Int -&gt; Bool</code> that decides if a four-digit bank card number is valid. For example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> luhn <span class="dv">1</span> <span class="dv">7</span> <span class="dv">8</span> <span class="dv">4</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> luhn <span class="dv">4783</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ot">luhnDouble ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>luhnDouble n <span class="op">|</span> n <span class="op">&lt;=</span> <span class="dv">5</span>    <span class="ot">=</span> <span class="dv">2</span> <span class="op">*</span> n</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dv">2</span> <span class="op">*</span> n <span class="op">-</span> <span class="dv">9</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ot">luhn ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>luhn a b c d <span class="ot">=</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    (luhnDouble a <span class="op">+</span> b <span class="op">+</span> luhnDouble c <span class="op">+</span> d)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">`mod`</span> <span class="dv">10</span> <span class="op">==</span> <span class="dv">0</span></span></code></pre></div></li>
+</ol>
+</div>
+    </div>
+</body>
+
+</html>

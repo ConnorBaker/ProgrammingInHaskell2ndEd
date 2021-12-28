@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-6-Notes.html">Chapter 6</a>
+    </div>
+    <div class="post-subtitle">
+        Recursive Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="basic-concepts">6.1 Basic Concepts</h2>
+<p>Functions can be defined in terms of themselves. When a function is self-referential, we say that it is recursive. Consider the explicit and recursive definitions of the factorial function:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">facExplicit ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>facExplicit n <span class="ot">=</span> <span class="fu">product</span> [<span class="dv">1</span><span class="op">..</span>n]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">facRecursive ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>facRecursive <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>facRecursive n <span class="ot">=</span> n <span class="op">*</span> facRecursive (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<!--more-->
+<p>The first type of case in a recursive definition is called the base case (there can be more than one base case in a recursive definition). The second type of case is called the recursive case, which covers all other cases besides the base case.</p>
+<blockquote>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fac <span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying fac }</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="op">*</span> fac <span class="dv">2</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying fac }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> fac <span class="dv">1</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying fac }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">*</span> fac <span class="dv">0</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying fac }</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="op">*</span> (<span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">*</span> <span class="dv">1</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="op">*</span> }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span></span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Though explicit function definitions are typically more performant, they can also be more difficult to write. Recursive definitions give programmers the ability to express certain properties of functions in an elegant and concise way. Consider the following definition of multiplication for non-negative integers.</p>
+<blockquote>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(*) ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">*</span> <span class="dv">0</span> <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">*</span> n <span class="ot">=</span> m <span class="op">+</span> (m <span class="op">*</span> (n<span class="op">-</span><span class="dv">1</span>))</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="recursion-on-lists">6.2 Recursion on lists</h2>
+<p>Recursion can be used to easily define functions that operate on lists. Consider the product function which can be defined to operate on a list.</p>
+<blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">product</span><span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> a</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">product</span> []     <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">product</span> (n<span class="op">:</span>ns) <span class="ot">=</span> n <span class="op">*</span> <span class="fu">product</span> ns</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Remember that lists in Haskell are built one element at a time using the <code>cons</code> operator. We can think of <code>[1,2,3]</code> as syntactic sugar for <code>1:(2:(3:[]))</code>. With this understanding, we can think of a recursive definition for calculating the length of list:</p>
+<blockquote>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span> []     <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span> (_<span class="op">:</span>xs) <span class="ot">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="fu">length</span> xs</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Note the use of the wildcard pattern <code>_</code> in the recursive case, which reflects the fact that calculating the length of a list does not depend upon the values of its elements.</p>
+<p>Similarly, we can define a function that reverses the list:</p>
+<blockquote>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">reverse</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reverse</span> []     <span class="ot">=</span> []</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">reverse</span> (x<span class="op">:</span>xs) <span class="ot">=</span> <span class="fu">reverse</span> xs <span class="op">++</span> [x]</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Interestingly enough, we can define the append operator, <code>++</code>, as</p>
+<blockquote>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(++) ::</span> [a] <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[]       <span class="op">++</span> ys <span class="ot">=</span> ys</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(x<span class="op">:</span>xs)   <span class="op">++</span> ys <span class="ot">=</span> x <span class="op">:</span> (xs <span class="op">++</span> ys)</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>We can also define a function that inserts an element into a list, as long as the elements are comparable.</p>
+<blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ot">insert ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>insert x []                 <span class="ot">=</span> [x]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>insert x (y<span class="op">:</span>ys) <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> x <span class="op">:</span> y <span class="op">:</span> ys</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y <span class="op">:</span> insert x ys</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>In particular, if <code>x &lt;= y</code> then the new element <code>x</code> is simply prepended to the start of the list, otherwise the head <code>y</code> becomes the first element of the resulting list, and we then proceed to insert the new element into the tail of the given list. For example, we have:</p>
+<blockquote>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>insert <span class="dv">3</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> insert <span class="dv">3</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> <span class="dv">2</span> <span class="op">:</span> insert <span class="dv">3</span> [<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">:</span> <span class="dv">2</span> <span class="op">:</span> <span class="dv">3</span> <span class="op">:</span> [<span class="dv">4</span>,<span class="dv">5</span>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ list notation }</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>With insert done, we can write a function that sorts an an existing list. It works be inserting the head of the list into itself, repeatedly sorting its tail.</p>
+<blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">isort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>isort []<span class="ot">=</span> []</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>isort (x<span class="op">:</span>xs) <span class="ot">=</span> insert x (isort xs)</span></code></pre></div>
+</blockquote>
+<p>For example:</p>
+<blockquote>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>isort [<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying isort }</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>insert <span class="dv">3</span> (insert <span class="dv">2</span> (insert <span class="dv">1</span> (insert <span class="dv">4</span> [])))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>insert <span class="dv">3</span> (insert <span class="dv">2</span> (insert <span class="dv">1</span> [<span class="dv">4</span>]))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>insert <span class="dv">3</span> (insert <span class="dv">2</span> [<span class="dv">1</span>,<span class="dv">4</span>])</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>insert <span class="dv">3</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying insert }</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="multiple-arguments">6.3 Multiple Arguments</h2>
+<p>Recursion is not limited to functions of a single argument. Consider the function <code>zip</code>, which stitches two lists together.</p>
+<blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zip</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> [b] <span class="ot">-&gt;</span> [(a,b)]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">zip</span> [] _          <span class="ot">=</span> []</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">zip</span> _ []          <span class="ot">=</span> []</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">zip</span> (x<span class="op">:</span>xs) (y<span class="op">:</span>ys) <span class="ot">=</span> (x,y) <span class="op">:</span> <span class="fu">zip</span> xs ys</span></code></pre></div>
+</blockquote>
+<p>For example:</p>
+<blockquote>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zip</span> [<span class="ch">'a'</span>,<span class="ch">'b'</span>,<span class="ch">'c'</span>] [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">zip</span> }</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>(<span class="ch">'a'</span>,<span class="dv">1</span>) <span class="op">:</span> <span class="fu">zip</span> [<span class="ch">'b'</span>,<span class="ch">'c'</span>] [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">zip</span> }</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>(<span class="ch">'a'</span>,<span class="dv">1</span>) <span class="op">:</span> (<span class="ch">'b'</span>,<span class="dv">2</span>) <span class="op">:</span> <span class="fu">zip</span> [<span class="ch">'c'</span>] [<span class="dv">3</span>,<span class="dv">4</span>]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ applying <span class="fu">zip</span> }</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>(<span class="ch">'a'</span>,<span class="dv">1</span>) <span class="op">:</span> (<span class="ch">'b'</span>,<span class="dv">2</span>) <span class="op">:</span> (<span class="ch">'c'</span>,<span class="dv">3</span>) <span class="op">:</span> <span class="fu">zip</span> [] [<span class="dv">4</span>]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span>{ list notation }</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>[(<span class="ch">'a'</span>,<span class="dv">1</span>), (<span class="ch">'b'</span>,<span class="dv">2</span>), (<span class="ch">'c'</span>,<span class="dv">3</span>)]</span></code></pre></div>
+</blockquote>
+<p>We can also define a function which removes some number of elements from the front of a list:</p>
+<blockquote>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> <span class="dv">0</span> xs     <span class="ot">=</span> xs</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> _ []     <span class="ot">=</span> []</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">drop</span> n (_<span class="op">:</span>xs) <span class="ot">=</span> <span class="fu">drop</span> (n<span class="op">-</span><span class="dv">1</span>) xs</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="multiple-recursion">6.4 Multiple Recursion</h2>
+<p>Recursive functions can invoke themselves more than once; consider the following definition of the <span class="math inline"><em>n</em><sup>th</sup></span> Fibonacci number:</p>
+<blockquote>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">fib ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fib <span class="dv">0</span> <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fib <span class="dv">1</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fib n <span class="ot">=</span> fib (n<span class="op">-</span><span class="dv">2</span>) <span class="op">+</span> fib (n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Now that we understand recursion, we should have a newfound appreciation for the definition of quick sort:</p>
+<blockquote>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">qsort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>qsort []    <span class="ot">=</span> []</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>qsort (x<span class="op">:</span>s) <span class="ot">=</span> qsort smaller <span class="op">++</span> [x] <span class="op">++</span> qsort larger</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>              <span class="kw">where</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                    smaller <span class="ot">=</span> [a <span class="op">|</span> a   x]</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="mutual-recursion">6.5 Mutual Recursion</h2>
+<p>Two or more functions are called mutually recursive when they are defined in terms of each other. Consider the following definition of odd and even, for non-negative integers:</p>
+<blockquote>
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">even</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> bool</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">even</span> <span class="dv">0</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">even</span> n <span class="ot">=</span> <span class="fu">odd</span> (n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">odd</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> bool</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">odd</span> <span class="dv">0</span> <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">odd</span> n <span class="ot">=</span> <span class="fu">even</span> (n<span class="op">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<p>Further functions can be defined in terms of these two that operate on lists, yielding elements at only odd or even indices:</p>
+<blockquote>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ot">evens ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>evens []     <span class="ot">=</span> []</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>evens (x<span class="op">:</span>xs) <span class="ot">=</span> x <span class="op">:</span> <span class="fu">odd</span> xs</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ot">odds ::</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>odds []     <span class="ot">=</span> []</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>odds (x<span class="op">:</span>xs) <span class="ot">=</span> x <span class="op">:</span> <span class="fu">even</span> xs</span></code></pre></div>
+<p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="advice-on-recursion">6.6 Advice on Recursion</h2>
+<p>Hutton covers what he describes as a “five-step process” for defining recursive functions. The steps are as follows:</p>
+<ul>
+<li>Define the type of the function</li>
+<li>Though the compiler can infer the types, it’s best to make sure that you understand what the function you wrote is doing</li>
+<li>Enumerate the cases</li>
+<li>List all of the cases that could possibly occur</li>
+<li>Define the simple cases</li>
+<li>Take care of the base case, or some of the simpler recursive cases</li>
+<li>Define the other cases</li>
+<li>Tackle the more difficult recursive cases</li>
+<li>Generalize and simplify</li>
+<li>Look back on your solution and find ways to improve it – do some of the cases reduce to others that you’ve already written?</li>
+</ul>
+<h2 id="chapter-remarks">6.7 Chapter Remarks</h2>
+<p>Hutton notes that the five-step process he describes for creating recursive functions is based on Glaser, Hartel, and Garratt’s “Programming by Numbers: A Programming Method for Novices.” It can be found in The Computer Journal, vol. 43, no. 4, (published in 2000).</p>
+</div>
+    </div>
+</body>
+
+</html>

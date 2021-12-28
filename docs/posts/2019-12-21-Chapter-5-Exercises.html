@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 5 Exercises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-5-Exercises.html">Chapter 5 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        List Comprehensions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">5.7 Exercises</h2>
+<ol type="1">
+<li><p>Using a list comprehension, give an expression that calculates the sum <span class="math inline">1<sup>2</sup> + 2<sup>2</sup> + … + 100<sup>2</sup></span> of the first one hundred integer squares.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">sum100ConsecSquares ::</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sum100ConsecSquares <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">^</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">100</span>]]</span></code></pre></div>
+<!--more--></li>
+<li><p>Suppose that a coordinate grid of size <span class="math inline"><em>m</em> × <em>n</em></span> is given by the list of all pairs <span class="math inline">(<em>x</em>,<em>y</em>)</span> of integers such that <span class="math inline">0 ≤ <em>x</em> ≤ <em>m</em></span> and <span class="math inline">0 ≤ <em>y</em> ≤ <em>n</em></span>. Using a list comprehension, define a function <code>grid :: Int -&gt; Int -&gt; [(Int,Int)]</code> that returns a coordinate grid of a given size. For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> grid <span class="dv">1</span> <span class="dv">2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">2</span>),(<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>),(<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">grid ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grid m n <span class="ot">=</span> [(x,y) <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>m], y <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>n]]</span></code></pre></div></li>
+<li><p>Using a list comprehension and the function grid above, define a function <code>square :: Int -&gt; [(Int,Int)]</code> that returns a coordinate square of size <span class="math inline"><em>n</em></span>, excluding the diagonal from <span class="math inline">(0,0)</span> to <span class="math inline">(<em>n</em>,<em>n</em>)</span>. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> square <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">2</span>),(<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">0</span>),(<span class="dv">2</span>,<span class="dv">1</span>)]</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">grid ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grid m n <span class="ot">=</span> [(x,y) <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>m], y <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>n]]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">square ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>square n <span class="ot">=</span> [(x,y) <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> grid n n, x <span class="op">/=</span> y]</span></code></pre></div></li>
+<li><p>In a similar way to the function length, show how the library function <code>replicate :: Int -&gt; a -&gt; [a]</code> that produces a list of identical elements can be defined using a list comprehension. For example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">replicate</span> <span class="dv">3</span> <span class="dt">True</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dt">True</span>,<span class="dt">True</span>,<span class="dt">True</span>]</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span> n x <span class="ot">=</span> [x <span class="op">|</span> _ <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n]]</span></code></pre></div></li>
+<li><p>A triple <span class="math inline">(<em>x</em>,<em>y</em>,<em>z</em>)</span> of positive integers is Pythagorean if it satisfies the equation <span class="math inline"><em>x</em><sup>2</sup> + <em>y</em><sup>2</sup> = <em>z</em><sup>2</sup></span>. Using a list comprehension with three generators, define a function <code>pyths :: Int -&gt; [(Int,Int,Int)]</code> that returns the list of all such triples whose components are at most a given limit. For example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pyths <span class="dv">10</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>),(<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>),(<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">10</span>)]</span></code></pre></div>
+<p>By adding in the constraints that <span class="math inline"><em>a</em> ≤ <em>b</em> ≤ <em>c</em></span> we can uniquely generated pythagorean triplets which are unique up to rotation.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">pyths ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pyths n <span class="ot">=</span> [(a,b,c) <span class="op">|</span> c <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n],</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                    b <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>c],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                    a <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>b],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    a<span class="op">^</span><span class="dv">2</span> <span class="op">+</span> b<span class="op">^</span><span class="dv">2</span> <span class="op">==</span> c<span class="op">^</span><span class="dv">2</span>]</span></code></pre></div></li>
+<li><p>A positive integer is perfect if it equals the sum of all of its factors, excluding the number itself. Using a list comprehension and the function factors, define a function <code>perfects :: Int -&gt; [Int]</code> that returns the list of all perfect numbers up to a given limit. For example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> perfects <span class="dv">500</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>,<span class="dv">28</span>,<span class="dv">496</span>]</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">factors ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>factors n <span class="ot">=</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n], n <span class="ot">`mod`</span> x <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ot">perfects ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>perfects n <span class="ot">=</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                x <span class="op">==</span> <span class="fu">sum</span> (factors x) <span class="op">-</span> ]</span></code></pre></div></li>
+<li><p>Show how the list comprehension <code>[(x,y) | x &lt;- [1,2], y &lt;- [3,4]]</code> with two generators can be re-expressed using two comprehensions with single generators. Hint: nest one comprehension within the other and make use of the library function <code>concat :: [[a]] -&gt; [a]</code>.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list1 ::</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>list1 <span class="ot">=</span>  <span class="fu">concat</span> [[(x,y) <span class="op">|</span> y <span class="ot">&lt;-</span> [<span class="dv">3</span>,<span class="dv">4</span>]] <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>]]</span></code></pre></div></li>
+<li><p>Redefine the function positions using the function find.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">find ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [(a,b)] <span class="ot">-&gt;</span> [b]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>find k t <span class="ot">=</span> [v <span class="op">|</span> (k',v) <span class="ot">&lt;-</span> t, k <span class="op">==</span> k']</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ot">positions ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>positions x xs <span class="ot">=</span> [i <span class="op">|</span> (x',i) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>], x <span class="op">==</span> x']</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ot">positions' ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>positions' x xs <span class="ot">=</span> find x (<span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>])</span></code></pre></div></li>
+<li><p>The scalar product of two lists of integers <code>xs</code> and <code>ys</code> of length <span class="math inline"><em>n</em></span> is given by the sum of the products of corresponding integers:</p>
+<p><span class="math display">$$\sum_{i=0}^{n-1} xs_i \cdot ys_i$$</span></p>
+<p>In a similar manner to <code>chisqr</code>, show how a list comprehension can be used to define a function <code>scalarproduct :: [Int] -&gt; [Int] -&gt; Int</code> that returns the scalar product of two lists. For example:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> scalarproduct [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dv">32</span></span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">chisqr ::</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>chisqr os es <span class="ot">=</span> <span class="fu">sum</span> [((o<span class="op">-</span>e)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>e <span class="op">|</span> (o,e) <span class="ot">&lt;-</span> <span class="fu">zip</span> os es]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ot">scalarproduct ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>scalarproduct xs ys <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">*</span>y <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs ys]</span></code></pre></div></li>
+<li><p>Modify the Caesar cipher program to also handle upper-case letters.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- We assume that the input is not only upper case letters.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Char</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Returns a list of indices of the specifed value</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ot">positions ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>positions x xs <span class="ot">=</span> [i <span class="op">|</span> (x',i) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>], x <span class="op">==</span> x']</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Returns the number of lowercase characters</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="ot">lowers ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>lowers xs <span class="ot">=</span> <span class="fu">length</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> xs, <span class="ch">'a'</span> <span class="op">&lt;=</span> x <span class="op">&amp;&amp;</span> x <span class="op">&lt;=</span> <span class="ch">'z'</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Returns the number of occurences</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ot">count ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>count x xs <span class="ot">=</span> <span class="fu">length</span> [x' <span class="op">|</span> x' <span class="ot">&lt;-</span> xs, x <span class="op">==</span> x']</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Converts a character into an integral value</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Specifically, it maps [a..z]++[A..Z] to the interval [0..51]</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="ot">let2int ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>let2int c <span class="op">|</span> <span class="ch">'a'</span> <span class="op">&lt;=</span> c <span class="op">&amp;&amp;</span> c <span class="op">&lt;=</span> <span class="ch">'z'</span> <span class="ot">=</span> <span class="fu">ord</span> c <span class="op">-</span> <span class="fu">ord</span> <span class="ch">'a'</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="ch">'A'</span> <span class="op">&lt;=</span> c <span class="op">&amp;&amp;</span> c <span class="op">&lt;=</span> <span class="ch">'Z'</span> <span class="ot">=</span> <span class="fu">ord</span> c <span class="op">-</span> <span class="fu">ord</span> <span class="ch">'A'</span> <span class="op">+</span> <span class="dv">26</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="fu">otherwise</span>            <span class="ot">=</span> <span class="fu">ord</span> c</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">-- Converts an integral value into a character</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="ot">int2let ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>int2let n <span class="op">|</span> n <span class="op">&lt;=</span> <span class="dv">25</span> <span class="ot">=</span> <span class="fu">chr</span> (<span class="fu">ord</span> <span class="ch">'a'</span> <span class="op">+</span> n)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> n <span class="op">&lt;=</span> <span class="dv">51</span> <span class="ot">=</span> <span class="fu">chr</span> (<span class="fu">ord</span> <span class="ch">'A'</span> <span class="op">-</span> <span class="dv">26</span> <span class="op">+</span> n)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="fu">chr</span> n</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="ot">shift ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>shift n c </span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">isLower</span> c <span class="ot">=</span> int2let ((let2int c <span class="op">+</span> n) <span class="ot">`mod`</span> <span class="dv">26</span>)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">isUpper</span> c <span class="ot">=</span> int2let (((let2int c <span class="op">+</span> n <span class="op">-</span> <span class="dv">26</span>) <span class="ot">`mod`</span> <span class="dv">26</span>) <span class="op">+</span> <span class="dv">26</span>)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> c</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="ot">encode ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>encode n xs <span class="ot">=</span> [shift n x <span class="op">|</span> x <span class="ot">&lt;-</span> xs]</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="co">-- Frequency distribution of lowercase english letters</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="ot">table ::</span> [<span class="dt">Float</span>]</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>table <span class="ot">=</span> [<span class="fl">8.1</span>, <span class="fl">1.5</span>, <span class="fl">2.8</span>, <span class="fl">4.2</span>, <span class="fl">12.7</span>, <span class="fl">2.2</span>, <span class="fl">2.0</span>, <span class="fl">6.1</span>, <span class="fl">7.0</span>,</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">4.0</span>, <span class="fl">2.4</span>, <span class="fl">6.7</span>, <span class="fl">7.5</span>, <span class="fl">1.9</span>, <span class="fl">0.1</span>, <span class="fl">6.0</span>,</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>        <span class="fl">6.3</span>, <span class="fl">9.0</span>, <span class="fl">2.8</span>, <span class="fl">1.0</span>, <span class="fl">2.4</span>, <span class="fl">0.2</span>, <span class="fl">2.0</span>, <span class="fl">0.1</span>]</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="ot">percent ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>percent n m <span class="ot">=</span> (<span class="fu">fromIntegral</span> n <span class="op">/</span> <span class="fu">fromIntegral</span> m) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="co">-- Only necessary to count the number of lowercase letters present.</span></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="ot">freqs ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> [<span class="dt">Float</span>]</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>freqs xs <span class="ot">=</span> [percent (count x xs) n <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="ch">'a'</span><span class="op">..</span><span class="ch">'z'</span>]]</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> n <span class="ot">=</span> lowers xs</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a><span class="ot">chisqr ::</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>chisqr os es <span class="ot">=</span> <span class="fu">sum</span> [((o<span class="op">-</span>e)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>e <span class="op">|</span> (o,e) <span class="ot">&lt;-</span> <span class="fu">zip</span> os es]</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="ot">rotate ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>rotate n xs <span class="ot">=</span> <span class="fu">drop</span> n xs <span class="op">++</span> <span class="fu">take</span> n xs</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="ot">crack ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>crack xs <span class="ot">=</span> encode (<span class="op">-</span>factor) xs</span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>        factor <span class="ot">=</span> <span class="fu">head</span> (positions (<span class="fu">minimum</span> chitab) chitab)</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>        chitab <span class="ot">=</span> [chisqr (rotate n table') table <span class="op">|</span> n <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span><span class="dv">25</span>]]</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>        table' <span class="ot">=</span> freqs xs</span></code></pre></div></li>
+</ol>
+</div>
+    </div>
+</body>
+
+</html>

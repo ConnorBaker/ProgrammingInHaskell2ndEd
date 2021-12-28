@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 8 Exercises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2020-12-23-Chapter-8-Exercises.html">Chapter 8 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Declaring Types and Classes
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 23, 2020</span>
+    </div>
+    <h2 id="exercises">8.9 Exercises</h2>
+<ol type="1">
+<li><p>In a similar manner to the function <code>add</code>, define a recursive multiplication function <code>mult :: Nat -&gt; Nat -&gt; Nat</code> for the recursive type of natural numbers:</p>
+<p>Hint: make use of add in your definition.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Zero</span> <span class="op">|</span> <span class="dt">Succ</span> <span class="dt">Nat</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>add <span class="dt">Zero</span>     n <span class="ot">=</span> n</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>add (<span class="dt">Succ</span> m) n <span class="ot">=</span> <span class="dt">Succ</span> (add m n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ot">mult ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mult <span class="dt">Zero</span>     _ <span class="ot">=</span> <span class="dt">Zero</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>mult (<span class="dt">Succ</span> m) n <span class="ot">=</span> add n (mult m n)</span></code></pre></div></li>
+</ol>
+<!--more-->
+<ol type="1">
+<li><p>Although not included in appendix B, the standard prelude defines</p>
+<p><code>data Ordering = LT | EQ | GT</code></p>
+<p>together with a function</p>
+<p><code>compare :: Ord a =&gt; a -&gt; a -&gt; Ordering</code></p>
+<p>that decides if one value in an ordered type is less than (<code>LT</code>), equal to (<code>EQ</code>), or greater than (<code>GT</code>) another value. Using this function, redefine the function <code>occurs :: Ord a =&gt; a -&gt; Tree a -&gt; Bool</code> for search trees. Why is this new definition more efficient than the original version?</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">TwoTree</span> a <span class="ot">=</span> <span class="dt">TwoLeaf</span> a <span class="op">|</span> <span class="dt">TwoNode</span> (<span class="dt">TwoTree</span> a) a (<span class="dt">TwoTree</span> a)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">occurs ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">TwoTree</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">TwoLeaf</span> v) <span class="ot">=</span> x <span class="op">==</span> v</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">TwoNode</span> l v r) <span class="op">|</span> x <span class="op">&lt;</span> v     <span class="ot">=</span> occurs x l</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                        <span class="op">|</span> x <span class="op">&gt;</span> v     <span class="ot">=</span> occurs x r</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                        <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Use compare :: Ord a =&gt; a -&gt; a -&gt; Ordering</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- This version is more efficient because unlike the guards above,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- there is only a single comparison performed, whereas the above</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- could require two.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ot">occurs' ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">TwoTree</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>occurs' x (<span class="dt">TwoLeaf</span> v    ) <span class="ot">=</span> x <span class="op">==</span> v</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>occurs' x (<span class="dt">TwoNode</span> l v r) <span class="ot">=</span> <span class="kw">case</span> <span class="fu">compare</span> x v <span class="kw">of</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dt">EQ</span> <span class="ot">-&gt;</span> <span class="dt">True</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="dt">LT</span> <span class="ot">-&gt;</span> occurs x l</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="dt">GT</span> <span class="ot">-&gt;</span> occurs x r</span></code></pre></div></li>
+<li><p>Consider the following type of binary trees:</p>
+<p><code>data Tree a = Leaf a | Node (Tree a) (Tree a)</code></p>
+<p>Let us say that such a tree is balanced if the number of leaves in the left and right subtree of every node differs by at most one, with leaves themselves being trivially balanced. Define a function <code>balanced :: Tree a -&gt; Bool</code> that decides if a binary tree is balanced or not.</p>
+<p>Hint: first define a function that returns the number of leaves in a tree.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">numLeaves ::</span> <span class="dt">TwoTree</span> a <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>numLeaves (<span class="dt">TwoLeaf</span> _    ) <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>numLeaves (<span class="dt">TwoNode</span> l _ r) <span class="ot">=</span> numLeaves l <span class="op">+</span> numLeaves r</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">balanced ::</span> <span class="dt">TwoTree</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>balanced (<span class="dt">TwoLeaf</span> _    ) <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>balanced (<span class="dt">TwoNode</span> l _ r) <span class="ot">=</span> <span class="fu">abs</span> diff <span class="op">&lt;=</span> <span class="dv">1</span> <span class="op">&amp;&amp;</span> balanced l <span class="op">&amp;&amp;</span> balanced r</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> diff <span class="ot">=</span> numLeaves l <span class="op">-</span> numLeaves r</span></code></pre></div></li>
+<li><p>Define a function <code>balance :: [a] -&gt; Tree a</code> that converts a non-empty list into a balanced tree.</p>
+<p>Hint: first define a function that splits a list into two halves whose length differs by at most one.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">FourTree</span> a <span class="ot">=</span> <span class="dt">FourLeaf</span> a <span class="op">|</span> <span class="dt">FourNode</span> (<span class="dt">FourTree</span> a) (<span class="dt">FourTree</span> a)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">halve ::</span> [a] <span class="ot">-&gt;</span> ([a], [a])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>halve as <span class="ot">=</span> <span class="fu">splitAt</span> midLength as <span class="kw">where</span> midLength <span class="ot">=</span> <span class="fu">div</span> (<span class="fu">length</span> as) <span class="dv">2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Assume list is not empty</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ot">balance ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">FourTree</span> a</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>balance []  <span class="ot">=</span> <span class="fu">error</span> <span class="st">&quot;Oh no!&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>balance [a] <span class="ot">=</span> <span class="dt">FourLeaf</span> a</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>balance as  <span class="ot">=</span> <span class="dt">FourNode</span> (balance l) (balance r) <span class="kw">where</span> (l, r) <span class="ot">=</span> halve as</span></code></pre></div></li>
+<li><p>Given the type declaration</p>
+<p><code>data Expr = Val Int | Add Expr Expr</code></p>
+<p>define a higher-order function</p>
+<p><code>folde :: (Int -&gt; a) -&gt; (a -&gt; a -&gt; a) -&gt; Expr -&gt; a</code></p>
+<p>such that <code>folde f g</code> replaces each <code>Val</code> constructor in an expression by the function <code>f</code>, and each <code>Add</code> constructor by the function <code>g</code>.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Expr</span> <span class="ot">=</span> <span class="dt">Val</span> <span class="dt">Int</span> <span class="op">|</span> <span class="dt">Add</span> <span class="dt">Expr</span> <span class="dt">Expr</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>folde</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">::</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> a)    <span class="co">-- Transforms the contents of the Val constructor</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a) <span class="co">-- Applied to result of the Add constructor</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ot">-&gt;</span> (<span class="dt">Expr</span> <span class="ot">-&gt;</span> a)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>folde f _ (<span class="dt">Val</span> n  ) <span class="ot">=</span> f n</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>folde f g (<span class="dt">Add</span> a b) <span class="ot">=</span> g (folde f g a) (folde f g b)</span></code></pre></div></li>
+<li><p>Using <code>folde</code>, define a function <code>eval :: Expr -&gt; Int</code> that evaluates an expression to an integer value, and a function <code>size :: Expr -&gt; Int</code> that calculates the number of values in an expression.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Evaluates an expression to an integer value</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">eval'' ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>eval'' <span class="ot">=</span> folde <span class="fu">id</span> (<span class="op">+</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Calculates the number of values in an expression</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ot">size ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>size <span class="ot">=</span> folde (<span class="fu">const</span> <span class="dv">1</span>) (<span class="op">+</span>)</span></code></pre></div></li>
+<li><p>Complete the following instance declarations:</p>
+<p><code>instance Eq a =&gt; Eq (Maybe a) where ...</code></p>
+<p><code>instance Eq a =&gt; Eq [a] where ...</code></p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Recall that we get /= for free as the negation of ==</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> <span class="dt">Eq</span> (<span class="dt">Maybe</span> a)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">Nothing</span> <span class="op">==</span> <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">Just</span> a  <span class="op">==</span> <span class="dt">Just</span> b  <span class="ot">=</span> a <span class="op">==</span> b</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> [a]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    []       <span class="op">==</span> []       <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    (x <span class="op">:</span> xs) <span class="op">==</span> (y <span class="op">:</span> ys) <span class="ot">=</span> x <span class="op">==</span> y <span class="op">&amp;&amp;</span> xs <span class="op">==</span> ys</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    _        <span class="op">==</span> _        <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div></li>
+<li><p>Extend the tautology checker to support the use of logical disjunction (<span class="math inline">∨</span>) and equivalence (<span class="math inline">⇔</span>) in propositions.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Prop</span> <span class="ot">=</span> <span class="dt">Const</span> <span class="dt">Bool</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Var</span> <span class="dt">Char</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Not</span> <span class="dt">Prop</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">And</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Or</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Imply</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span> <span class="dt">Equiv</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Assoc</span> k v <span class="ot">=</span> [(k, v)]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Subst</span> <span class="ot">=</span> <span class="dt">Assoc</span> <span class="dt">Char</span> <span class="dt">Bool</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ot">find ::</span> <span class="dt">Eq</span> k <span class="ot">=&gt;</span> k <span class="ot">-&gt;</span> <span class="dt">Assoc</span> k v <span class="ot">-&gt;</span> v</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>find k t <span class="ot">=</span> <span class="fu">head</span> [ v <span class="op">|</span> (k', v) <span class="ot">&lt;-</span> t, k <span class="op">==</span> k' ]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="ot">eval ::</span> <span class="dt">Subst</span> <span class="ot">-&gt;</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>eval _ (<span class="dt">Const</span> b  ) <span class="ot">=</span> b</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Var</span>   x  ) <span class="ot">=</span> find x s</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Not</span>   p  ) <span class="ot">=</span> <span class="fu">not</span> (eval s p)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">And</span>   p q) <span class="ot">=</span> eval s p <span class="op">&amp;&amp;</span> eval s q</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Or</span>    p q) <span class="ot">=</span> eval s p <span class="op">||</span> eval s q</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Imply</span> p q) <span class="ot">=</span> eval s p <span class="op">&lt;=</span> eval s q</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Equiv</span> p q) <span class="ot">=</span> eval s p <span class="op">==</span> eval s q</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="ot">vars ::</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> [<span class="dt">Char</span>]</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Const</span> _  ) <span class="ot">=</span> []</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Var</span>   x  ) <span class="ot">=</span> [x]</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Not</span>   p  ) <span class="ot">=</span> vars p</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">And</span>   p q) <span class="ot">=</span> vars p <span class="op">++</span> vars q</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Or</span>    p q) <span class="ot">=</span> vars p <span class="op">++</span> vars q</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Imply</span> p q) <span class="ot">=</span> vars p <span class="op">++</span> vars q</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Equiv</span> p q) <span class="ot">=</span> vars p <span class="op">++</span> vars q</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="ot">bools ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [[<span class="dt">Bool</span>]]</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>bools <span class="dv">0</span> <span class="ot">=</span> [[]]</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>bools n <span class="ot">=</span> <span class="fu">map</span> (<span class="dt">False</span> <span class="op">:</span>) bss <span class="op">++</span> <span class="fu">map</span> (<span class="dt">True</span> <span class="op">:</span>) bss <span class="kw">where</span> bss <span class="ot">=</span> bools (n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="ot">substs ::</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> [<span class="dt">Subst</span>]</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>substs p <span class="ot">=</span> <span class="fu">map</span> (<span class="fu">zip</span> vs) (bools (<span class="fu">length</span> vs)) <span class="kw">where</span> vs <span class="ot">=</span> rmdups (vars p)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="ot">rmdups ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>rmdups []       <span class="ot">=</span> []</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>rmdups (a <span class="op">:</span> as) <span class="ot">=</span> <span class="kw">if</span> a <span class="ot">`elem`</span> as <span class="kw">then</span> rmdups as <span class="kw">else</span> a <span class="op">:</span> rmdups as</span></code></pre></div></li>
+<li><p>Extend the abstract machine to support the use of multiplication.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Expr'</span> <span class="ot">=</span> <span class="dt">Val'</span> <span class="dt">Int</span> <span class="op">|</span> <span class="dt">Add'</span> <span class="dt">Expr'</span> <span class="dt">Expr'</span> <span class="op">|</span> <span class="dt">Mul'</span> <span class="dt">Expr'</span> <span class="dt">Expr'</span> <span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Op</span> <span class="ot">=</span> <span class="dt">EVALa</span> <span class="dt">Expr'</span> <span class="op">|</span> <span class="dt">ADD</span> <span class="dt">Int</span> <span class="op">|</span> <span class="dt">EVALm</span> <span class="dt">Expr'</span> <span class="op">|</span> <span class="dt">MUL</span> <span class="dt">Int</span> <span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Cont</span> <span class="ot">=</span> [<span class="dt">Op</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ot">value' ::</span> <span class="dt">Expr'</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>value' <span class="ot">=</span> <span class="fu">flip</span> eval' []</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ot">eval' ::</span> <span class="dt">Expr'</span> <span class="ot">-&gt;</span> <span class="dt">Cont</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>eval' (<span class="dt">Val'</span> n  ) c <span class="ot">=</span> exec c n</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>eval' (<span class="dt">Add'</span> n m) c <span class="ot">=</span> eval' n (<span class="dt">EVALa</span> m <span class="op">:</span> c)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>eval' (<span class="dt">Mul'</span> n m) c <span class="ot">=</span> eval' n (<span class="dt">EVALm</span> m <span class="op">:</span> c)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ot">exec ::</span> <span class="dt">Cont</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>exec []            n <span class="ot">=</span> n</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">EVALa</span> y <span class="op">:</span> c) n <span class="ot">=</span> eval' y (<span class="dt">ADD</span> n <span class="op">:</span> c)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">EVALm</span> y <span class="op">:</span> c) n <span class="ot">=</span> eval' y (<span class="dt">MUL</span> n <span class="op">:</span> c)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">ADD</span>   n <span class="op">:</span> c) m <span class="ot">=</span> exec c (n <span class="op">+</span> m)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">MUL</span>   n <span class="op">:</span> c) m <span class="ot">=</span> exec c (n <span class="op">*</span> m)</span></code></pre></div></li>
+</ol>
+</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 5</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2019-12-21-Chapter-5-Notes.html">Chapter 5</a>
+    </div>
+    <div class="post-subtitle">
+        List Comprehensions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="basic-concepts">5.1 Basic Concepts</h2>
+<p>In mathematics, we can construct a set with a generator. If we wanted to create the set of all odd numbers, we could use the set-builder notation <span class="math inline">{2<em>k</em> + 1|<em>x</em> ∈ ℤ<sup>+</sup>}</span>.</p>
+<p>Haskell presents a similar opportunity, but it calls it a list comprehension. If we were to want to build a list of the first 10 perfect squares, we could do</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> [x<span class="op">^</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">10</span>]]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">16</span>,<span class="dv">25</span>,<span class="dv">36</span>,<span class="dv">49</span>,<span class="dv">64</span>,<span class="dv">81</span>,<span class="dv">100</span>]</span></code></pre></div>
+<!--more-->
+<p>Just like in mathematics, the bar (<code>|</code>) is read as such that. The expression <code>x &lt;- [1..10]</code> is called a generator, where <code>x</code> is the variable, <code>&lt;-</code> is read as drawn from, and <code>[1..10]</code> is a list of integers from 1 to 10, inclusive.</p>
+<p>If the generators are being used to construct a tuple, changing the order of the generator changes the order of the resulting tuples. Additionally, generators can depend upon the variables of previous generators.</p>
+<p>When we don’t care to store certain elements in a list comprehension, we can use the wildcard pattern (<code>_</code>). As an example, one implementation of the length function is</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span> xs <span class="ot">=</span> <span class="fu">sum</span> [<span class="dv">1</span> <span class="op">|</span> _ <span class="ot">&lt;-</span> xs]</span></code></pre></div>
+<h2 id="guards">5.2 Guards</h2>
+<p>If we wanted additional constraints, called guards, we can add them after a generator.</p>
+<h2 id="the-zip-function">5.3 The zip Function</h2>
+<p>The <code>zip</code> function takes two lists and combines them to create a list of pairs. The function stops when either one of the lists is exhausted.</p>
+<blockquote>
+<p>Within the definition for positions, the expression <code>[0..]</code> produces the list of indices <code>[0,1,2,3,...]</code>. This list is notionally infinite, but under lazy evaluation only as many elements of the list as required by the context in which it is used, in this case zipping with the input list xs, will actually be produced. Exploiting lazy evaluation in this manner avoids the need to explicitly produce a list of indices of the same length as the input list.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+<h2 id="string-comprehensions">5.4 String Comprehensions</h2>
+<p><code>String</code>s are not primitives in Haskell; they are lists of characters. As such, all the functions that work on lists also work on <code>String</code>s.</p>
+<h2 id="chapter-remarks">5.6 Chapter Remarks</h2>
+<blockquote>
+<p>The term comprehension comes from the axiom of comprehension in set theory, which makes precise the idea of constructing a set by selecting all values that satisfy a particular property.</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
+</blockquote>
+</div>
+    </div>
+</body>
+
+</html>

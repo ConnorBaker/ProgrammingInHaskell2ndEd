@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Chapter 8</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="post-box">
+    <div class="post-title">
+        <a href="../posts/2020-06-01-Chapter-8-Notes.html">Chapter 8</a>
+    </div>
+    <div class="post-subtitle">
+        Declaring Types and Classes
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">June  1, 2020</span>
+    </div>
+    <h2 id="type-declarations">8.1 Type declarations</h2>
+<p>We can introduce new names for types that we already have by means of the <code>type</code> keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pos</span> <span class="ot">=</span> (<span class="dt">Int</span>, <span class="dt">Int</span>)</span></code></pre></div>
+<p>and we might declare a transformation as a function which maps a <code>Pos</code> to another <code>Pos</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Trans</span> <span class="ot">=</span> <span class="dt">Pos</span> <span class="ot">-&gt;</span> <span class="dt">Pos</span></span></code></pre></div>
+<p><em>Note: the name of the newly declared type must be capitalized.</em> <!--more--> <code>type</code> declarations are not allowed to be recursive. As an example, <code>type Tree = (Int, [Tree])</code> is not allowed. Recursive types may be declared using the <code>data</code> mechanism, which is discussed in the next section.</p>
+<p><code>type</code> declarations can be parameterized by other types. If we wanted a more generic two-tuple instead of one specifically meant for integers, we could write</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pair</span> a <span class="ot">=</span> (a,a)</span></code></pre></div>
+<p>Additionally, we can use more than one parameter. Suppose we wanted a type which is a list of keys associated with values:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Assoc</span> k v <span class="ot">=</span> [(k,v)]</span></code></pre></div>
+<p>We could define a function which returns the first value that is associated with a key</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">find ::</span> <span class="dt">Eq</span> k <span class="ot">=&gt;</span> k <span class="ot">-&gt;</span> <span class="dt">Assoc</span> k v <span class="ot">-&gt;</span> v</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>find k t <span class="ot">=</span> <span class="fu">head</span> [v <span class="op">|</span> (k',v) <span class="ot">&lt;-</span> t, k <span class="op">==</span> k']</span></code></pre></div>
+<p><code>find</code> is a function which takes a key (which must be a type which derives <code>Eq</code>), a list of key-value pairs, and returns a value. It works by taking the first element of the list of values which match the key used as an argument.</p>
+<h2 id="data-declarations">8.2 Data declarations</h2>
+<p>A new type, as opposed to a synonym for an existing type, can be declared by specifying its values using the <code>data</code> mechanism.</p>
+<p>If we wanted to define a new type which describes the cardinal directions, we could do</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Move</span> <span class="ot">=</span> <span class="dt">North</span> <span class="op">|</span> <span class="dt">South</span> <span class="op">|</span> <span class="dt">East</span> <span class="op">|</span> <span class="dt">West</span></span></code></pre></div>
+<p>The pipe (<code>|</code>) symbol is read as <em>or</em> and the new values of the type are called <em>constructors</em>. The names of new constructors must begin with a capital letter, just like the name of the new types. Additionally, the same constructor name cannot be used in multiple types.</p>
+<p>With pattern matching, we can define functions which apply a move to a position, which apply a sequence of moves to a position, and which apply the reverse direction of a move.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">move ::</span> <span class="dt">Move</span> <span class="ot">-&gt;</span> <span class="dt">Pos</span> <span class="ot">-&gt;</span> <span class="dt">Pos</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>move <span class="dt">North</span> (x,y) <span class="ot">=</span> (x,y<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>move <span class="dt">South</span> (x,y) <span class="ot">=</span> (x,y<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>move <span class="dt">East</span>  (x,y) <span class="ot">=</span> (x<span class="op">+</span><span class="dv">1</span>,y)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>move <span class="dt">West</span>  (x,y) <span class="ot">=</span> (x<span class="op">-</span><span class="dv">1</span>,y)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ot">moves ::</span> [<span class="dt">Move</span>] <span class="ot">-&gt;</span> <span class="dt">Pos</span> <span class="ot">-&gt;</span> <span class="dt">Pos</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>moves [] p <span class="ot">=</span> p</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>moves (m<span class="op">:</span>ms) p <span class="ot">=</span> moves ms (move m p)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ot">rev ::</span> <span class="dt">Move</span> <span class="ot">-&gt;</span> <span class="dt">Move</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>rev <span class="dt">North</span> <span class="ot">=</span> <span class="dt">South</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>rev <span class="dt">South</span> <span class="ot">=</span> <span class="dt">North</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>rev <span class="dt">East</span>  <span class="ot">=</span> <span class="dt">West</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>rev <span class="dt">West</span>  <span class="ot">=</span> <span class="dt">East</span></span></code></pre></div>
+<p><em>Note: If you try these in GHCi add <code>deriving Show</code> to the end of the data declaration. Without it, GHCi can’t display values of the new type.</em></p>
+<p>Constructors can have arguments. As an example, consider the <code>Shape</code> data type:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Shape</span> <span class="ot">=</span> <span class="dt">Circle</span> <span class="dt">Float</span> <span class="op">|</span> <span class="dt">Rect</span> <span class="dt">Float</span> <span class="dt">Float</span></span></code></pre></div>
+<p>These constructors are used to define functions on <code>Shape</code>s. As examples, consider the following:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">square ::</span> <span class="dt">Float</span> <span class="ot">-&gt;</span> <span class="dt">Shape</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>square n <span class="ot">=</span> <span class="dt">Rect</span> n n</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ot">area ::</span> <span class="dt">Shape</span> <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>area (<span class="dt">Circle</span> r) <span class="ot">=</span> <span class="fu">pi</span> <span class="op">*</span> r <span class="op">^</span> <span class="dv">2</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>area (<span class="dt">Rect</span> x y) <span class="ot">=</span> x <span class="op">*</span> y</span></code></pre></div>
+<p>The constructors <code>Circle</code> and <code>Rect</code> are considered <em>constructor functions</em> (because they take arguments) which map <code>Float</code>s to <code>Shape</code>s.</p>
+<p>The difference between functions and constructor functions is that the latter have no defining equations and exist solely for the purpose of building pieces of data. As an example, <code>negate 1.0</code> can be evaluated to <code>-1.0</code>; <code>Circle 1.0</code> is fully evaluated and cannot be further simplified. The expression <code>Circle 1.0</code> is a piece of data in the same way that <code>1.0</code> is.</p>
+<p>Data declaration can also be parameterized. Consider the following type from <code>Prelude</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Maybe</span> a <span class="ot">=</span> <span class="dt">Nothing</span> <span class="op">|</span> <span class="dt">Just</span> a</span></code></pre></div>
+<p>This type is thought of as being values of a type <code>a</code> which may either fail or succeed. As an example, let’s consider the same versions of <code>div</code> and <code>head</code> (recall that <code>div</code> will not work if the divisor is <code>0</code> and that <code>head</code> will not work on the empty list):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">safediv ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">Int</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>safedif _ <span class="dv">0</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>safediv m n <span class="ot">=</span> <span class="dt">Just</span> (<span class="fu">div</span> m n)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ot">safehead ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">Maybe</span> a</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>safehead [] <span class="ot">=</span> <span class="dt">Nothing</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>safehead xs <span class="ot">=</span> <span class="dt">Just</span> (<span class="fu">head</span> xs)</span></code></pre></div>
+<h2 id="newtype-declarations">8.3 Newtype declarations</h2>
+<p>Types with a single constructor with a single argument can be declared with the <code>newtype</code> mechanism. As an example, a natural number type could be defined as</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">N</span> <span class="dt">Int</span></span></code></pre></div>
+<p>The single constructor <code>N</code> takes an <code>Int</code> as an argument – it is up to the library to ensure that it is non-negative.</p>
+<p>Let’s look at how <code>newtype</code> compares with these two alternative definitions of the natural number type</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Int</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">N</span> <span class="dt">Int</span></span></code></pre></div>
+<p>Using <code>newtype</code> instead of <code>type</code> means that <code>Nat</code> and <code>Int</code> are different types instead of synonyms; this ensures that the type system does not allow using one in place of the other.</p>
+<p>Using <code>newtype</code> instead of <code>data</code> brings a performance benefit. <code>newtype</code> constructors (like <code>N</code>) don’t incur any costs when the programs are evaluated since they are automatically removed by the compiler once type-checking has completed.</p>
+<p><em>Note: In general, <code>newtype</code> provides better type safety than <code>type</code> and better performance than <code>data</code>.</em></p>
+<h2 id="recursive-types">8.4 Recursive types</h2>
+<p>As mentioned in <a href="#81-type-declarations">the first section</a>, <code>type</code> declarations can’t be recursive. However, both <code>data</code> and <code>newtype</code> can be recursive. Consider a recursive definition of the natural numbers</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Zero</span> <span class="op">|</span> <span class="dt">Succ</span> <span class="dt">Nat</span></span></code></pre></div>
+<p>Then the values of type <code>Nat</code> correspond to natural numbers – <code>Zero</code> represents the number zero and <code>Succ</code> represents the successor function (as defined on the naturals, that’s <code>(1+)</code>).</p>
+<p>We can define the following conversion functions:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">nat2int ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nat2int <span class="dt">Zero</span>     <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nat2int (<span class="dt">Succ</span> n) <span class="ot">=</span> <span class="dv">1</span> <span class="op">+</span> nat2int n</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ot">int2nat ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>int2nat <span class="dv">0</span> <span class="ot">=</span> <span class="dt">Zero</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>int2nat n <span class="ot">=</span> <span class="dt">Succ</span> (int2nat (n<span class="op">-</span><span class="dv">1</span>))</span></code></pre></div>
+<p>We can define addition on the <code>Nat</code> type as</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>add <span class="dt">Zero</span> n <span class="ot">=</span> n</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>add (<span class="dt">Succ</span> m) n <span class="ot">=</span> <span class="dt">Succ</span> (add m n)</span></code></pre></div>
+<p>This definition draws on the idea that the addition of two natural numbers takes place by moving the <code>Succ</code> constructors from the first number until they exhausted, at which point the <code>Zero</code> at the end is replaced by the second number. As an example, let’s see what happens with <code>add 2 1</code>:</p>
+<pre class="text"><code>add (Succ (Succ Zero)) (Succ Zero)
+=   {applying add}
+Succ (add (Succ Zero) (Succ Zero))
+=   {applying add}
+Succ (Succ (add Zero (Succ Zero))
+=   {applying add}
+Succ (Succ (Succ Zero))</code></pre>
+<p>As another example, consider the following definition of the <code>List</code> type:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">List</span> a <span class="ot">=</span> <span class="dt">Nil</span> <span class="op">|</span> <span class="dt">Cons</span> a (<span class="dt">List</span> a)</span></code></pre></div>
+<p>A value of type <code>List a</code> is either <code>Nil</code> (the empty list) or of the form <code>Cons x xs</code> for some values <code>x</code> of type <code>a</code> and <code>xs</code> of type <code>List a</code>, which represent a non-empty list.</p>
+<p>We can re-define the <code>len</code> function so that it operates on our own <code>List</code>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ot">len ::</span> <span class="dt">List</span> a <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>len <span class="dt">Nil</span>        <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>len (<span class="dt">Cos</span> _ xs) <span class="ot">=</span> <span class="dv">1</span> <span class="op">+</span> len xs</span></code></pre></div>
+<p>Recursion makes representing some data structures, like binary trees, fairly simple:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">BinTree</span> a <span class="ot">=</span> <span class="dt">Leaf</span> a <span class="op">|</span> <span class="dt">Node</span> (<span class="dt">BinTree</span> a) a (<span class="dt">BinTree</span> a)</span></code></pre></div>
+<p>The second constructor can be interpreted as the left child, the value, and the right child of a node in the tree.</p>
+<p>We can define the tree</p>
+<pre class="text"><code>      5
+     / \
+    /   \
+   /     \
+  3       7
+ / \     / \
+1   4   6   9</code></pre>
+<p>as</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ot">t ::</span> <span class="dt">BinTree</span> <span class="dt">Int</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dt">Node</span> (<span class="dt">Node</span> (<span class="dt">Leaf</span> <span class="dv">1</span>) <span class="dv">3</span> (<span class="dt">Leaf</span> <span class="dv">4</span>)) <span class="dv">5</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         (<span class="dt">Node</span> (<span class="dt">Leaf</span> <span class="dv">6</span>) <span class="dv">7</span> (<span class="dt">Leaf</span> <span class="dv">9</span>))</span></code></pre></div>
+<p>Consider a function that searches such a tree and reports whether a value exists within it (where <code>l</code>, <code>v</code>, and <code>r</code> are the left node, value, and right node, respectively):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ot">occurs ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Tree</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">Leaf</span> v)     <span class="ot">=</span> x <span class="op">==</span> v</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">Node</span> l v r) <span class="ot">=</span> x <span class="op">==</span> v <span class="op">||</span> occurs x l <span class="op">||</span> occurs x r</span></code></pre></div>
+<p>As an added benefit of lazy evaluation, if either of the first two conditions are true, then the remaining conditions are not evaluated. In the worst case <code>occurs</code> traverses the entire tree.</p>
+<p>Consider a function which flattens a tree to a list:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ot">flatten ::</span> <span class="dt">Tree</span> a <span class="ot">-&gt;</span> [a]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>flatten (<span class="dt">Leaf</span> x) <span class="ot">=</span> [x]</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>flatten (<span class="dt">Node</span> l x r) <span class="ot">=</span> flatten l <span class="op">++</span> [x] <span class="op">++</span> flatten r</span></code></pre></div>
+<p><em>If applying this function to a tree yields a sorted list, then the tree is called a search tree.</em></p>
+<p>Applying <code>flatten</code> to our tree yields <code>[1,3,4,5,6,7,9]</code> so we do have a search tree. Since that is the case, we can re-write <code>occurs</code> to take advantage of the fact that we have a binary search tree:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ot">occurs ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Tree</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">Leaf</span> v) <span class="ot">=</span> x <span class="op">==</span> v</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>occurs x (<span class="dt">Node</span> l v r)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x <span class="op">==</span> v <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x <span class="op">&lt;</span>  v <span class="ot">=</span> occurs x l</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x <span class="op">&gt;</span>  v <span class="ot">=</span> occurs x r</span></code></pre></div>
+<p>This version only traverses one path down the tree instead of testing every node.</p>
+<p>We can declare many different types of trees. We can have trees that only have data in their leaves,</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Tree</span> a <span class="ot">=</span> <span class="dt">Leaf</span> a <span class="op">|</span> <span class="dt">Node</span> (<span class="dt">Tree</span> a) (<span class="dt">Tree</span> a)</span></code></pre></div>
+<p>trees that have data only in their nodes,</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Tree</span> a <span class="ot">=</span> <span class="dt">Leaf</span> <span class="op">|</span> <span class="dt">Node</span> (<span class="dt">Tree</span> a) a (<span class="dt">Tree</span> a)</span></code></pre></div>
+<p>trees that have different data types in their leaves and nodes,</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Tree</span> a b <span class="ot">=</span> <span class="dt">Leaf</span> a <span class="op">|</span> <span class="dt">Node</span> (<span class="dt">Tree</span> a b) b (<span class="dt">Tree</span> a b)</span></code></pre></div>
+<p>or trees that have a list of sub-trees</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Tree</span> a <span class="ot">=</span> <span class="dt">Node</span> a [<span class="dt">Tree</span> a]</span></code></pre></div>
+<h2 id="class-and-instance-declarations">8.5 Class and instance declarations</h2>
+<p>Classes are different from types and are defined by the <code>class</code> mechanism. As an example, the class <code>Eq</code> of equality types is declared in the standard prelude as</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Eq</span> a <span class="kw">where</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  (<span class="op">==</span>),<span class="ot"> (/=) ::</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">/=</span> y <span class="ot">=</span> <span class="fu">not</span> (x <span class="op">==</span> y)</span></code></pre></div>
+<p>We interpret this as meaning that a type <code>a</code> is an instance of the class <code>Eq</code> if and only if it supports the equality and inequality operators defined within the class. In actuality, because we have a <em>default definition</em> for the <code>/=</code> operator, instances of <code>Eq</code> only require a definition for the <code>==</code> operator.</p>
+<p><a href="https://stackoverflow.com/questions/6948166/javas-interface-and-haskells-type-class-differences-and-similarities">Type classes were created as a structured way to express “ad-hoc polymorphism”, which is essentially the technical term for overloaded functions.</a> In the example <code>Eq</code> class given above, if we have a complex data structure like a tree, our definition of the <code>==</code> operator will be different from one which compares two <code>Pair</code>s. Making a type an instance of <code>Eq</code> is a promise to the compiler that that type has a specialized definition of the <code>==</code> operator. Additionally, default definitions can be overridden by an instance if (as the word default implies).</p>
+<p>As another example, we can make the type <code>Bool</code> into an instance of <code>Eq</code> as follows:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Bool</span> <span class="kw">where</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">False</span> <span class="op">==</span> <span class="dt">False</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">True</span>  <span class="op">==</span> <span class="dt">True</span>  <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  _     <span class="op">==</span> _     <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<p>Only types which are declared by the <code>data</code> and <code>newtype</code> mechanisms can be made into instances of classes.</p>
+<p>Classes can be extended to form new classes. As an example consider the class <code>Ord</code>, which contains values which have a total ordering. It is defined as an extension of <code>Eq</code>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> <span class="dt">Ord</span> a <span class="kw">where</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>(<span class="op">&lt;</span>), (<span class="op">&lt;=</span>), (<span class="op">&gt;</span>),<span class="ot"> (&gt;=) ::</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>,<span class="ot"> max             ::</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span> x y</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> x</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span> x y</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> y</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> x</span></code></pre></div>
+<p>As illustrated by the definition of the class <code>Ord</code>, instances must be instances of <code>Eq</code> and support six additional operators.</p>
+<p>We can have <code>Bool</code> implement <code>Ord</code> by adding support for the additional operators which do not have a default implementation:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Bool</span> <span class="kw">where</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span> <span class="op">&lt;</span> <span class="dt">True</span> <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>_     <span class="op">&lt;</span> _    <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- We can define all of these operators in terms of &lt; and ==</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- just by switching the order of the operands and using ||</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">&lt;=</span> c <span class="ot">=</span> (b <span class="op">&lt;</span> c) <span class="op">||</span> (b <span class="op">==</span> c)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">&gt;=</span> c <span class="ot">=</span> c <span class="op">&lt;=</span> b</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>b <span class="op">&gt;</span>  c <span class="ot">=</span> c <span class="op">&lt;</span> b</span></code></pre></div>
+<h3 id="derived-instances">Derived instances</h3>
+<p>When new types are declared, it’s usually appropriate to make them instances of a few built-in classes. We can do this by using the <code>deriving</code> mechanism:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Bool</span> <span class="ot">=</span> <span class="dt">False</span> <span class="op">|</span> <span class="dt">True</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>              <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Ord</span>, <span class="dt">Show</span>, <span class="dt">Read</span>)</span></code></pre></div>
+<p>Haskell then automagically implements the required definitions for those classes.</p>
+<pre class="text"><code>&gt; False == False
+True
+
+&gt; False &lt; True
+True
+
+&gt; show False
+&quot;False&quot;</code></pre>
+<p>You might wonder how the compiler could decide how to implement an ordering on <code>Bool</code>. In the case of deriving instances of <code>Ord</code>, the ordering of the constructors is determined by their position in its declaration. If we had defined <code>Bool</code> as <code>data Bool = True | False</code> then we would have <code>True &lt; False == True</code>.</p>
+<p>When constructors have arguments, the types of those arguments <em>must</em> be instances of derived classes. Recall our definitions of <code>Shape</code> and <code>Maybe</code>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Shape</span> <span class="ot">=</span> <span class="dt">Circle</span> <span class="dt">Float</span> <span class="op">|</span> <span class="dt">Rect</span> <span class="dt">Float</span> <span class="dt">Float</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Maybe</span> a <span class="ot">=</span> <span class="dt">Nothing</span> <span class="op">|</span> <span class="dt">Just</span> a</span></code></pre></div>
+<p>Deriving <code>Shape</code> as an equality type requires that the type <code>Float</code> is also an equality type (which is the case here). The same requirement holds for <code>Maybe</code>: if <code>Maybe a</code> derives <code>Ord</code>, then <code>a</code> must also derive <code>Ord</code> (which means that we have created a class constraint on the accepted parameters).</p>
+<p>Just like with lists and tuples, <code>Shape</code>’s values with constructors have their arguments ordered lexicographically. Assuming that <code>Shape</code> derives <code>Ord</code>, we have</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="dt">Rect</span> <span class="fl">1.0</span> <span class="fl">4.0</span> <span class="op">&lt;</span> <span class="dt">Rect</span> <span class="fl">2.0</span> <span class="fl">3.0</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="dt">Rect</span> <span class="fl">1.0</span> <span class="fl">4.0</span> <span class="op">&lt;</span> <span class="dt">Rect</span> <span class="fl">1.0</span> <span class="fl">3.0</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="dt">False</span></span></code></pre></div>
+<h2 id="tautology-checker">8.6 Tautology checker</h2>
+<p>The remainder of this chapter contains two extended programming exercises. The first exercise is to develop a function that decides if simple logical propositions are always true (a <em>tautology</em>).</p>
+<p>Consider a language of propositions built up from basic values <code>(False,True)</code> and variables (<code>A, B, ..., Z</code>) using negation (<span class="math inline">¬</span>), conjunction (<span class="math inline">∧</span>), implication (<span class="math inline">⟹</span>), and parentheses. As an example, the following are propositions:</p>
+<p><span class="math inline"><em>A</em> ∧ ¬<em>A</em></span></p>
+<p><span class="math inline">(<em>A</em>∧(<em>A</em>⟹<em>B</em>)) ⟹ <em>B</em></span></p>
+<p>The meaning of the logical operators can be defined using truth tables.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline">¬<em>A</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>B</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>A</em> ∧ <em>B</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>B</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>A</em> ⟹ <em>B</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+</tbody>
+</table>
+<p>They can be combined to evaluate the results of more complex propositions.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>A</em> ∧ ¬<em>A</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>B</em></span></th>
+<th style="text-align: center;"><span class="math inline">(<em>A</em>∧(<em>A</em>⟹<em>B</em>)) ⟹ <em>B</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+</tbody>
+</table>
+<p>We see that the first is in fact always false (a <em>contradiction</em>) while the second is a tautology.</p>
+<p>Our first step should be to define a data type to represent our propositions.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Prop</span> <span class="ot">=</span> <span class="dt">Const</span> <span class="dt">Bool</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> <span class="dt">Var</span> <span class="dt">Char</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> <span class="dt">Not</span> <span class="dt">Prop</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> <span class="dt">And</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>          <span class="op">|</span> <span class="dt">Imply</span> <span class="dt">Prop</span> <span class="dt">Prop</span></span></code></pre></div>
+<p>We might define our propositions as</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ot">p1 ::</span> <span class="dt">Prop</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="dt">And</span> (<span class="dt">Var</span> <span class="ch">'A'</span>) (<span class="dt">Not</span> (<span class="dt">Var</span> <span class="ch">'A'</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="ot">p2 ::</span> <span class="dt">Prop</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="dt">Imply</span> (<span class="dt">And</span> (<span class="dt">Var</span> <span class="ch">'A'</span>) (<span class="dt">Imply</span> (<span class="dt">Var</span> <span class="ch">'A'</span>) (<span class="dt">Var</span> <span class="ch">'B'</span>))) (<span class="dt">Var</span> <span class="ch">'B'</span>)</span></code></pre></div>
+<p>To evaluate the proposition we need to know the value of each of its variables. We can declare a substitution as a lookup table which associates variable names with logical values, re-using the <code>Assoc</code> type we introduced earlier in the chapter:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Subst</span> <span class="ot">=</span> <span class="dt">Assoc</span> <span class="dt">Char</span> <span class="dt">Bool</span></span></code></pre></div>
+<p>As an example, the substitution <code>[('A', False), ('B', True)]</code> assigns the variable <code>A</code> to <code>False</code> and the variable <code>B</code> to <code>True</code>. With the ability to perform substitutions, we can define a function which evaluates propositions given a substitution.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ot">eval ::</span> <span class="dt">Subst</span> <span class="ot">-&gt;</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>eval _ (<span class="dt">Const</span> b)   <span class="ot">=</span> b</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Var</span> x)     <span class="ot">=</span> find x s</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Not</span> p)     <span class="ot">=</span> <span class="fu">not</span> (eval s p)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">And</span> p q)   <span class="ot">=</span> eval s p <span class="op">&amp;&amp;</span> eval s q</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>eval s (<span class="dt">Imply</span> p q) <span class="ot">=</span> eval s p <span class="op">&lt;=</span> eval s q</span></code></pre></div>
+<p>As a digression, let us consider why we can implement the logical operator for implication, <span class="math inline">⟹</span>, with the ordering we get for free on logical values.</p>
+<p>We know that we have four cases for implication:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline"><em>A</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>B</em></span></th>
+<th style="text-align: center;"><span class="math inline"><em>A</em> ⟹ <em>B</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>F</em></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+<td style="text-align: center;"><span class="math inline"><em>T</em></span></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the implication operator is only false when the truthiness of <span class="math inline"><em>A</em></span> is strictly greater than the truthiness value of <span class="math inline"><em>B</em></span> (we take advantage of the ordering <code>False &lt; True</code> defined in the <code>Bool</code> type).</p>
+<p>A proposition is a tautology if it is true for all possible substitutions. To make progress towards being able to evaluate whether a proposition is a tautology, we need a function that yields a list of all the variables in a proposition.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ot">vars ::</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> [<span class="dt">Char</span>]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Const</span> _)   <span class="ot">=</span> []</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Var</span> x)     <span class="ot">=</span> [x]</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Not</span> p)     <span class="ot">=</span> vars p</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">And</span> p q)   <span class="ot">=</span> vars p <span class="op">++</span> vars q</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>vars (<span class="dt">Imply</span> p q) <span class="ot">=</span> vars p <span class="op">++</span> vars q</span></code></pre></div>
+<p><em>Note: <code>vars</code> doesn’t provide any sort of mechanism for removing duplicates – that’s okay since we can do it later on.</em></p>
+<p>Our goal now is to create a function that returns a list containing every possible set of combinations of true and false. An example of the desired use might be (formatted for clarity):</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> bools <span class="dv">3</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>[[<span class="dt">False</span>, <span class="dt">False</span>, <span class="dt">False</span>]</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">False</span>, <span class="dt">False</span>, <span class="dt">True</span>]</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">False</span>, <span class="dt">True</span>, <span class="dt">False</span>]</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">False</span>, <span class="dt">True</span>, <span class="dt">True</span>]</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">True</span>, <span class="dt">False</span>, <span class="dt">False</span>]</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">True</span>, <span class="dt">False</span>, <span class="dt">True</span>]</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">True</span>, <span class="dt">True</span>, <span class="dt">False</span>]</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>,[<span class="dt">True</span>, <span class="dt">True</span>, <span class="dt">True</span>]]</span></code></pre></div>
+<p>We can think of this function as counting in binary (where <code>[False, False, False]</code> corresponds to the binary number <code>000</code>, <code>[False, False, True]</code> to <code>001</code>, and so on). Alternatively, we can observe the relation to the mathematical definition of the power set, where the truth value at a given index determines whether we include that element in the power set.</p>
+<p>It is known that the power set of a set <span class="math inline"><em>A</em></span> with <span class="math inline"><em>n</em></span> elements has <span class="math inline">2<sup><em>n</em></sup></span> elements. To construct the power set of a set <span class="math inline"><em>A</em></span>, one can build a binary tree as they traverse <span class="math inline"><em>A</em></span>. For each element of <span class="math inline"><em>A</em></span>, split every leaf of the tree – the left branch represents skipping the current element while the right branch represents including the element in some set in the power set. This choice – inclusion or exclusion – is performed for every set in the set. By the multiplication principle, given <span class="math inline"><em>n</em></span> elements, we have <span class="math inline">2<sup><em>n</em></sup></span> possible choices.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ot">bools ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [[<span class="dt">Bool</span>]]</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>bools <span class="dv">0</span> <span class="ot">=</span> [[]]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>bools n <span class="ot">=</span> <span class="fu">map</span> (<span class="dt">False</span> <span class="op">:</span>) bss <span class="op">++</span> <span class="fu">map</span> (<span class="dt">True</span> <span class="op">:</span>) bss</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    bss <span class="ot">=</span> bools (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>With <code>bools</code>, we can now construct a function which performs all possible substitutions,</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ot">substs ::</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> [<span class="dt">Subst</span>]</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>substs p <span class="ot">=</span> <span class="fu">map</span> (<span class="fu">zip</span> vs) (bools (<span class="fu">length</span> vs))</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    vs <span class="ot">=</span> rmdups (vars p)</span></code></pre></div>
+<p>where <code>rmdups</code> is as defined in Chapter 7.</p>
+<p>As an example,</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> substs p2</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>[[(<span class="ch">'A'</span>,<span class="dt">False</span>),(<span class="ch">'B'</span>,<span class="dt">False</span>)],</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>[(<span class="ch">'A'</span>,<span class="dt">False</span>),(<span class="ch">'B'</span>,<span class="dt">True</span>)],</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>[(<span class="ch">'A'</span>,<span class="dt">True</span>),(<span class="ch">'B'</span>,<span class="dt">False</span>)],</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>[(<span class="ch">'A'</span>,<span class="dt">True</span>),(<span class="ch">'B'</span>,<span class="dt">True</span>)]]</span></code></pre></div>
+<p>Lastly, we need to build a function which checks to see whether a proposition is tautologous.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ot">isTaut ::</span> <span class="dt">Prop</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>isTaut p <span class="ot">=</span> <span class="fu">and</span> [eval s p <span class="op">|</span> s <span class="ot">&lt;-</span> substs p]</span></code></pre></div>
+<h2 id="abstract-machine">8.7 Abstract Machine</h2>
+<p>The second extended example builds a machine which can operate on arithmetic expressions built from integers and the addition operator, yielding an integer.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Expr</span> <span class="ot">=</span> <span class="dt">Val</span> <span class="dt">Int</span> <span class="op">|</span> <span class="dt">Add</span> <span class="dt">Expr</span> <span class="dt">Expr</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="ot">value ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>value (<span class="dt">Val</span> n)   <span class="ot">=</span> n</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>value (<span class="dt">Add</span> x y) <span class="ot">=</span> value x <span class="op">+</span> value y</span></code></pre></div>
+<p>Tracing the evaluation of <code>(2 + 3) + 4</code>, we have</p>
+<pre class="text"><code>value (Add (Add (Val 2) (Val 3)) (Val 4))
+={ applying value }
+value (Add (Val 2) (Val 3)) + value (Val 4)
+={ applying the first value }
+(value (Val 2) + value (Val 3)) + value (Val 4)
+={ applying the first value }
+(2 + value (Val 3)) + value (Val 4)
+={ applying the first value }
+(2 + 3) + value (Val 4)
+={ applying the first + }
+5 + value (Val 4)
+={ applying value }
+5 + 4
+={ applying + }
+9</code></pre>
+<p>The order of evaluation for the operands of <code>value</code> is not specified. In fact, the order of evaluation is left up to Haskell. If we want to enforce an order of evaluation, we can do so by defining an <em>abstract machine</em> for expressions, which would specify the process of evaluating an expression.</p>
+<p>To do this, we begin by defining a type of <em>control stacks</em> for our abstract machine. The control stacks are a list of operations to be performed after the current evaluation has finished.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Cont</span> <span class="ot">=</span> [<span class="dt">Op</span>]</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Op</span> <span class="ot">=</span> <span class="dt">EVAL</span> <span class="dt">Expr</span> <span class="op">|</span> <span class="dt">ADD</span> <span class="dt">Int</span></span></code></pre></div>
+<p>A function which evaluates an expression in the context of a control stack can be defined as</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ot">eval ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Cont</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>eval (<span class="dt">Val</span> n)   c <span class="ot">=</span> exec c n</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>eval (<span class="dt">Add</span> x y) c <span class="ot">=</span> eval x (<span class="dt">EVAL</span> y <span class="op">:</span> c)</span></code></pre></div>
+<p>Picking apart <code>eval</code>, we have to possible paths through the function. In the first case, we have an integer (which cannot be further evaluated) and we begin executing the control stack. In the second case, we have an expression. We evaluate the first argument, <code>x</code>, first, placing <code>EVAL y</code> on the control stack so that <code>y</code> is evaluated after the evaluation of <code>x</code> is complete.</p>
+<p>Our function which performs the actual evaluation, <code>exec</code>, can be defined as</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ot">exec ::</span> <span class="dt">Cont</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>exec []           n <span class="ot">=</span> n</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">EVAL</span> y <span class="op">:</span> c) n <span class="ot">=</span> eval y (<span class="dt">ADD</span> n <span class="op">:</span> c)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>exec (<span class="dt">ADD</span> n <span class="op">:</span> c)  m <span class="ot">=</span> exec c (n <span class="op">+</span> m)</span></code></pre></div>
+<p>We can interpret <code>exec</code> by looking at the different cases we cover.</p>
+<ul>
+<li>Given an empty control stack, return the integer as the result</li>
+<li>Given a control stack where the first element is a postponed evaluation (<code>EVAL</code>), evaluate it and put the integer argument on the stack to signal that it should be added to the result of the evaluation of <code>y</code></li>
+<li>Given a control stack where the first element is an <code>ADD</code> operation, evaluation of both arguments must have been completed and we can continue executing the remaining control stack</li>
+</ul>
+<p>The last step in constructing our abstract machine is to construct a function which evaluates an expression to an integer by invoking <code>eval</code> with the given expression and an empty stack:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ot">value ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>value e <span class="ot">=</span> eval e []</span></code></pre></div>
+<p>Hutton remarks:</p>
+<blockquote>
+<p>The fact that our abstract machine uses two mutually recursive functions, eval and exec, reflects the fact that it has two modes of operation, depending upon whether it is being driven by the structure of the expression or the control stack. To illustrate the machine, here is how it evaluates (2 + 3) +4:</p>
+<pre class="text"><code>value (Add (Add (Val 2) (Val 3)) (Val 4))
+={ applying value }
+eval (Add (Add (Val 2) (Val 3)) (Val 4)) []
+={ applying eval }
+eval (Add (Val 2) (Val 3)) [EVAL (Val 4)]
+={ applying eval }
+eval (Val 2) [EVAL (Val 3), EVAL (Val 4)]
+={ applying eval }
+exec [EVAL (Val 3), EVAL (Val 4)] 2
+={ applying exec }
+eval (Val 3) [ADD 2, EVAL (Val 4)]
+={ applying eval }
+exec [ADD 2, EVAL (Val 4)] 3
+={ applying exec }
+exec [EVAL (Val 4)] 5
+={ applying exec }
+eval (Val 4) [ADD 5]
+={ applying eval }
+exec [ADD 5] 4
+={ applying exec }
+exec [] 9
+={ applying exec }
+9</code></pre>
+<p>Note how eval proceeds downwards to the leftmost integer in the expression, maintaining a trail of the pending right-hand expressions on the control stack. In turn, exec then proceeds upwards through the trail, transferring control back to eval and performing additions as appropriate.</p>
+</blockquote>
+<h2 id="chapter-remarks">8.8 Chapter Remarks</h2>
+<p>The abstract machine example is derived from Hutton and Wright’s “Calculating an Exceptional Machine.”</p>
+<p>The type of control stacks used are a special case of the zipper data structure for traversing values of recursive types, covered in greater detail in Huet’s, “The Zipper.”</p>
+</div>
+    </div>
+</body>
+
+</html>

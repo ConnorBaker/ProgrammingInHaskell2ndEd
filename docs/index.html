@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bumbling Through Haskell - Posts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="./css/blog.css">
+</head>
+
+<body class="background-default">
+    <div class="flex flex-row justify-between p-4 text-3xl text-white font-black">
+        <div class="backdrop-blur-xl backdrop-brightness-75 rounded-full p-4">
+            <span class="sr-only">The identity function written as a lambda with bee emoji</span>
+            λ 🐝 . 🐝
+        </div>
+        <div class="p-4">
+            <span class="sr-only">Go to blog on GitHub</span>
+            <a href="https://github.com/ConnorBaker/ProgrammingInHaskell2ndEd" class="text-white">
+                <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="spacing-defaults text-defaults">
+        <div id="header" class="text-center text-white space-y-4">
+            <div class="text-7xl font-display font-black">
+                Bumbling Through Haskell
+            </div>
+            <div class="text-xl">
+                Miscellaneous thoughts and notes on Haskell
+            </div>
+        </div>
+
+        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
+            <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
+                    <a href="./" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+
+                    <a href="./about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+
+                    <a href="./archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
+                </div>
+            </div>
+        </nav>
+
+        
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2020-12-23-Chapter-8-Exercises.html">Chapter 8 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Declaring Types and Classes
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 23, 2020</span>
+    </div>
+    <h2 id="exercises">8.9 Exercises</h2>
+<ol type="1">
+<li><p>In a similar manner to the function <code>add</code>, define a recursive multiplication function <code>mult :: Nat -&gt; Nat -&gt; Nat</code> for the recursive type of natural numbers:</p>
+<p>Hint: make use of add in your definition.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nat</span> <span class="ot">=</span> <span class="dt">Zero</span> <span class="op">|</span> <span class="dt">Succ</span> <span class="dt">Nat</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">deriving</span> stock <span class="dt">Show</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>add <span class="dt">Zero</span>     n <span class="ot">=</span> n</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>add (<span class="dt">Succ</span> m) n <span class="ot">=</span> <span class="dt">Succ</span> (add m n)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ot">mult ::</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span> <span class="ot">-&gt;</span> <span class="dt">Nat</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mult <span class="dt">Zero</span>     _ <span class="ot">=</span> <span class="dt">Zero</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>mult (<span class="dt">Succ</span> m) n <span class="ot">=</span> add n (mult m n)</span></code></pre></div></li>
+</ol>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2020-12-23-Chapter-8-Exercises.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2020-06-01-Chapter-8-Notes.html">Chapter 8</a>
+    </div>
+    <div class="post-subtitle">
+        Declaring Types and Classes
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">June  1, 2020</span>
+    </div>
+    <h2 id="type-declarations">8.1 Type declarations</h2>
+<p>We can introduce new names for types that we already have by means of the <code>type</code> keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pos</span> <span class="ot">=</span> (<span class="dt">Int</span>, <span class="dt">Int</span>)</span></code></pre></div>
+<p>and we might declare a transformation as a function which maps a <code>Pos</code> to another <code>Pos</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Trans</span> <span class="ot">=</span> <span class="dt">Pos</span> <span class="ot">-&gt;</span> <span class="dt">Pos</span></span></code></pre></div>
+<p><em>Note: the name of the newly declared type must be capitalized.</em> 
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2020-06-01-Chapter-8-Notes.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2020-03-01-Chapter-7-Exercises.html">Chapter 7 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Higher-Order Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">March  1, 2020</span>
+    </div>
+    <h2 id="exercises">7.9 Exercises</h2>
+<ol type="1">
+<li><p>Show how the list comprehension <code>[f x | x &lt;- xs, p x]</code> can be re-expressed using the higher order functions <code>map</code> and <code>filter</code>.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">applyFilterAndFnToList ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>applyFilterAndFnToList p f xs <span class="ot">=</span> <span class="fu">map</span> f (<span class="fu">filter</span> p xs)</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2020-03-01-Chapter-7-Exercises.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2020-02-28-Chapter-7-Notes.html">Chapter 7</a>
+    </div>
+    <div class="post-subtitle">
+        Higher-Order Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">February 28, 2020</span>
+    </div>
+    <h2 id="basic-concepts">7.1 Basic Concepts</h2>
+<p>Functions with multiple arguments are defined with currying (which is part of why we have right-associative groupings for parameters). As an example, we can rewrite</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>add xy <span class="ot">=</span> x <span class="op">+</span> y</span></code></pre></div>
+<p>as</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>add <span class="ot">=</span> \x <span class="ot">-&gt;</span> (\y <span class="ot">-&gt;</span> x <span class="op">+</span> y)</span></code></pre></div>
+<p>which makes it clear that add is a function that takes an integer and returns another function which takes an integer and maps to the sum <code>x + y</code>. 
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2020-02-28-Chapter-7-Notes.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-6-Notes.html">Chapter 6</a>
+    </div>
+    <div class="post-subtitle">
+        Recursive Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="basic-concepts">6.1 Basic Concepts</h2>
+<p>Functions can be defined in terms of themselves. When a function is self-referential, we say that it is recursive. Consider the explicit and recursive definitions of the factorial function:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">facExplicit ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>facExplicit n <span class="ot">=</span> <span class="fu">product</span> [<span class="dv">1</span><span class="op">..</span>n]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">facRecursive ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>facRecursive <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>facRecursive n <span class="ot">=</span> n <span class="op">*</span> facRecursive (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-6-Notes.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-6-Exercises.html">Chapter 6 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Recursive Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">6.8 Exercises</h2>
+<ol type="1">
+<li><p>How does the recursive version of the factorial function behave if applied to a negative argument, like <span class="math inline"> − 1</span>? Modify the definition to prohibit negative arguments by adding a guard to the recursive case.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">facRecursive ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>facRecursive n</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&lt;</span> <span class="dv">0</span>     <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">==</span> <span class="dv">0</span>    <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> n <span class="op">*</span> facRecursive (n <span class="op">-</span> <span class="dv">1</span>)</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-6-Exercises.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-5-Notes.html">Chapter 5</a>
+    </div>
+    <div class="post-subtitle">
+        List Comprehensions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="basic-concepts">5.1 Basic Concepts</h2>
+<p>In mathematics, we can construct a set with a generator. If we wanted to create the set of all odd numbers, we could use the set-builder notation <span class="math inline">{2<em>k</em> + 1|<em>x</em> ∈ ℤ<sup>+</sup>}</span>.</p>
+<p>Haskell presents a similar opportunity, but it calls it a list comprehension. If we were to want to build a list of the first 10 perfect squares, we could do</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> [x<span class="op">^</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">10</span>]]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">9</span>,<span class="dv">16</span>,<span class="dv">25</span>,<span class="dv">36</span>,<span class="dv">49</span>,<span class="dv">64</span>,<span class="dv">81</span>,<span class="dv">100</span>]</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-5-Notes.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-5-Exercises.html">Chapter 5 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        List Comprehensions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">5.7 Exercises</h2>
+<ol type="1">
+<li><p>Using a list comprehension, give an expression that calculates the sum <span class="math inline">1<sup>2</sup> + 2<sup>2</sup> + … + 100<sup>2</sup></span> of the first one hundred integer squares.</p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">sum100ConsecSquares ::</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sum100ConsecSquares <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">^</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">100</span>]]</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-5-Exercises.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-4-Notes.html">Chapter 4</a>
+    </div>
+    <div class="post-subtitle">
+        Defining Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="new-from-old">4.1 New From Old</h2>
+<p>Function composition is an extremely powerful tool and should not be overlooked. If it works for Unix, it’ll probably work for you.</p>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-4-Notes.html">
+            Read more</a>
+    </div>
+</div>
+
+<div class="post-box">
+    <div class="post-title">
+        <a href="./posts/2019-12-21-Chapter-4-Exercises.html">Chapter 4 Exercises</a>
+    </div>
+    <div class="post-subtitle">
+        Defining Functions
+    </div>
+    <div class="flow-root">
+        <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
+        <span class="float-right">December 21, 2019</span>
+    </div>
+    <h2 id="exercises">4.8 Exercises</h2>
+<ol type="1">
+<li><p>Using library functions, define a function <code>halve :: [a] -&gt; ([a],[a])</code> that splits an even-lengthed list into two halves. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> halve [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])</span></code></pre></div>
+<p>Solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">halve ::</span> [a] <span class="ot">-&gt;</span> ([a],[a])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>halve xs <span class="ot">=</span> <span class="fu">splitAt</span> (((<span class="fu">length</span> xs) <span class="op">+</span> <span class="dv">1</span>) <span class="ot">`div`</span> <span class="dv">2</span>) xs</span></code></pre></div>
+
+    
+    <div class="flex justify-end">
+        <a class="post-pill-button" href="./posts/2019-12-21-Chapter-4-Exercises.html">
+            Read more</a>
+    </div>
+</div>
+
+    </div>
+</body>
+
+</html>
