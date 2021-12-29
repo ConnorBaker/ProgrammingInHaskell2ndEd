@@ -120,7 +120,7 @@ In particular, if `x <= y` then the new element `x` is simply prepended to the s
 >
 > Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-With insert done, we can write a function that sorts an an existing list. It works be inserting the head of the list into itself, repeatedly sorting its tail.
+With `insert` done, we can write a function that sorts an existing list. It works by inserting the head of the list into itself, repeatedly sorting its tail.
 
 > ```haskell
 > isort :: Ord a => [a] -> [a]
@@ -244,13 +244,13 @@ Hutton covers what he describes as a "five-step process" for defining recursive 
 - Define the type of the function
 - Though the compiler can infer the types, it's best to make sure that you understand what the function you wrote is doing
 - Enumerate the cases
-- List all of the cases that could possibly occur
+- List all the cases that could possibly occur
 - Define the simple cases
 - Take care of the base case, or some of the simpler recursive cases
 - Define the other cases
 - Tackle the more difficult recursive cases
 - Generalize and simplify
-- Look back on your solution and find ways to improve it -- do some of the cases reduce to others that you've already written?
+- Look back on your solution and find ways to improve it -- do some cases reduce to others that you've already written?
 
 ## 6.7 Chapter Remarks
 

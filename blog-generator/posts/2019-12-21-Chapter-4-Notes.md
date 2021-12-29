@@ -16,7 +16,7 @@ Function composition is an extremely powerful tool and should not be overlooked.
 
 ## 4.2 Conditional Expressions
 
-Conditional expressions in Haskell look a bit different than those in bog-standard imperative languages. Consider an implementation of the `signum` function for integers:
+Conditional expressions in Haskell look a bit different from those in bog-standard imperative languages. Consider an implementation of the `signum` function for integers:
 
 ```haskell
 signum :: Int -> Int
@@ -44,7 +44,7 @@ signum n | n < 0     = -1
 
 The guard symbol `|` is read as such that.
 
-> ... the guard otherwise is defined in the standard prelude simply by `otherwise = True`. Ending a sequence of guards with otherwise is not necessary, but provides a convenient way of handling all other cases..
+> ... the guard otherwise is defined in the standard prelude simply by `otherwise = True`. Ending a sequence of guards with otherwise is not necessary, but provides a convenient way of handling all other cases.
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
@@ -68,7 +68,7 @@ True && True = True
 _    && _    = False
 ```
 
-> This version also has the benefit that, under lazy evaluation as discussed in chapter 15, if the first argument is False, then the result False is returned without the need to evaluate the second argument.
+> This version also has the benefit that, under lazy evaluation as discussed in chapter 15, if the first argument is `False`, then the result `False` is returned without the need to evaluate the second argument.
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell (2nd ed.).
 
@@ -116,11 +116,7 @@ Lists are not primitives in Haskell.
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-Haskell uses the symbol `\` to represent the Greek letter lambda, written as $\lambda$. Consider the lambda expression
-
-`\x -> x + x`
-
-which adds a number to itself. One might use the lambda expression in GHCi to double a number:
+Haskell uses the symbol `\` to represent the Greek letter lambda, written as $\lambda$. Consider the lambda expression `\x -> x + x` which adds a number to itself. One might use the lambda expression in GHCi to double a number:
 
 ```haskell
 > (\x -> x + x) 2
@@ -184,7 +180,7 @@ Lastly, lambda expressions help get rid of the need to define small, single-use 
 
 ## 4.6 Operator Sections
 
-Functions written between two arguments are called operators (formally known as an infix operator). Any function with two arguments can be converted into an operator by putting the function in-between back-ticks. The opposite is also possible: putting parenthesis around an operator turns it into a prefix operator.
+Functions written between two arguments are called operators (formally, an infix operator). Any function with two arguments can be converted into an operator by putting the function in-between back-ticks. The opposite is also possible: putting parenthesis around an operator turns it into a prefix operator.
 
 > In general, if `#` is an operator, then expressions of the form `(#)`, `(x #)`, and `(# y)` for arguments `x` and `y` are called sections, whose meaning as functions can be formalised \[sic\] using lambda expressions as follows:
 >

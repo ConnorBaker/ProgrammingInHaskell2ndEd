@@ -14,15 +14,9 @@ subtitle: Types and Clauses
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-This means that the set-theoretic definition of the type Bool could be thought of as
+This means that the set-theoretic definition of the type `Bool` could be thought of as `Bool = {True, False}` and the type `Bool -> Bool` would be `Bool->Bool = {f: Bool -> Bool}`.
 
 <!--more-->
-
-`Bool = {True, False}`
-
-and the type `Bool -> Bool` would be
-
-`Bool->Bool = {f: Bool -> Bool}`
 
 Haskell uses the notation `e :: T` to say that `e` is a value in the type `T` (that is, `e` has type `T`).
 
@@ -46,7 +40,7 @@ Type | Values |
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-The type of a list says nothing of its length (which may be infinite, because Haskell provides for lazy evaluation).
+The type of list says nothing of its length (which may be infinite, because Haskell provides for lazy evaluation).
 
 ## 3.4 Tuple Types
 
@@ -70,43 +64,27 @@ Functions in Haskell are curried -- that is, functions can return functions that
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-The arrow operator is right associative, which allows for excess parentheses when using curried functions. Graham notes that the following two types are equivalent:
+The arrow operator is right associative, which allows for excess parentheses when using curried functions. Graham notes that `Int -> Int -> Int -> Int` and `Int -> (Int -> (Int -> Int))` are equivalent.
 
-`Int -> Int -> Int -> Int`
-
-and
-
-`Int -> (Int -> (Int -> Int))`
-
-Graham also points out that, as a result, function application is left-associative:
-
-`must x y z`
-
-and
-
-`((must x) y) z`
-
-are equivalent.
+Graham also points out that, as a result, function application is left-associative: `must x y z` and `((must x) y) z` are equivalent.
 
 > Unless tupling is explicitly required, all functions in Haskell with multiple arguments are normally defined as curried functions, and the two conventions above are used to reduce the number of parentheses that are required.
 >
-> Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed,).
+> Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
 ## 3.7 Polymorphic Types
 
-Polymorphic types are ones that can take any type as an argument. The `length` function is an example of a polymorphic type. It has the type
-
-`length :: [a] -> Int`
+Polymorphic types are ones that can take any type as an argument. The `length` function is an example of a polymorphic type. It has the type `length :: [a] -> Int`.
 
 ## 3.8 Overloaded Types
 
 A class constraint serves to restrict the application of a function to a certain instance of a type.
 
-> Class constraints are written in the form C a, where C is the name of a class and a is a type variable. For example, the type of the addition operator + is as follows:
+> Class constraints are written in the form `C a`, where `C` is the name of a class and `a` is a type variable. For example, the type of the addition operator `+` is as follows:
 >
 > `(+) :: Num a => a -> a -> a`
 >
-> That is, for any type a that is an instance of the class Num of numeric types, the function `(+)` has type `a -> a -> a`.
+> That is, for any type a that is an instance of the class `Num` of numeric types, the function `(+)` has type `a -> a -> a`.
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
@@ -134,7 +112,7 @@ A type that includes class constraints is called overloaded.
 >
 > Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).
 
-Function types are not typically instances of Eq because it is not usually feasible to compare two functions for equality.
+Function types are not typically instances of `Eq` because it is not usually feasible to compare two functions for equality.
 
 ### Ord
 
@@ -206,7 +184,7 @@ tells GHC to turn the string into a list of `Int` instead of keeping it as a `St
 
 ### Fractional
 
-> This class contains types whose values are instances of the numeric class Num, but in addition whose values are non-integeral, and as such support the methods of fractional division and fractional reciprocation:
+> This class contains types whose values are instances of the numeric class `Num`, but in addition whose values are non-integral, and as such support the methods of fractional division and fractional reciprocation:
 >
 > `(/) :: a -> a -> a`
 >

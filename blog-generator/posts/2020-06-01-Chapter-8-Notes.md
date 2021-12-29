@@ -10,27 +10,13 @@ subtitle: Declaring Types and Classes
 
 ## 8.1 Type declarations
 
-We can introduce new names for types that we already have by means of the `type` keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing
-
-```haskell
-type Pos = (Int, Int)
-```
-
-and we might declare a transformation as a function which maps a `Pos` to another `Pos`
-
-```haskell
-type Trans = Pos -> Pos
-```
+We can introduce new names for types that we already have by means of the `type` keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing `type Pos = (Int, Int)` and we might declare a transformation as a function which maps a `Pos` to another `Pos`: `type Trans = Pos -> Pos`.
 
 *Note: the name of the newly declared type must be capitalized.*
 <!--more-->
 `type` declarations are not allowed to be recursive. As an example, `type Tree = (Int, [Tree])` is not allowed. Recursive types may be declared using the `data` mechanism, which is discussed in the next section.
 
-`type` declarations can be parameterized by other types. If we wanted a more generic two-tuple instead of one specifically meant for integers, we could write
-
-```haskell
-type Pair a = (a,a)
-```
+`type` declarations can be parameterized by other types. If we wanted a more generic two-tuple instead of one specifically meant for integers, we could write `type Pair a = (a,a)`.
 
 Additionally, we can use more than one parameter. Suppose we wanted a type which is a list of keys associated with values:
 

@@ -19,7 +19,7 @@
             alias clean_blog="rm -rf _cache/ docs/ dist-newstyle/"
             alias build_blog="cabal run site build && tailwindcss -i blog_tailwind.css -o ./css/blog.css && cabal run site build"
             alias run_blog="build_blog && cabal run site watch"
-            alias publish_blog="clean_blog && build_blog && mv docs .. && clean_blog"
+            alias publish_blog="clean_blog && build_blog && rm -rf ../docs && mv docs .. && clean_blog"
           '';
         };
       }

@@ -16,7 +16,7 @@ Haskell has a large standard library. A portion of the standard library, called 
 
 ## 2.4 Function Application
 
-> The notation for function application is a bit different than is common in mathematics. These differences are highlighted by the table below:
+> The notation for function application is a bit different from it is common in mathematics. These differences are highlighted by the table below:
 >
 > Mathematics | Haskell |
 > :-: | :-: |
@@ -38,6 +38,6 @@ Haskell has a large standard library. A portion of the standard library, called 
 
 ### The layout rule
 
-> Within a script, each definition at the same level must begin in precisely the same column. This layout rulemakes it possible to determine the grouping of definitions from their indentation.
+> Within a script, each definition at the same level must begin in precisely the same column. This layout rule makes it possible to determine the grouping of definitions from their indentation.
 >
 > Excerpt from: Graham Hutton. "Programming in Haskell" (2nd ed.).

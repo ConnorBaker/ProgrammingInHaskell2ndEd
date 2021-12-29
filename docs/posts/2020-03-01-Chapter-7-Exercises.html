@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 7 Exercises</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -63,14 +66,16 @@
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
         <span class="float-right">March  1, 2020</span>
     </div>
-    <h2 id="exercises">7.9 Exercises</h2>
-<ol type="1">
-<li><p>Show how the list comprehension <code>[f x | x &lt;- xs, p x]</code> can be re-expressed using the higher order functions <code>map</code> and <code>filter</code>.</p>
-<p>Solution:</p>
+    <h2 id="exercise-1">Exercise 1</h2>
+<blockquote>
+<p>Show how the list comprehension <code>[f x | x &lt;- xs, p x]</code> can be re-expressed using the higher order functions <code>map</code> and <code>filter</code>.</p>
+</blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">applyFilterAndFnToList ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>applyFilterAndFnToList p f xs <span class="ot">=</span> <span class="fu">map</span> f (<span class="fu">filter</span> p xs)</span></code></pre></div>
-<!--more--></li>
-<li><p>Without looking at the definitions from the standard prelude, define the following higher-order library functions on lists:</p>
+<!--more-->
+<h2 id="exercise-2">Exercise 2</h2>
+<blockquote>
+<p>Without looking at the definitions from the standard prelude, define the following higher-order library functions on lists:</p>
 <ul>
 <li><p>Decide if all the elements of a list satisfy a predicate:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span></code></pre></div></li>
@@ -82,7 +87,7 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dropWhile</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span></code></pre></div></li>
 </ul>
 <p><em>Note: In <code>Prelude</code> the first two of these functions are generic functions rather than being specific to the type of lists</em></p>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Part a</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span> p <span class="ot">=</span> <span class="fu">and</span> <span class="op">.</span> <span class="fu">map</span> p</span>
@@ -103,9 +108,11 @@
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">dropWhile</span> _ [] <span class="ot">=</span> []</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">dropWhile</span> p x'<span class="op">@</span>(x<span class="op">:</span>xs)</span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> p x       <span class="ot">=</span> <span class="fu">dropWhile</span> p xs</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> x'</span></code></pre></div></li>
-<li><p>Redefine the functions <code>map f</code> and <code>filter p</code> using <code>foldr</code>.</p>
-<p>Solution:</p>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> x'</span></code></pre></div>
+<h2 id="exercise-3">Exercise 3</h2>
+<blockquote>
+<p>Redefine the functions <code>map f</code> and <code>filter p</code> using <code>foldr</code>.</p>
+</blockquote>
 <div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">map' ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>map' f <span class="ot">=</span> <span class="fu">foldr</span> (\x xs <span class="ot">-&gt;</span> f x <span class="op">:</span> xs) []</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -116,15 +123,19 @@
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                x<span class="op">:</span>xs</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">else</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                xs)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        []</span></code></pre></div></li>
-<li><p>Using <code>foldl</code> define a function <code>dec2Int :: [Int] -&gt; Int</code> that converts a decimal number into an integer. For example:</p>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        []</span></code></pre></div>
+<h2 id="exercise-4">Exercise 4</h2>
+<blockquote>
+<p>Using <code>foldl</code> define a function <code>dec2Int :: [Int] -&gt; Int</code> that converts a decimal number into an integer. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> dec2Int [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2345</span></span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">dec2Int ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dec2Int <span class="ot">=</span> <span class="fu">foldl</span> (\xs x <span class="ot">-&gt;</span> <span class="dv">10</span><span class="op">*</span>xs <span class="op">+</span> x) <span class="dv">0</span></span></code></pre></div></li>
-<li><p>Without looking at the definitions from the standard prelude, define the higher-order library function <code>curry</code> that converts a function on pairs into a curried function, and, conversely, the function <code>uncurry</code> that converts a curried function with two arguments into a function on pairs. (Hint: first write down the types of the two functions.)</p>
-<p>Solution:</p>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dec2Int <span class="ot">=</span> <span class="fu">foldl</span> (\xs x <span class="ot">-&gt;</span> <span class="dv">10</span><span class="op">*</span>xs <span class="op">+</span> x) <span class="dv">0</span></span></code></pre></div>
+<h2 id="exercise-5">Exercise 5</h2>
+<blockquote>
+<p>Without looking at the definitions from the standard prelude, define the higher-order library function <code>curry</code> that converts a function on pairs into a curried function, and, conversely, the function <code>uncurry</code> that converts a curried function with two arguments into a function on pairs. (Hint: first write down the types of the two functions.)</p>
+</blockquote>
 <div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curry</span><span class="ot"> ::</span> ((a,b) <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curry</span> f a b <span class="ot">=</span> f (a,b)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alternatively:</span></span>
@@ -133,14 +144,16 @@
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uncurry</span><span class="ot"> ::</span> (a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a,b) <span class="ot">-&gt;</span> c</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">uncurry</span> f (a,b) <span class="ot">=</span> f a b</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Alternatively:</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- uncurry f = \(a,b) -&gt; f a b</span></span></code></pre></div></li>
-<li><p>A higher-order function <code>unfold</code> that encapsulates a simple pattern of recursion for producing a list can be defined as follows:</p>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- uncurry f = \(a,b) -&gt; f a b</span></span></code></pre></div>
+<h2 id="exercise-6">Exercise 6</h2>
+<blockquote>
+<p>A higher-order function <code>unfold</code> that encapsulates a simple pattern of recursion for producing a list can be defined as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>unfold p h t x <span class="op">|</span> px        <span class="ot">=</span> []</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>               <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> h x <span class="op">:</span> unfold p h t (t x)</span></code></pre></div>
 <p>That is, the function <code>unfold p h t</code> produces the empty list if the predicate <code>p</code> is true of the argument value, and otherwise produces a non-empty list by applying the function <code>h</code> to this value to give the head, and the function <code>t</code> to generate another argument that is recursively processed in the same way to produce the tail of the list. For example, the function <code>int2Bin</code> can be rewritten more compactly using <code>unfold</code> as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>int2Bin <span class="ot">=</span> unfold (<span class="op">==</span> <span class="dv">0</span>) (<span class="ot">`mod`</span> <span class="dv">2</span>) (<span class="ot">`div`</span> <span class="dv">2</span>)</span></code></pre></div>
 <p>Redefine the functions <code>chop8</code>, <code>map f</code> and <code>iterate f</code> using <code>unfold</code>.</p>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">unfold ::</span> (a <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [b]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>unfold p h t x</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> p x       <span class="ot">=</span> []</span>
@@ -153,9 +166,11 @@
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>map'' f <span class="ot">=</span> unfold <span class="fu">null</span> (f <span class="op">.</span> <span class="fu">head</span>) <span class="fu">tail</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="ot">iterate' ::</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a]</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>iterate' <span class="ot">=</span> unfold (<span class="fu">const</span> <span class="dt">False</span>) <span class="fu">id</span></span></code></pre></div></li>
-<li><p>Modify the binary string transmitter example to detect simple transmission errors using the concept of parity bits. That is, each eight-bit binary number produced during encoding is extended with a parity bit, set to one if the number contains an odd number of ones, and to zero otherwise. In turn, each resulting nine-bit binary number consumed during decoding is checked to ensure that its parity bit is correct, with the parity bit being discarded if this is the case, and a parity error being reported otherwise. (Hint: the library function <code>error :: String -&gt; a</code> displays the given string as an error message and terminates the program; the polymorphic result type ensures that error can be used in any context.)</p>
-<p>Solution:</p>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>iterate' <span class="ot">=</span> unfold (<span class="fu">const</span> <span class="dt">False</span>) <span class="fu">id</span></span></code></pre></div>
+<h2 id="exercise-7">Exercise 7</h2>
+<blockquote>
+<p>Modify the binary string transmitter example to detect simple transmission errors using the concept of parity bits. That is, each eight-bit binary number produced during encoding is extended with a parity bit, set to one if the number contains an odd number of ones, and to zero otherwise. In turn, each resulting nine-bit binary number consumed during decoding is checked to ensure that its parity bit is correct, with the parity bit being discarded if this is the case, and a parity error being reported otherwise. (Hint: the library function <code>error :: String -&gt; a</code> displays the given string as an error message and terminates the program; the polymorphic result type ensures that error can be used in any context.)</p>
+</blockquote>
 <div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Bit</span> <span class="ot">=</span> <span class="dt">Int</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ot">bin2Int ::</span> [<span class="dt">Bit</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
@@ -186,25 +201,31 @@
 <span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>decodeWithParityBit list <span class="ot">=</span></span>
 <span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="fu">last</span> list <span class="op">==</span> <span class="fu">sum</span> (<span class="fu">init</span> list) <span class="ot">`mod`</span> <span class="dv">2</span></span>
 <span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        <span class="kw">then</span> decode <span class="op">$</span> <span class="fu">init</span> list</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="fu">error</span> <span class="st">&quot;Parity bit doesn't match input actual string&quot;</span></span></code></pre></div></li>
-<li><p>Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modeled using the tail function on lists of bits.</p>
-<p>Solution:</p>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="fu">error</span> <span class="st">&quot;Parity bit doesn't match input actual string&quot;</span></span></code></pre></div>
+<h2 id="exercise-8">Exercise 8</h2>
+<blockquote>
+<p>Test your new string transmitter program from the previous exercise using a faulty communication channel that forgets the first bit, which can be modeled using the tail function on lists of bits.</p>
+</blockquote>
 <div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">channelNoisy ::</span> [<span class="dt">Bit</span>] <span class="ot">-&gt;</span> [<span class="dt">Bit</span>]</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>channelNoisy <span class="ot">=</span> <span class="fu">tail</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ot">transmitNoisy ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>transmitNoisy <span class="ot">=</span> decodeWithParityBit</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span> channelNoisy</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span> encodeWithParityBit</span></code></pre></div></li>
-<li><p>Define a function <code>altMap :: (a -&gt; b) -&gt; (a -&gt; b) -&gt; [a] -&gt; [b]</code> that alternately applies its two argument functions to successive elements in a list, in turn about order. For example:</p>
-<p>Solution:</p>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span> encodeWithParityBit</span></code></pre></div>
+<h2 id="exercise-9">Exercise 9</h2>
+<blockquote>
+<p>Define a function <code>altMap :: (a -&gt; b) -&gt; (a -&gt; b) -&gt; [a] -&gt; [b]</code> that alternately applies its two argument functions to successive elements in a list, in turn about order. For example:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> altMap (<span class="op">+</span><span class="dv">10</span>) (<span class="op">+</span><span class="dv">100</span>) [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>,<span class="dv">101</span>,<span class="dv">12</span>,<span class="dv">103</span>,<span class="dv">14</span>]</span></code></pre></div>
+</blockquote>
 <div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ot">altMap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [b]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>altMap _ _ [] <span class="ot">=</span> []</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>altMap f g (x<span class="op">:</span>xs) <span class="ot">=</span> f x <span class="op">:</span> altMap g f xs</span></code></pre></div></li>
-<li><p>Using <code>altMap</code>, define a function <code>luhn :: [Int] -&gt; Bool</code> that implements the Luhn algorithm from the exercises in Chapter 4 for bank card numbers of any length. Test your new function using your own bank card.</p>
-<p>Solution:</p>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>altMap f g (x<span class="op">:</span>xs) <span class="ot">=</span> f x <span class="op">:</span> altMap g f xs</span></code></pre></div>
+<h2 id="exercise-10">Exercise 10</h2>
+<blockquote>
+<p>Using <code>altMap</code>, define a function <code>luhn :: [Int] -&gt; Bool</code> that implements the Luhn algorithm from the exercises in Chapter 4 for bank card numbers of any length. Test your new function using your own bank card.</p>
+</blockquote>
 <div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ot">luhnDouble ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>luhnDouble n</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> n <span class="op">&lt;=</span> <span class="dv">5</span>    <span class="ot">=</span> <span class="dv">2</span> <span class="op">*</span> n</span>
@@ -212,8 +233,7 @@
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ot">luhn ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Bool</span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>luhn [] <span class="ot">=</span> <span class="dt">False</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>luhn ns <span class="ot">=</span> <span class="fu">mod</span> (<span class="fu">sum</span> <span class="op">$</span> altMap luhnDouble <span class="fu">id</span> ns) <span class="dv">10</span> <span class="op">==</span> <span class="dv">0</span></span></code></pre></div></li>
-</ol>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>luhn ns <span class="ot">=</span> <span class="fu">mod</span> (<span class="fu">sum</span> <span class="op">$</span> altMap luhnDouble <span class="fu">id</span> ns) <span class="dv">10</span> <span class="op">==</span> <span class="dv">0</span></span></code></pre></div>
 </div>
     </div>
 </body>

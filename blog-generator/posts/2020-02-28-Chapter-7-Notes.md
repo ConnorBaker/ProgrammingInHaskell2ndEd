@@ -101,19 +101,10 @@ There are several other higher-order functions present in Prelude which are wort
 ```haskell
 > all even [2,4,6,8]
 True
-```
-
-```haskell
 > any odd [2,4,6,8]
 False
-```
-
-```haskell
 > takeWhile even [2,4,5,6,8]
 [2,4]
-```
-
-```haskell
 > dropWhile even [2,4,5,6,8]
 [5,6,8]
 ```
@@ -134,19 +125,13 @@ For practice, we redefine the `sum`, `product`, `or`, and `and` functions to ope
 ```haskell
 sum [] = 0
 sum (x:xs) = x + sum xs
-```
 
-```haskell
 product [] = 1
 product (x:xs) = x * product xs
-```
 
-```haskell
 or [] = False
 or (x:xs) = x || or xs
-```
 
-```haskell
 and [] = True
 and (x:xs) = x && and xs
 ```
@@ -157,17 +142,11 @@ The higher-order library function `foldr` works using the simple recursive patte
 
 ```haskell
 sum = foldr (+) 0
-```
 
-```haskell
 product = foldr (*) 1
-```
 
-```haskell
 or = foldr (||) False
-```
 
-```haskell
 and = foldr (&&) True
 ```
 
@@ -185,23 +164,7 @@ Let's break down the type of `foldr` (I myself didn't understand it until I read
 
 We can see that there are three arguments: a function, the starting value of an accumulator, and a list. The function argument takes an element of a list (the `a`), an accumulator (that's the first `b`), and returns the accumulator. After execution, `foldr` returns the result of the accumulator.
 
-As an example of how `foldr` is applied, consider the following:
-
-```haskell
-foldr (+) 0 [1,2,3]
-```
-
-is equivalent to
-
-```haskell
-foldr (+) 0 1:(2:(3:[]))
-```
-
-which, after the application of `foldr`, turns into the expression
-
-```haskell
-1+(2+(3+0))
-```
+As an example of how `foldr` is applied, consider the following: `foldr (+) 0 [1,2,3]` is equivalent to `foldr (+) 0 1:(2:(3:[]))` which, after the application of `foldr`, turns into the expression `1+(2+(3+0))`.
 
 As an example, let's re-write the library functions `length` and `reverse` using `foldr`.
 
@@ -213,15 +176,11 @@ length []     = 0
 length (_:xs) = 1 + length xs
 ```
 
-We start by constructing the first argument of `foldr`. Just like the definition above, we shouldn't care what elements of the list we're dealing with. We know that our accumulator will be a number, and that the accumulator should increase by one after each element is processed. As such, we end up with the lambda below:
-
-```haskell
-(\_ n -> 1 + n)
-```
+We start by constructing the first argument of `foldr`. Just like the definition above, we shouldn't care what elements of the list we're dealing with. We know that our accumulator will be a number, and that the accumulator should increase by one after each element is processed. As such, we end up with the lambda `(\_ n -> 1 + n)`.
 
 Keep in mind that the `\` only indicates that we're declaring a lambda function, not that `_` is the only argument of the lambda function.
 
-The second argument of `foldr` is the value that the accumulator starts at, which will be zero, per the definition of `length` (in the case that the list is empty, `foldr` has no elements to operate on so it returns the initial value of the accumulator). All together, we have 
+The second argument of `foldr` is the value that the accumulator starts at, which will be zero, per the definition of `length` (in the case that the list is empty, `foldr` has no elements to operate on, so it returns the initial value of the accumulator). All together, we have 
 
 ```haskell
 length :: [a] -> Int
@@ -240,29 +199,11 @@ reverse []     = []
 reverse (x:xs) = reverse xs ++ [x]
 ```
 
-To better get a sense of how we might re-write it with `foldr`, let's work through an example. If we have the list
+To better get a sense of how we might re-write it with `foldr`, let's work through an example. If we have the list `1 : (2 : (3 : []))` and we invoke reverse, we have `(([] ++ [3]) ++ [2]) ++ [1]`.
 
-```haskell
-1 : (2 : (3 : []))
-```
+We can see that the result is equivalent to concatenating each element to the end of a list: `3:(2:(1:[]))`.
 
-and we invoke reverse, we have
-
-```haskell
-(([] ++ [3]) ++ [2]) ++ [1]
-```
-
-We can see that the result is equivalent to concatenating each element to the end of a list:
-
-```haskell
-3:(2:(1:[]))
-```
-
-Beginning again by constructing the function argument of `fodlr`, we have 
-
-```haskell
-(\x y -> y ++ [x])
-```
+Beginning again by constructing the function argument of `fodlr`, we have `(\x y -> y ++ [x])`.
 
 *Note: We must use `[x]` because `x` is not a list, and `(++)` is only defined to work on lists.*
 
@@ -292,25 +233,15 @@ Just as we redefined the `sum`, `product`, `or`, `and`, `length`, and `reverse` 
 
 ```haskell
 sum = foldl (+) 0
-```
 
-```haskell
 product = foldl (*) 1
-```
 
-```haskell
 or = foldl (||) False
-```
 
-```haskell
 and = foldl (&&) True
-```
 
-```haskell
 length = foldl (\n _ -> 1 + n) 0
-```
 
-```haskell
 reverse = foldl (\x y -> y:x) []
 ```
 
@@ -343,17 +274,7 @@ f . g = \x -> f (g x)
 
 We could also have written the definition as `(f . g) x = f (g x)`, but the definition above uses a lambda to make clear the fact that `(.)` returns a function.
 
-One use of composition is to reduce the number of parenthesis in your code. We could write 
-
-```haskell
-sumCubeOfOdd = sum (map (^3) (filter odd))
-```
-
-as
-
-```haskell
-sumCubeOfOdd = sum . map (^3) . filter odd
-```
+One use of composition is to reduce the number of parenthesis in your code. We could write `sumCubeOfOdd = sum (map (^3) (filter odd))` as `sumCubeOfOdd = sum . map (^3) . filter odd`.
 
 Composition has an identity:
 
@@ -424,7 +345,7 @@ iterate f x = [x, f x, (f . f) x, (f . f . f) x]
 Let's instead try to think of a more succinct. To do that, let's trace what our ideal version of the function would do, for some four bit input `[a,b,c,d]`.
 
 ```haskell
- > [a,b,c,d]
+> [a,b,c,d]
 -> (1 * a) + (2 * b) + (4 * c) + (8 * d)
 ```
 
@@ -478,9 +399,7 @@ To decode the result of `encode`, we need to split the list every eight elements
 chop8 :: [Bit] -> [[Bit]]
 chop8 [] = []
 chop8 bits = take 8 bits : chop8 (drop 8 bits)
-```
 
-```haskell
 decode :: [Bit] -> String
 decode = map (chr . bin2Int) . chop8
 ```
@@ -490,9 +409,7 @@ Lastly, let's define a function that simulates transmitting a string of characte
 ```haskell
 channel :: [Bit] -> [Bit]
 channel = id
-```
 
-```haskell
 transmit :: String -> String
 transmit = decode . channel . encode
 ```

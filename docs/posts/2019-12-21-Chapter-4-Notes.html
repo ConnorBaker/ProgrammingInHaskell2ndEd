@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 4</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -67,7 +70,7 @@
 <p>Function composition is an extremely powerful tool and should not be overlooked. If it works for Unix, it’ll probably work for you.</p>
 <!--more-->
 <h2 id="conditional-expressions">4.2 Conditional Expressions</h2>
-<p>Conditional expressions in Haskell look a bit different than those in bog-standard imperative languages. Consider an implementation of the <code>signum</code> function for integers:</p>
+<p>Conditional expressions in Haskell look a bit different from those in bog-standard imperative languages. Consider an implementation of the <code>signum</code> function for integers:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">signum</span> n <span class="ot">=</span> <span class="kw">if</span> n <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">then</span> <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="kw">else</span> <span class="kw">if</span> n <span class="op">==</span> <span class="dv">0</span> <span class="kw">then</span> <span class="dv">0</span></span>
@@ -85,7 +88,7 @@
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div>
 <p>The guard symbol <code>|</code> is read as such that.</p>
 <blockquote>
-<p>… the guard otherwise is defined in the standard prelude simply by <code>otherwise = True</code>. Ending a sequence of guards with otherwise is not necessary, but provides a convenient way of handling all other cases..</p>
+<p>… the guard otherwise is defined in the standard prelude simply by <code>otherwise = True</code>. Ending a sequence of guards with otherwise is not necessary, but provides a convenient way of handling all other cases.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
 <h2 id="pattern-matching">4.4 Pattern Matching</h2>
@@ -100,7 +103,7 @@
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">True</span> <span class="op">&amp;&amp;</span> <span class="dt">True</span> <span class="ot">=</span> <span class="dt">True</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>_    <span class="op">&amp;&amp;</span> _    <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
 <blockquote>
-<p>This version also has the benefit that, under lazy evaluation as discussed in chapter 15, if the first argument is False, then the result False is returned without the need to evaluate the second argument.</p>
+<p>This version also has the benefit that, under lazy evaluation as discussed in chapter 15, if the first argument is <code>False</code>, then the result <code>False</code> is returned without the need to evaluate the second argument.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell (2nd ed.).</p>
 </blockquote>
 <h3 id="tuple-patterns">Tuple patterns</h3>
@@ -129,9 +132,7 @@
 <p>As an alternative to defining functions using equations, functions can also be constructed using lambda expressions, which comprise a pattern for each of the arguments, a body that specifies how the result can be calculated in terms of the arguments, but do not give a name for the function itself. In other words, lambda expressions are nameless functions.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>Haskell uses the symbol <code>\</code> to represent the Greek letter lambda, written as <span class="math inline"><em>λ</em></span>. Consider the lambda expression</p>
-<p><code>\x -&gt; x + x</code></p>
-<p>which adds a number to itself. One might use the lambda expression in GHCi to double a number:</p>
+<p>Haskell uses the symbol <code>\</code> to represent the Greek letter lambda, written as <span class="math inline"><em>λ</em></span>. Consider the lambda expression <code>\x -&gt; x + x</code> which adds a number to itself. One might use the lambda expression in GHCi to double a number:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> (\x <span class="ot">-&gt;</span> x <span class="op">+</span> x) <span class="dv">2</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span></code></pre></div>
 <p>These lambda expressions can define curried functions. Consider that we can rewrite</p>
@@ -166,7 +167,7 @@
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
 <h2 id="operator-sections">4.6 Operator Sections</h2>
-<p>Functions written between two arguments are called operators (formally known as an infix operator). Any function with two arguments can be converted into an operator by putting the function in-between back-ticks. The opposite is also possible: putting parenthesis around an operator turns it into a prefix operator.</p>
+<p>Functions written between two arguments are called operators (formally, an infix operator). Any function with two arguments can be converted into an operator by putting the function in-between back-ticks. The opposite is also possible: putting parenthesis around an operator turns it into a prefix operator.</p>
 <blockquote>
 <p>In general, if <code>#</code> is an operator, then expressions of the form <code>(#)</code>, <code>(x #)</code>, and <code>(# y)</code> for arguments <code>x</code> and <code>y</code> are called sections, whose meaning as functions can be formalised [sic] using lambda expressions as follows:</p>
 <p><code>(#) = \x -&gt; (\y -&gt; x # y)</code></p>

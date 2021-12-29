@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 6</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -145,7 +148,7 @@
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]</span></code></pre></div>
 <p>Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>With insert done, we can write a function that sorts an an existing list. It works be inserting the head of the list into itself, repeatedly sorting its tail.</p>
+<p>With <code>insert</code> done, we can write a function that sorts an existing list. It works by inserting the head of the list into itself, repeatedly sorting its tail.</p>
 <blockquote>
 <div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ot">isort ::</span> <span class="dt">Ord</span> a <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>isort []<span class="ot">=</span> []</span>
@@ -241,13 +244,13 @@
 <li>Define the type of the function</li>
 <li>Though the compiler can infer the types, it’s best to make sure that you understand what the function you wrote is doing</li>
 <li>Enumerate the cases</li>
-<li>List all of the cases that could possibly occur</li>
+<li>List all the cases that could possibly occur</li>
 <li>Define the simple cases</li>
 <li>Take care of the base case, or some of the simpler recursive cases</li>
 <li>Define the other cases</li>
 <li>Tackle the more difficult recursive cases</li>
 <li>Generalize and simplify</li>
-<li>Look back on your solution and find ways to improve it – do some of the cases reduce to others that you’ve already written?</li>
+<li>Look back on your solution and find ways to improve it – do some cases reduce to others that you’ve already written?</li>
 </ul>
 <h2 id="chapter-remarks">6.7 Chapter Remarks</h2>
 <p>Hutton notes that the five-step process he describes for creating recursive functions is based on Glaser, Hartel, and Garratt’s “Programming by Numbers: A Programming Method for Novices.” It can be found in The Computer Journal, vol. 43, no. 4, (published in 2000).</p>

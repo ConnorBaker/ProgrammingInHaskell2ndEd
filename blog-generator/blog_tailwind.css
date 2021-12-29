@@ -23,16 +23,16 @@
     @apply list-decimal ml-12;
   }
 
+  blockquote {
+    @apply bg-amber-100 border border-amber-300 rounded-md px-2 py-1;
+  }
+
   pre > code.sourceCode {
     @apply whitespace-pre relative;
   }
 
   pre > code.sourceCode > span {
-    @apply inline-block leading-tight;
-  }
-
-  pre > code.sourceCode > span:empty {
-    @apply h-5;
+    @apply inline-block;
   }
 
   code.sourceCode > span {
@@ -40,12 +40,9 @@
     text-decoration: inherit;
   }
 
-  div.sourceCode {
-    @apply my-4 mx-0;
-  }
-
+  div.sourceCode,
   pre.sourceCode {
-    @apply m-2;
+    @apply my-2 leading-tight;
   }
 
   @media screen {
@@ -83,7 +80,11 @@
   }
 
   div.sourceCode {
-    @apply bg-lime-100 border border-lime-300 rounded-xl p-2;
+    @apply bg-lime-100 border border-lime-300 rounded-lg px-1 py-0.5;
+  }
+
+  blockquote > div.sourceCode {
+    @apply bg-red-100 border border-red-300 rounded-lg px-1 py-0.5;
   }
 
   @media screen {
@@ -92,119 +93,70 @@
     }
   }
 
+  ul li > code,
+  ol li > code,
   p > code {
-    @apply bg-lime-100 border border-lime-300 rounded-lg p-1;
+    @apply bg-lime-100 border border-lime-300 rounded-md px-1 py-0.5;
   }
 
-  code span.al {
-    @apply text-red-600;
-  } /* Alert */
+  blockquote > ul li > code,
+  blockquote > ol li > code,
+  blockquote > p > code {
+    @apply bg-red-100 border border-red-300 rounded-md px-1 py-0.5;
+  }
 
-  code span.an {
-    @apply text-yellow-700 font-bold italic;
-  } /* Annotation */
+  code span.al, /* Alert */
+  code span.in, /* Information */
+  code span.wa  /* Warning */ {
+    @apply text-amber-700;
+  }
 
-  code span.at {
-    @apply text-yellow-600;
-  } /* Attribute */
+  code span.er /* Error */ {
+    @apply text-red-700;
+  }
 
-  code span.bn {
-    @apply text-indigo-700;
-  } /* BaseN */
+  code span.dt /* DataType */ {
+    @apply text-cyan-700;
+  }
 
-  code span.cf {
-    @apply text-blue-900 font-bold;
-  } /* ControlFlow */
-
-  code span.ch {
-    @apply text-lime-600;
-  } /* Char */
-
-  code span.cn {
-    @apply text-lime-200;
-  } /* Constant */
-
-  code span.co {
-    @apply text-yellow-700 italic;
-  } /* Comment */
-
-  code span.cv {
-    @apply text-yellow-700 font-bold italic;
-  } /* CommentVar */
-
-  code span.do {
-    @apply text-yellow-700 font-bold italic;
-  } /* Documentation */
-
-  code span.dt {
+  code span.fu, /* Function */
+  code span.op, /* Operator */
+  code span.ot  /* Other */ {
     @apply text-blue-900;
-  } /* DataType */
+  }
 
-  code span.dv {
-    @apply text-indigo-700;
-  } /* DecVal */
+  code span.an, /* Annotation */
+  code span.co, /* Comment */
+  code span.cv, /* CommentVar */
+  code span.do, /* Documentation */
+  code span.pp  /* Preprocessor */ {
+    @apply text-emerald-700 italic;
+  }
 
-  code span.er {
-    @apply text-red-700 font-bold;
-  } /* Error */
+  code span.cf, /* ControlFlow */
+  code span.kw  /* Keyword */ {
+    @apply text-emerald-900;
+  }
 
-  code span.ex {
-  } /* Extension */
+  code span.bn, /* BaseN */
+  code span.ch, /* Char */
+  code span.cn, /* Constant */
+  code span.dv, /* DecVal */
+  code span.fl, /* Float */ 
+  code span.sc, /* SpecialChar */
+  code span.ss, /* SpecialString */
+  code span.st, /* String */
+  code span.vs  /* VerbatimString */ {
+    @apply text-orange-700;
+  }
 
-  code span.fl {
-    @apply text-indigo-700;
-  } /* Float */
-
-  code span.fu {
-    @apply text-white;
-  } /* Function */
-
-  code span.im {
-  } /* Import */
-
-  code span.in {
-    @apply text-yellow-700 font-bold italic;
-  } /* Information */
-
-  code span.kw {
-    @apply text-blue-900 font-bold;
-  } /* Keyword */
-
-  code span.op {
-    @apply text-orange-600 font-bold;
-  } /* Operator */
-
-  code span.ot {
-    @apply text-yellow-700;
-  } /* Other */
-
-  code span.pp {
-    @apply text-yellow-700 italic;
-  } /* Preprocessor */
-
-  code span.sc {
+  code span.va  /* Variable */ {
     @apply text-black;
-  } /* SpecialChar */
+  }
 
-  code span.ss {
-    @apply text-lime-600;
-  } /* SpecialString */
-
-  code span.st {
-    @apply text-lime-600;
-  } /* String */
-
-  code span.va {
-    @apply text-black;
-  } /* Variable */
-
-  code span.vs {
-    @apply text-lime-600;
-  } /* VerbatimString */
-
-  code span.wa {
-    @apply text-yellow-700 font-bold italic;
-  } /* Warning */
+  code span.ex, /* Extension */
+  code span.im  /* Import */ {
+  }
 }
 
 @layer components {
@@ -237,7 +189,7 @@
   }
 
   .post-subtitle {
-    @apply ml-1 text-xl italic;
+    @apply ml-1 text-3xl italic;
   }
 
   .post-first-paragraph {

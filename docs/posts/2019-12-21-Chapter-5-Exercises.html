@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 5 Exercises</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -64,59 +67,76 @@
         <span class="float-right">December 21, 2019</span>
     </div>
     <h2 id="exercises">5.7 Exercises</h2>
-<ol type="1">
-<li><p>Using a list comprehension, give an expression that calculates the sum <span class="math inline">1<sup>2</sup> + 2<sup>2</sup> + … + 100<sup>2</sup></span> of the first one hundred integer squares.</p>
-<p>Solution:</p>
+<h2 id="exercise-1">Exercise 1</h2>
+<blockquote>
+<p>Using a list comprehension, give an expression that calculates the sum <span class="math inline">1<sup>2</sup> + 2<sup>2</sup> + … + 100<sup>2</sup></span> of the first one hundred integer squares.</p>
+</blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">sum100ConsecSquares ::</span> <span class="dt">Int</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sum100ConsecSquares <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">^</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">100</span>]]</span></code></pre></div>
-<!--more--></li>
-<li><p>Suppose that a coordinate grid of size <span class="math inline"><em>m</em> × <em>n</em></span> is given by the list of all pairs <span class="math inline">(<em>x</em>,<em>y</em>)</span> of integers such that <span class="math inline">0 ≤ <em>x</em> ≤ <em>m</em></span> and <span class="math inline">0 ≤ <em>y</em> ≤ <em>n</em></span>. Using a list comprehension, define a function <code>grid :: Int -&gt; Int -&gt; [(Int,Int)]</code> that returns a coordinate grid of a given size. For example:</p>
+<!--more-->
+<h2 id="exercise-2">Exercise 2</h2>
+<blockquote>
+<p>Suppose that a coordinate grid of size <span class="math inline"><em>m</em> × <em>n</em></span> is given by the list of all pairs <span class="math inline">(<em>x</em>,<em>y</em>)</span> of integers such that <span class="math inline">0 ≤ <em>x</em> ≤ <em>m</em></span> and <span class="math inline">0 ≤ <em>y</em> ≤ <em>n</em></span>. Using a list comprehension, define a function <code>grid :: Int -&gt; Int -&gt; [(Int,Int)]</code> that returns a coordinate grid of a given size. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> grid <span class="dv">1</span> <span class="dv">2</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">0</span>,<span class="dv">0</span>),(<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">2</span>),(<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">1</span>),(<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">grid ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grid m n <span class="ot">=</span> [(x,y) <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>m], y <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>n]]</span></code></pre></div></li>
-<li><p>Using a list comprehension and the function grid above, define a function <code>square :: Int -&gt; [(Int,Int)]</code> that returns a coordinate square of size <span class="math inline"><em>n</em></span>, excluding the diagonal from <span class="math inline">(0,0)</span> to <span class="math inline">(<em>n</em>,<em>n</em>)</span>. For example:</p>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>grid m n <span class="ot">=</span> [(x,y) <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>m], y <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>n]]</span></code></pre></div>
+<h2 id="exercise-3">Exercise 3</h2>
+<blockquote>
+<p>Using a list comprehension and the function grid above, define a function <code>square :: Int -&gt; [(Int,Int)]</code> that returns a coordinate square of size <span class="math inline"><em>n</em></span>, excluding the diagonal from <span class="math inline">(0,0)</span> to <span class="math inline">(<em>n</em>,<em>n</em>)</span>. For example:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> square <span class="dv">2</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">0</span>,<span class="dv">1</span>),(<span class="dv">0</span>,<span class="dv">2</span>),(<span class="dv">1</span>,<span class="dv">0</span>),(<span class="dv">1</span>,<span class="dv">2</span>),(<span class="dv">2</span>,<span class="dv">0</span>),(<span class="dv">2</span>,<span class="dv">1</span>)]</span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ot">grid ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grid m n <span class="ot">=</span> [(x,y) <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>m], y <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span>n]]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">square ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>square n <span class="ot">=</span> [(x,y) <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> grid n n, x <span class="op">/=</span> y]</span></code></pre></div></li>
-<li><p>In a similar way to the function length, show how the library function <code>replicate :: Int -&gt; a -&gt; [a]</code> that produces a list of identical elements can be defined using a list comprehension. For example:</p>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>square n <span class="ot">=</span> [(x,y) <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> grid n n, x <span class="op">/=</span> y]</span></code></pre></div>
+<h2 id="exercise-4">Exercise 4</h2>
+<blockquote>
+<p>In a similar way to the function length, show how the library function <code>replicate :: Int -&gt; a -&gt; [a]</code> that produces a list of identical elements can be defined using a list comprehension. For example:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="fu">replicate</span> <span class="dv">3</span> <span class="dt">True</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dt">True</span>,<span class="dt">True</span>,<span class="dt">True</span>]</span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> [a]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span> n x <span class="ot">=</span> [x <span class="op">|</span> _ <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n]]</span></code></pre></div></li>
-<li><p>A triple <span class="math inline">(<em>x</em>,<em>y</em>,<em>z</em>)</span> of positive integers is Pythagorean if it satisfies the equation <span class="math inline"><em>x</em><sup>2</sup> + <em>y</em><sup>2</sup> = <em>z</em><sup>2</sup></span>. Using a list comprehension with three generators, define a function <code>pyths :: Int -&gt; [(Int,Int,Int)]</code> that returns the list of all such triples whose components are at most a given limit. For example:</p>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span> n x <span class="ot">=</span> [x <span class="op">|</span> _ <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n]]</span></code></pre></div>
+<h2 id="exercise-5">Exercise 5</h2>
+<blockquote>
+<p>A triple <span class="math inline">(<em>x</em>,<em>y</em>,<em>z</em>)</span> of positive integers is Pythagorean if it satisfies the equation <span class="math inline"><em>x</em><sup>2</sup> + <em>y</em><sup>2</sup> = <em>z</em><sup>2</sup></span>. Using a list comprehension with three generators, define a function <code>pyths :: Int -&gt; [(Int,Int,Int)]</code> that returns the list of all such triples whose components are at most a given limit. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pyths <span class="dv">10</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>),(<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>),(<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">10</span>)]</span></code></pre></div>
-<p>By adding in the constraints that <span class="math inline"><em>a</em> ≤ <em>b</em> ≤ <em>c</em></span> we can uniquely generated pythagorean triplets which are unique up to rotation.</p>
-<p>Solution:</p>
+<p>By adding in the constraints that <span class="math inline"><em>a</em> ≤ <em>b</em> ≤ <em>c</em></span> we can uniquely generate Pythagorean triplets which are unique up to rotation.</p>
+</blockquote>
 <div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">pyths ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pyths n <span class="ot">=</span> [(a,b,c) <span class="op">|</span> c <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n],</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                    b <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>c],</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                    a <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>b],</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    a<span class="op">^</span><span class="dv">2</span> <span class="op">+</span> b<span class="op">^</span><span class="dv">2</span> <span class="op">==</span> c<span class="op">^</span><span class="dv">2</span>]</span></code></pre></div></li>
-<li><p>A positive integer is perfect if it equals the sum of all of its factors, excluding the number itself. Using a list comprehension and the function factors, define a function <code>perfects :: Int -&gt; [Int]</code> that returns the list of all perfect numbers up to a given limit. For example:</p>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    a<span class="op">^</span><span class="dv">2</span> <span class="op">+</span> b<span class="op">^</span><span class="dv">2</span> <span class="op">==</span> c<span class="op">^</span><span class="dv">2</span>]</span></code></pre></div>
+<h2 id="exercise-6">Exercise 6</h2>
+<blockquote>
+<p>A positive integer is perfect if it equals the sum of all of its factors, excluding the number itself. Using a list comprehension and the function factors, define a function <code>perfects :: Int -&gt; [Int]</code> that returns the list of all perfect numbers up to a given limit. For example:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> perfects <span class="dv">500</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>,<span class="dv">28</span>,<span class="dv">496</span>]</span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ot">factors ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>factors n <span class="ot">=</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n], n <span class="ot">`mod`</span> x <span class="op">==</span> <span class="dv">0</span>]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ot">perfects ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>perfects n <span class="ot">=</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>n],</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                x <span class="op">==</span> <span class="fu">sum</span> (factors x) <span class="op">-</span> ]</span></code></pre></div></li>
-<li><p>Show how the list comprehension <code>[(x,y) | x &lt;- [1,2], y &lt;- [3,4]]</code> with two generators can be re-expressed using two comprehensions with single generators. Hint: nest one comprehension within the other and make use of the library function <code>concat :: [[a]] -&gt; [a]</code>.</p>
-<p>Solution:</p>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                x <span class="op">==</span> <span class="fu">sum</span> (factors x) <span class="op">-</span> ]</span></code></pre></div>
+<h2 id="exercise-7">Exercise 7</h2>
+<blockquote>
+<p>Show how the list comprehension <code>[(x,y) | x &lt;- [1,2], y &lt;- [3,4]]</code> with two generators can be re-expressed using two comprehensions with single generators. Hint: nest one comprehension within the other and make use of the library function <code>concat :: [[a]] -&gt; [a]</code>.</p>
+</blockquote>
+<blockquote>
 <div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list1 ::</span> [(<span class="dt">Int</span>,<span class="dt">Int</span>)]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>list1 <span class="ot">=</span>  <span class="fu">concat</span> [[(x,y) <span class="op">|</span> y <span class="ot">&lt;-</span> [<span class="dv">3</span>,<span class="dv">4</span>]] <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>]]</span></code></pre></div></li>
-<li><p>Redefine the function positions using the function find.</p>
-<p>Solution:</p>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>list1 <span class="ot">=</span>  <span class="fu">concat</span> [[(x,y) <span class="op">|</span> y <span class="ot">&lt;-</span> [<span class="dv">3</span>,<span class="dv">4</span>]] <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>]]</span></code></pre></div>
+</blockquote>
+<h2 id="exercise-8">Exercise 8</h2>
+<blockquote>
+<p>Redefine the function <code>positions</code> using the function <code>find</code>.</p>
+</blockquote>
 <div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">find ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [(a,b)] <span class="ot">-&gt;</span> [b]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>find k t <span class="ot">=</span> [v <span class="op">|</span> (k',v) <span class="ot">&lt;-</span> t, k <span class="op">==</span> k']</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -124,20 +144,24 @@
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>positions x xs <span class="ot">=</span> [i <span class="op">|</span> (x',i) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>], x <span class="op">==</span> x']</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ot">positions' ::</span> <span class="dt">Eq</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>positions' x xs <span class="ot">=</span> find x (<span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>])</span></code></pre></div></li>
-<li><p>The scalar product of two lists of integers <code>xs</code> and <code>ys</code> of length <span class="math inline"><em>n</em></span> is given by the sum of the products of corresponding integers:</p>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>positions' x xs <span class="ot">=</span> find x (<span class="fu">zip</span> xs [<span class="dv">0</span><span class="op">..</span>])</span></code></pre></div>
+<h2 id="exercise-9">Exercise 9</h2>
+<blockquote>
+<p>The scalar product of two lists of integers <code>xs</code> and <code>ys</code> of length <span class="math inline"><em>n</em></span> is given by the sum of the products of corresponding integers:</p>
 <p><span class="math display">$$\sum_{i=0}^{n-1} xs_i \cdot ys_i$$</span></p>
 <p>In a similar manner to <code>chisqr</code>, show how a list comprehension can be used to define a function <code>scalarproduct :: [Int] -&gt; [Int] -&gt; Int</code> that returns the scalar product of two lists. For example:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> scalarproduct [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dv">32</span></span></code></pre></div>
-<p>Solution:</p>
+</blockquote>
 <div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">chisqr ::</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> [<span class="dt">Float</span>] <span class="ot">-&gt;</span> <span class="dt">Float</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>chisqr os es <span class="ot">=</span> <span class="fu">sum</span> [((o<span class="op">-</span>e)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>e <span class="op">|</span> (o,e) <span class="ot">&lt;-</span> <span class="fu">zip</span> os es]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ot">scalarproduct ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>scalarproduct xs ys <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">*</span>y <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs ys]</span></code></pre></div></li>
-<li><p>Modify the Caesar cipher program to also handle upper-case letters.</p>
-<p>Solution:</p>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>scalarproduct xs ys <span class="ot">=</span> <span class="fu">sum</span> [x<span class="op">*</span>y <span class="op">|</span> (x,y) <span class="ot">&lt;-</span> <span class="fu">zip</span> xs ys]</span></code></pre></div>
+<h2 id="exercise-10">Exercise 10</h2>
+<blockquote>
+<p>Modify the Caesar cipher program to also handle upper-case letters.</p>
+</blockquote>
 <div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- We assume that the input is not only upper case letters.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Data.Char</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -200,8 +224,7 @@
 <span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span></span>
 <span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>        factor <span class="ot">=</span> <span class="fu">head</span> (positions (<span class="fu">minimum</span> chitab) chitab)</span>
 <span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>        chitab <span class="ot">=</span> [chisqr (rotate n table') table <span class="op">|</span> n <span class="ot">&lt;-</span> [<span class="dv">0</span><span class="op">..</span><span class="dv">25</span>]]</span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>        table' <span class="ot">=</span> freqs xs</span></code></pre></div></li>
-</ol>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>        table' <span class="ot">=</span> freqs xs</span></code></pre></div>
 </div>
     </div>
 </body>

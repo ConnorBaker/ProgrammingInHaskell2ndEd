@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 3 Exercises</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -63,9 +66,10 @@
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
         <span class="float-right">December 21, 2019</span>
     </div>
-    <h2 id="exercises">3.11 Exercises</h2>
-<ol type="1">
-<li><p>What are the types of the following values?</p>
+    <h2 id="exercise-1">Exercise 1</h2>
+<blockquote>
+<p>What are the types of the following values?</p>
+</blockquote>
 <ul>
 <li><code>['a','b','c'] :: ?</code>
 <ul>
@@ -83,11 +87,12 @@
 <ul>
 <li><code>([Bool], [Char])</code></li>
 </ul></li>
-</ul></li>
-</ol>
+</ul>
 <!--more-->
-<ol start="2" type="1">
-<li><p>Write down definitions that have the following types; it does not matter what the definitions do as long as they are type correct.</p>
+<h2 id="exercise-2">Exercise 2</h2>
+<blockquote>
+<p>Write down definitions that have the following types; it does not matter what the definitions do as long as they are type correct.</p>
+</blockquote>
 <ul>
 <li><code>bools :: [Bool]</code>
 <ul>
@@ -109,8 +114,11 @@
 <ul>
 <li>Note that this is equivalent to <code>apply :: (a -&gt; b) -&gt; (a -&gt; b)</code>, so we can use <code>apply f x = f x</code></li>
 </ul></li>
-</ul></li>
-<li><p>What are the types of the following functions?</p>
+</ul>
+<h2 id="exercise-3">Exercise 3</h2>
+<blockquote>
+<p>What are the types of the following functions?</p>
+</blockquote>
 <ul>
 <li><code>second xs = head (tail xs)</code>
 <ul>
@@ -136,10 +144,16 @@
 <ul>
 <li><code>twice :: (a -&gt; a) -&gt; (a -&gt; a)</code></li>
 </ul></li>
-</ul></li>
-<li><p>Check your answers to the proceeding questions using GHCi.</p>
-<p><em>Omitted.</em></p></li>
-<li><p>Why is it not feasible in general for function types to be instances of the <code>Eq</code> class? When is it feasible? Hint: two functions of the same type are equal if they always return equal results for equal arguments.</p>
+</ul>
+<h2 id="exercise-4">Exercise 4</h2>
+<blockquote>
+<p>Check your answers to the proceeding questions using GHCi.</p>
+</blockquote>
+<p><em>Omitted.</em></p>
+<h2 id="exercise-5">Exercise 5</h2>
+<blockquote>
+<p>Why is it not feasible in general for function types to be instances of the <code>Eq</code> class? When is it feasible? Hint: two functions of the same type are equal if they always return equal results for equal arguments.</p>
+</blockquote>
 <p>Being an instance of the <code>Eq</code> class means that the type is comparable. With integers, comparability is no problem – we are taught the strict total ordering of <span class="math inline">&lt;</span> on the set of the integers with the number line from an early age. However, to discern whether two functions are equal, one must check whether they define the same mappings. This requires operating on the entirety of the domain of both functions, which is computationally expensive.</p>
 <p>One can raise additional questions:</p>
 <ul>
@@ -150,8 +164,7 @@
 <li>Should we then also consider every possible transformation?</li>
 </ul></li>
 <li>For these reasons and more, it is typically not possible to define an ordering on functions (I use weak language here on purpose – I do not have a great deal of math under my belt).</li>
-</ul></li>
-</ol>
+</ul>
 </div>
     </div>
 </body>

@@ -7,7 +7,10 @@
     <title>Bumbling Through Haskell - Chapter 3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="../css/blog.css">
 </head>
 
@@ -68,11 +71,8 @@
 <p>A type is a collection of related values.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>This means that the set-theoretic definition of the type Bool could be thought of as</p>
+<p>This means that the set-theoretic definition of the type <code>Bool</code> could be thought of as <code>Bool = {True, False}</code> and the type <code>Bool -&gt; Bool</code> would be <code>Bool-&gt;Bool = {f: Bool -&gt; Bool}</code>.</p>
 <!--more-->
-<p><code>Bool = {True, False}</code></p>
-<p>and the type <code>Bool -&gt; Bool</code> would be</p>
-<p><code>Bool-&gt;Bool = {f: Bool -&gt; Bool}</code></p>
 <p>Haskell uses the notation <code>e :: T</code> to say that <code>e</code> is a value in the type <code>T</code> (that is, <code>e</code> has type <code>T</code>).</p>
 <p>Every expression must have a type. Types are calculated prior to evaluating an expression via type inference. We get type errors when the inferred type is not the same as the explicit type.</p>
 <h2 id="basic-types">3.2 Basic Types</h2>
@@ -119,7 +119,7 @@
 <p>A list is a sequence of elements of the same type, with the elements being enclosed in square parentheses and separated by commas. We write <code>[T]</code> for the type of all lists whose elements have type <code>T</code>…</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>The type of a list says nothing of its length (which may be infinite, because Haskell provides for lazy evaluation).</p>
+<p>The type of list says nothing of its length (which may be infinite, because Haskell provides for lazy evaluation).</p>
 <h2 id="tuple-types">3.4 Tuple Types</h2>
 <blockquote>
 <p>A tuple is a finite sequence of components of possibly different types, with the components being enclosed in round parentheses and separated by commas.</p>
@@ -137,28 +137,20 @@
 <p>As well as being interesting in their own right, curried functions are also more flexible than functions on tuples, because useful functions can often be made by partially applying a curried function with less than its full complement of arguments.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>The arrow operator is right associative, which allows for excess parentheses when using curried functions. Graham notes that the following two types are equivalent:</p>
-<p><code>Int -&gt; Int -&gt; Int -&gt; Int</code></p>
-<p>and</p>
-<p><code>Int -&gt; (Int -&gt; (Int -&gt; Int))</code></p>
-<p>Graham also points out that, as a result, function application is left-associative:</p>
-<p><code>must x y z</code></p>
-<p>and</p>
-<p><code>((must x) y) z</code></p>
-<p>are equivalent.</p>
+<p>The arrow operator is right associative, which allows for excess parentheses when using curried functions. Graham notes that <code>Int -&gt; Int -&gt; Int -&gt; Int</code> and <code>Int -&gt; (Int -&gt; (Int -&gt; Int))</code> are equivalent.</p>
+<p>Graham also points out that, as a result, function application is left-associative: <code>must x y z</code> and <code>((must x) y) z</code> are equivalent.</p>
 <blockquote>
 <p>Unless tupling is explicitly required, all functions in Haskell with multiple arguments are normally defined as curried functions, and the two conventions above are used to reduce the number of parentheses that are required.</p>
-<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed,).</p>
+<p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
 <h2 id="polymorphic-types">3.7 Polymorphic Types</h2>
-<p>Polymorphic types are ones that can take any type as an argument. The <code>length</code> function is an example of a polymorphic type. It has the type</p>
-<p><code>length :: [a] -&gt; Int</code></p>
+<p>Polymorphic types are ones that can take any type as an argument. The <code>length</code> function is an example of a polymorphic type. It has the type <code>length :: [a] -&gt; Int</code>.</p>
 <h2 id="overloaded-types">3.8 Overloaded Types</h2>
 <p>A class constraint serves to restrict the application of a function to a certain instance of a type.</p>
 <blockquote>
-<p>Class constraints are written in the form C a, where C is the name of a class and a is a type variable. For example, the type of the addition operator + is as follows:</p>
+<p>Class constraints are written in the form <code>C a</code>, where <code>C</code> is the name of a class and <code>a</code> is a type variable. For example, the type of the addition operator <code>+</code> is as follows:</p>
 <p><code>(+) :: Num a =&gt; a -&gt; a -&gt; a</code></p>
-<p>That is, for any type a that is an instance of the class Num of numeric types, the function <code>(+)</code> has type <code>a -&gt; a -&gt; a</code>.</p>
+<p>That is, for any type a that is an instance of the class <code>Num</code> of numeric types, the function <code>(+)</code> has type <code>a -&gt; a -&gt; a</code>.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
 <p>A type that includes class constraints is called overloaded.</p>
@@ -179,7 +171,7 @@
 <p>All the basic types, <code>Bool</code>, <code>Char</code>, <code>String</code>, <code>Int</code>, <code>Integer</code>, <code>Float</code>, and <code>Double</code>, are instances of the <code>Eq</code> class, as are list and tuple types, provided that their element and component types are instances.</p>
 <p>Excerpt From: Graham Hutton. “Programming in Haskell” (2nd ed.).</p>
 </blockquote>
-<p>Function types are not typically instances of Eq because it is not usually feasible to compare two functions for equality.</p>
+<p>Function types are not typically instances of <code>Eq</code> because it is not usually feasible to compare two functions for equality.</p>
 <h3 id="ord">Ord</h3>
 <blockquote>
 <p>This class contains types that are instances of the equality class <code>Eq</code>, but in addition whose values are totally (linearly) ordered, and as such can be compared and processed using the following six methods:</p>
@@ -222,7 +214,7 @@
 </blockquote>
 <h3 id="fractional">Fractional</h3>
 <blockquote>
-<p>This class contains types whose values are instances of the numeric class Num, but in addition whose values are non-integeral, and as such support the methods of fractional division and fractional reciprocation:</p>
+<p>This class contains types whose values are instances of the numeric class <code>Num</code>, but in addition whose values are non-integral, and as such support the methods of fractional division and fractional reciprocation:</p>
 <p><code>(/) :: a -&gt; a -&gt; a</code></p>
 <p><code>recip :: a -&gt; a -&gt; a</code></p>
 <p>The basic types <code>Float</code> and <code>Double</code> are instances.</p>
