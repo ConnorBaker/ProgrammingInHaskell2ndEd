@@ -8,11 +8,11 @@
   }
 
   h2 {
-    @apply text-3xl;
+    @apply pt-6 text-3xl;
   }
 
   h3 {
-    @apply text-xl;
+    @apply pt-3 text-xl;
   }
 
   ul {
@@ -177,23 +177,19 @@
   }
 
   .text-defaults {
-    @apply antialiased text-justify text-black selection:bg-lime-300;
+    @apply leading-relaxed antialiased text-justify text-black selection:bg-lime-300;
   }
 
   .post-box {
-    @apply p-8 max-w-5xl mx-auto bg-lime-50 rounded-xl shadow-xl shadow-black/50 space-y-2;
+    @apply p-8 max-w-4xl mx-auto bg-lime-50 rounded-xl shadow-xl shadow-black/50 space-y-2;
   }
 
   .post-title {
-    @apply text-5xl font-display font-bold;
+    @apply -ml-1 text-5xl font-display font-bold;
   }
 
   .post-subtitle {
-    @apply ml-1 text-3xl italic;
-  }
-
-  .post-first-paragraph {
-    @apply first-line:uppercase first-line:tracking-wide first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left;
+    @apply text-3xl italic;
   }
 
   .post-pill-button {
@@ -201,6 +197,6 @@
   }
 
   .post-pill-button-short {
-    @apply post-pill-button px-2 py-1;
+    @apply post-pill-button px-2 py-0.5;
   }
 }

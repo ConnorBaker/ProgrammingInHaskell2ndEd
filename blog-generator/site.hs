@@ -42,7 +42,7 @@ config =
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y"
+    dateField "date" "%F"
         <> defaultContext
 
 main :: IO ()

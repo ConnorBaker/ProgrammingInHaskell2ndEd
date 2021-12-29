@@ -42,17 +42,12 @@
             </div>
         </div>
 
-        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
-            <div class="flow-root">
-                <div class="flex items-center space-x-4">
-                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
-                    <a href="../" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+        <nav class="px-4 py-2 space-x-4 w-fit mx-auto text-black bg-lime-50 rounded-full">
+            <a href="../" class="clickable-light-bg px-2 py-0.5 rounded-full">Posts</a>
 
-                    <a href="../about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+            <a href="../about.html" class="clickable-light-bg px-2 py-0.5 rounded-full">About</a>
 
-                    <a href="../archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
-                </div>
-            </div>
+            <a href="../archive.html" class="clickable-light-bg px-2 py-0.5 rounded-full">Archive</a>
         </nav>
 
         <div class="post-box">
@@ -62,10 +57,11 @@
     <div class="post-subtitle">
         Declaring Types and Classes
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">June  1, 2020</span>
+        <span class="float-right italic">2020-06-01</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="type-declarations">8.1 Type declarations</h2>
 <p>We can introduce new names for types that we already have by means of the <code>type</code> keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing <code>type Pos = (Int, Int)</code> and we might declare a transformation as a function which maps a <code>Pos</code> to another <code>Pos</code>: <code>type Trans = Pos -&gt; Pos</code>.</p>
 <p><em>Note: the name of the newly declared type must be capitalized.</em> <!--more--> <code>type</code> declarations are not allowed to be recursive. As an example, <code>type Tree = (Int, [Tree])</code> is not allowed. Recursive types may be declared using the <code>data</code> mechanism, which is discussed in the next section.</p>

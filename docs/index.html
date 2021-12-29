@@ -42,17 +42,12 @@
             </div>
         </div>
 
-        <nav class="p-4 w-fit mx-auto h-18 text-black bg-lime-50 rounded-full">
-            <div class="flow-root">
-                <div class="flex items-center space-x-4">
-                    <!-- TODO: Use some distinctive visual style to indicate the current page -->
-                    <a href="./" class="clickable-light-bg px-3 py-2 rounded-full">Posts</a>
+        <nav class="px-4 py-2 space-x-4 w-fit mx-auto text-black bg-lime-50 rounded-full">
+            <a href="./" class="clickable-light-bg px-2 py-0.5 rounded-full">Posts</a>
 
-                    <a href="./about.html" class="clickable-light-bg px-3 py-2 rounded-full">About</a>
+            <a href="./about.html" class="clickable-light-bg px-2 py-0.5 rounded-full">About</a>
 
-                    <a href="./archive.html" class="clickable-light-bg px-3 py-2 rounded-full">Archive</a>
-                </div>
-            </div>
+            <a href="./archive.html" class="clickable-light-bg px-2 py-0.5 rounded-full">Archive</a>
         </nav>
 
         
@@ -63,10 +58,11 @@
     <div class="post-subtitle">
         Declaring Types and Classes
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 23, 2020</span>
+        <span class="float-right italic">2020-12-23</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="exercise-1">Exercise 1</h2>
 <blockquote>
 <p>In a similar manner to the function <code>add</code>, define a recursive multiplication function <code>mult :: Nat -&gt; Nat -&gt; Nat</code> for the recursive type of natural numbers:</p>
@@ -97,10 +93,11 @@
     <div class="post-subtitle">
         Declaring Types and Classes
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">June  1, 2020</span>
+        <span class="float-right italic">2020-06-01</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="type-declarations">8.1 Type declarations</h2>
 <p>We can introduce new names for types that we already have by means of the <code>type</code> keyword. As an example, if we wanted to think of an ordered pair of integers as some position, we could do so by writing <code>type Pos = (Int, Int)</code> and we might declare a transformation as a function which maps a <code>Pos</code> to another <code>Pos</code>: <code>type Trans = Pos -&gt; Pos</code>.</p>
 <p><em>Note: the name of the newly declared type must be capitalized.</em> 
@@ -118,10 +115,11 @@
     <div class="post-subtitle">
         Higher-Order Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">March  1, 2020</span>
+        <span class="float-right italic">2020-03-01</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="exercise-1">Exercise 1</h2>
 <blockquote>
 <p>Show how the list comprehension <code>[f x | x &lt;- xs, p x]</code> can be re-expressed using the higher order functions <code>map</code> and <code>filter</code>.</p>
@@ -143,10 +141,11 @@
     <div class="post-subtitle">
         Higher-Order Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">February 28, 2020</span>
+        <span class="float-right italic">2020-02-28</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="basic-concepts">7.1 Basic Concepts</h2>
 <p>Functions with multiple arguments are defined with currying (which is part of why we have right-associative groupings for parameters). As an example, we can rewrite</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
@@ -169,10 +168,11 @@
     <div class="post-subtitle">
         Recursive Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="basic-concepts">6.1 Basic Concepts</h2>
 <p>Functions can be defined in terms of themselves. When a function is self-referential, we say that it is recursive. Consider the explicit and recursive definitions of the factorial function:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">facExplicit ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
@@ -196,10 +196,11 @@
     <div class="post-subtitle">
         Recursive Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="exercise-1">Exercise 1</h2>
 <blockquote>
 <p>How does the recursive version of the factorial function behave if applied to a negative argument, like <span class="math inline"> − 1</span>? Modify the definition to prohibit negative arguments by adding a guard to the recursive case.</p>
@@ -224,10 +225,11 @@
     <div class="post-subtitle">
         List Comprehensions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="basic-concepts">5.1 Basic Concepts</h2>
 <p>In mathematics, we can construct a set with a generator. If we wanted to create the set of all odd numbers, we could use the set-builder notation <span class="math inline">{2<em>k</em> + 1|<em>x</em> ∈ ℤ<sup>+</sup>}</span>.</p>
 <p>Haskell presents a similar opportunity, but it calls it a list comprehension. If we were to want to build a list of the first 10 perfect squares, we could do</p>
@@ -248,10 +250,11 @@
     <div class="post-subtitle">
         List Comprehensions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="exercises">5.7 Exercises</h2>
 <h2 id="exercise-1">Exercise 1</h2>
 <blockquote>
@@ -274,10 +277,11 @@
     <div class="post-subtitle">
         Defining Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="new-from-old">4.1 New From Old</h2>
 <p>Function composition is an extremely powerful tool and should not be overlooked. If it works for Unix, it’ll probably work for you.</p>
 
@@ -295,10 +299,11 @@
     <div class="post-subtitle">
         Defining Functions
     </div>
-    <div class="flow-root">
+    <div class="flow-root pb-6">
         <a class="post-pill-button-short" href="https://github.com/connorbaker">Connor Baker</a>
-        <span class="float-right">December 21, 2019</span>
+        <span class="float-right italic">2019-12-21</span>
     </div>
+    <div class="w-full rounded-full pt-0.5 bg-lime-500"></div>
     <h2 id="exercise-1">Exercise 1</h2>
 <blockquote>
 <p>Using library functions, define a function <code>halve :: [a] -&gt; ([a],[a])</code> that splits an even-lengthed list into two halves. For example:</p>
