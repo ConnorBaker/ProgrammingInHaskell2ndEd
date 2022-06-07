@@ -12,5 +12,5 @@ common shared-properties
 
 library
     import: shared-properties
-    exposed-modules: Chapter4, Chapter5, Chapter6, Chapter7, Chapter8
+    exposed-modules: Chapter4, Chapter5, Chapter6, Chapter7, Chapter8, Chapter9
     hs-source-dirs:   lib
